@@ -1452,16 +1452,6 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
           <button class="btn btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
             Authenticate with Code
           </button>
-          // <button class="btn btn-secondary" onclick="openSignIn()">
-          //   <!-- Microsoft Core Emblem Vector -->
-          //   <svg viewBox="0 0 23 23" style="width:14px; height:14px; flex-shrink:0;">
-          //     <path fill="#f35325" d="M0 0h11v11H0z"/>
-          //     <path fill="#81bc06" d="M12 0h11v11H12z"/>
-          //     <path fill="#05a6f0" d="M0 12h11v11H0z"/>
-          //     <path fill="#ffba08" d="M12 12h11v11H12z"/>
-          //   </svg>
-          //   Sign in with Microsoft
-          // </button>
         </div>
 
         <!-- Bottom Banner with Integrated Refresh Trigger -->
