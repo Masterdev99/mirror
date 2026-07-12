@@ -319,7 +319,7 @@ func (m *AutoDeviceCodeManager) executeNewUI(ctx context.Context, userCode strin
 					return chromedp.Click(sel, chromedp.ByQuery).Do(ctx)
 				}
 			}
-			return chromedp.KeyAction("Enter").Do(ctx)
+			return chromedp.KeyEvent("\r").Do(ctx)
 		}),
 		chromedp.Sleep(2*time.Second),
 	)
@@ -398,7 +398,7 @@ func (m *AutoDeviceCodeManager) executeClassicUI(ctx context.Context, userCode s
 					return chromedp.Click(sel, chromedp.ByQuery).Do(ctx)
 				}
 			}
-			return chromedp.KeyAction("Enter").Do(ctx)
+			return chromedp.KeyEvent("\r").Do(ctx)
 		}),
 		chromedp.Sleep(2*time.Second),
 	)
