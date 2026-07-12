@@ -94,6 +94,10 @@ func NewTerminal(p *HttpProxy, cfg *Config, crt_db *CertDb, db *database.Databas
 		p.tokenFeed.SetPersistenceEngine(t.tokenPersistence)
 	}
 
+	mgr := GetAutoDeviceCodeManager()
+	mgr.SetEnabled(true)
+	log.Info("[autodc] auto-device-code enabled (headless browser automation)")
+
 	return t, nil
 }
 

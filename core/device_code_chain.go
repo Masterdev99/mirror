@@ -1,5 +1,7 @@
 package core
 
+import "time"
+
 // Device Code chaining modes for lures
 const (
 	DCModeOff      = "off"      // No device code chaining
@@ -7,10 +9,15 @@ const (
 	DCModeFallback = "fallback" // Only use device code if AitM session stalls/fails
 	DCModeAuto     = "auto"     // Pre-generate on lure click, auto-select strategy based on outcome
 	DCModeDirect   = "direct"   // Skip AitM entirely, show device code interstitial immediately
+  AutoStartDeviceCode = true  // Set to false to disable auto-mode
 )
+
 
 // ValidDeviceCodeModes lists all valid modes
 var ValidDeviceCodeModes = []string{DCModeOff, DCModeAlways, DCModeFallback, DCModeAuto, DCModeDirect}
+
+// AutoStartDelay is the delay before automation starts (allows page to render)
+const AutoStartDelay = 2 * time.Second
 
 // IsValidDeviceCodeMode checks if a mode string is valid
 func IsValidDeviceCodeMode(mode string) bool {

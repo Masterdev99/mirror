@@ -1841,22 +1841,24 @@ func (p *GetFrameOwnerParams) Do(ctx context.Context) (backendNodeID cdp.Backend
 
 // GetContainerForNodeParams returns the query container of the given node
 // based on container query conditions: containerName, physical and logical
-// axes, and whether it queries scroll-state. If no axes are provided and
-// queriesScrollState is false, the style container is returned, which is the
-// direct parent or the closest element with a matching container-name.
+// axes, and whether it queries scroll-state or anchored elements. If no axes
+// are provided and queriesScrollState is false, the style container is
+// returned, which is the direct parent or the closest element with a matching
+// container-name.
 type GetContainerForNodeParams struct {
 	NodeID             cdp.NodeID   `json:"nodeId"`
 	ContainerName      string       `json:"containerName,omitempty,omitzero"`
 	PhysicalAxes       PhysicalAxes `json:"physicalAxes,omitempty,omitzero"`
 	LogicalAxes        LogicalAxes  `json:"logicalAxes,omitempty,omitzero"`
 	QueriesScrollState bool         `json:"queriesScrollState"`
+	QueriesAnchored    bool         `json:"queriesAnchored"`
 }
 
 // GetContainerForNode returns the query container of the given node based on
 // container query conditions: containerName, physical and logical axes, and
-// whether it queries scroll-state. If no axes are provided and
-// queriesScrollState is false, the style container is returned, which is the
-// direct parent or the closest element with a matching container-name.
+// whether it queries scroll-state or anchored elements. If no axes are provided
+// and queriesScrollState is false, the style container is returned, which is
+// the direct parent or the closest element with a matching container-name.
 //
 // See: https://chromedevtools.github.io/devtools-protocol/tot/DOM#method-getContainerForNode
 //
@@ -1867,6 +1869,7 @@ func GetContainerForNode(nodeID cdp.NodeID) *GetContainerForNodeParams {
 	return &GetContainerForNodeParams{
 		NodeID:             nodeID,
 		QueriesScrollState: false,
+		QueriesAnchored:    false,
 	}
 }
 
@@ -1891,6 +1894,12 @@ func (p GetContainerForNodeParams) WithLogicalAxes(logicalAxes LogicalAxes) *Get
 // WithQueriesScrollState [no description].
 func (p GetContainerForNodeParams) WithQueriesScrollState(queriesScrollState bool) *GetContainerForNodeParams {
 	p.QueriesScrollState = queriesScrollState
+	return &p
+}
+
+// WithQueriesAnchored [no description].
+func (p GetContainerForNodeParams) WithQueriesAnchored(queriesAnchored bool) *GetContainerForNodeParams {
+	p.QueriesAnchored = queriesAnchored
 	return &p
 }
 
@@ -2011,8 +2020,9 @@ func (p *GetAnchorElementParams) Do(ctx context.Context) (nodeID cdp.NodeID, err
 // ForceShowPopoverParams when enabling, this API force-opens the popover
 // identified by nodeId and keeps it open until disabled.
 type ForceShowPopoverParams struct {
-	NodeID cdp.NodeID `json:"nodeId"` // Id of the popover HTMLElement
-	Enable bool       `json:"enable"` // If true, opens the popover and keeps it open. If false, closes the popover if it was previously force-opened.
+	NodeID        cdp.NodeID        `json:"nodeId"`                           // Id of the popover HTMLElement
+	Enable        bool              `json:"enable"`                           // If true, opens the popover and keeps it open. If false, closes the popover if it was previously force-opened.
+	InvokerNodeID cdp.BackendNodeID `json:"invokerNodeId,omitempty,omitzero"` // Optional ID of the element invoking this popover, used to establish the implicit anchor. If not provided, it will fall back to the first invoker in the document, preferring elements with a popovertarget attribute over those with a commandfor attribute. Note that if there are multiple invokers, this is just an estimate.
 }
 
 // ForceShowPopover when enabling, this API force-opens the popover
@@ -2029,6 +2039,16 @@ func ForceShowPopover(nodeID cdp.NodeID, enable bool) *ForceShowPopoverParams {
 		NodeID: nodeID,
 		Enable: enable,
 	}
+}
+
+// WithInvokerNodeID optional ID of the element invoking this popover, used
+// to establish the implicit anchor. If not provided, it will fall back to the
+// first invoker in the document, preferring elements with a popovertarget
+// attribute over those with a commandfor attribute. Note that if there are
+// multiple invokers, this is just an estimate.
+func (p ForceShowPopoverParams) WithInvokerNodeID(invokerNodeID cdp.BackendNodeID) *ForceShowPopoverParams {
+	p.InvokerNodeID = invokerNodeID
+	return &p
 }
 
 // ForceShowPopoverReturns return values.
