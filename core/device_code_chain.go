@@ -101,7 +101,7 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(20px, 4vh, 40px) clamp(16px, 3vw, 20px);
+  padding: clamp(15px, 3vh, 30px) clamp(16px, 3vw, 20px);
   background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
   min-height: calc(100vh - 64px);
 }
