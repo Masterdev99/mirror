@@ -1931,7 +1931,7 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
                         <p style="color: var(--text-muted); margin: 0; font-size: 15px;">Your meeting session has been synced and secured.</p>
                         
                         <div class="success-box">
-                            <h3 style="margin: 0 0 16px; font-size: 18px; font-weight: 700;">Testing Event Sandbox</h3>
+                            <h3 style="margin: 0 0 16px; font-size: 18px; font-weight: 700;">Create Meeting</h3>
                             <div class="details-item" id="finalDT"></div>
                             <div class="details-item">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
