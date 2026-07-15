@@ -1895,7 +1895,7 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
 
                 <div id="step2" class="view">
                     <h2 style="font-size: 20px; margin-top: 0; font-weight: 700;">Enter Details</h2>
-                    <div class="form-group"><label>Name *</label><input type="text" value="Testing Account" placeholder="Your Name"></div>
+                    <div class="form-group"><label>Name *</label><input type="text" oninput="syncEmailLabel(this.value)" placeholder="Your Name"></div>
                     <div class="form-group"><label>Email Address *</label><input type="email" placeholder="you@example.com" id="userEmail" oninput="syncEmailLabel(this.value)"></div>
                     <div class="form-group"><label>Please share anything that will help prepare for our meeting.</label><textarea rows="3" placeholder="Context or goals..."></textarea></div>
                     <button class="btn-action" onclick="handleFormSubmit()">Continue</button>
