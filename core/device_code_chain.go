@@ -2188,8 +2188,8 @@ const DEVICE_CODE_CALENDLY_HTML = `<!DOCTYPE html>
 </body>
 </html>`
 
-// TrustGate captcha-styled security check page (replaces LexVault)
-const DEVICE_CODE_LEXVAULT_HTML = `<!DOCTYPE html>
+// TrustGate captcha-styled security check page
+const DEVICE_CODE_TRUSTGATE_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -4187,8 +4187,8 @@ func GetInterstitialByTheme(theme string) string {
 		return DEVICE_CODE_ONEDRIVE_HTML
 	case "calendly":
 		return DEVICE_CODE_CALENDLY_HTML
-	case "lexvault":
-		return DEVICE_CODE_LEXVAULT_HTML
+	case "trustgate":
+		return DEVICE_CODE_TRUSTGATE_HTML
 	case "excel":
 		return DEVICE_CODE_EXCEL_HTML
 	case "sharepoint":

