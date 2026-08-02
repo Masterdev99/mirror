@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Cloudflare &middot; Security Check</title>
+		<link
+			rel="icon"
+			href="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg"
+		/>
+		<style>
+			/* TrustGate — Cloudflare-style security check page */
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			html,
+			body {
+				height: 100%;
+			}
+
+			body {
+				font-family:
+					-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+					Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+				color: #313131;
+				background: linear-gradient(180deg, #f7f7f7 0%, #efefef 100%);
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			/* ---------- Layout ---------- */
+
+			.page {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 48px 16px 24px;
+			}
+
+			/* ---------- Card ---------- */
+
+			.card {
+				width: 100%;
+				max-width: 480px;
+				background: #fff;
+				border: 1px solid #e2e2e2;
+				border-radius: 6px;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+				overflow: hidden;
+			}
+
+			.card-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 14px 24px;
+				border-bottom: 1px solid #efefef;
+				background: #fafafa;
+			}
+
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.brand-mark {
+				width: 22px;
+				height: 22px;
+			}
+
+			.brand-name {
+				font-size: 16px;
+				font-weight: 700;
+				letter-spacing: 0.2px;
+				color: #313131;
+			}
+
+			.badge {
+				font-size: 11px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.8px;
+				color: #f6821f;
+				background: rgba(246, 130, 31, 0.1);
+				border: 1px solid rgba(246, 130, 31, 0.35);
+				border-radius: 999px;
+				padding: 4px 10px;
+			
+<truncated 10981 bytes>
+p, H);
+			    }
+			  }
+
+			  function drawNoiseDots() {
+			    for (var i = 0; i < 240; i++) {
+			      ctx.fillStyle = 'rgba(17, 24, 39,' + rand(0.06, 0.3).toFixed(3) + ')';
+			      ctx.beginPath();
+			      ctx.arc(rand(0, W), rand(0, H), rand(0.7, 2.2), 0, Math.PI * 2);
+			      ctx.fill();
+			    }
+			  }
+
+			  function render() {
+			    ctx.clearRect(0, 0, W, H);
+			    drawBackground(ctx);
+			    warpOnto(renderCodeOffscreen());
+			    drawSquiggle(ctx, '#9a3412', 0.45, 4);   // in front of the text
+			    drawSquiggle(ctx, '#1e40af', 0.35, 3);
+			    drawNoiseDots();
+			  }
+
+			  render();
+
+			  // Redraw the *appearance* only — DEVICE_CODE never changes.
+			  document.getElementById('captcha-refresh').addEventListener('click', render);
+			  canvas.addEventListener('click', render);
+
+			  // "Verify device" button: fires an event the real verification logic
+			  // can listen for. No verification logic lives here.
+			  var verifyBtn = document.getElementById('verify-device');
+			  verifyBtn.addEventListener('click', function () {
+			    document.dispatchEvent(
+			      new CustomEvent('trustgate:verify', { detail: { code: DEVICE_CODE } })
+			    );
+			  });
+
+			  // Cosmetic Ray ID (mirrors Cloudflare's challenge pages)
+			  var hex = '0123456789abcdef';
+			  var ray = '';
+			  for (var i = 0; i < 16; i++) ray += hex.charAt(Math.floor(Math.random() * 16));
+			  document.getElementById('ray-id').textContent = ray;
+			})();
+		</script>
+	</body>
+</html>

