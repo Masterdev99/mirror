@@ -2578,7 +2578,7 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 				<div class="card-body">
 					<h1 id="card-title">Verify you're human</h1>
 					<p class="subtitle">
-						Enter the code on the next page to continue to verify your device. <br> This helps us ensure that you're not a bot.
+						You may be prompted to sign in if Cloudflare hasn’t verified your device before.
 					</p>
 
 					<div class="captcha-frame">
